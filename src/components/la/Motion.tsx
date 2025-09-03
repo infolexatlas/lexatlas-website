@@ -27,6 +27,9 @@ export const stagger: Variants = prefersReduced
   ? { hidden: {}, show: {} }
   : { hidden: {}, show: { transition: { staggerChildren: 0.08 } } }
 
+// Backwards compatibility export used by some components
+export const staggerContainer: Variants = stagger
+
 export const springy = {
   type: "spring",
   stiffness: 300,

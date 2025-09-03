@@ -1,86 +1,177 @@
-import { notFound } from 'next/navigation'
-import { Metadata } from 'next'
-import { isFakeCheckout, stripe } from '@/lib/stripe'
-import { expandPairTitle } from '@/lib/kits.config'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Container } from '@/components/ui/container'
-import { CheckCircle } from 'lucide-react'
-import { SuccessPageClient } from './SuccessPageClient'
 
-interface PageProps {
-  searchParams: { 
-    session_id?: string
-    fake?: string
-    kind?: string
-    slug?: string
-    pair?: string
-  }
+
+'use client'
+export const dynamic = 'force-dynamic'
+
+import { Suspense, useEffect, useMemo } from 'react'
+import { useSearchParams } from 'next/navigation'
+import Link from 'next/link'
+import { motion, useReducedMotion } from 'framer-motion'
+import { track } from '@/lib/analytics'
+
+const ISO3: Record<string, string> = { fra: 'France', usa: 'United States', gbr: 'United Kingdom', can: 'Canada', mar: 'Morocco', deu: 'Germany', che: 'Switzerland', bel: 'Belgium', esp: 'Spain', ita: 'Italy', prt: 'Portugal' }
+
+function titleFromSlug(slug?: string) {
+  if (!slug) return 'Your Marriage Kit'
+  const [a, b] = slug.toLowerCase().split('-')
+  if (!ISO3[a] || !ISO3[b]) return 'Your Marriage Kit'
+  return `${ISO3[a]} – ${ISO3[b]} Marriage Kit`
 }
 
-export const metadata: Metadata = {
-  title: 'Purchase Successful - LexAtlas',
-  description: 'Your marriage kit purchase was successful. Download your files below.',
+const fadeInUp = {
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.2, 0.8, 0.2, 1] } },
 }
 
-export default async function SuccessPage({ searchParams }: PageProps) {
-  const { session_id, fake, kind, slug, pair } = searchParams
+const containerStagger = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
+}
 
-  if (!session_id) {
-    notFound()
-  }
+function SuccessInner() {
+  const sp = useSearchParams()
+  const kit = sp.get('kit') || ''
+  const sessionId = sp.get('session_id') || ''
+  const title = useMemo(() => titleFromSlug(kit), [kit])
+  const prefersReducedMotion = useReducedMotion()
 
-  let session: any = null
-  let purchasedItems: string[] = []
-  let purchaseKind = ''
+  useEffect(() => {
+    track('checkout_success', { type: 'single', items_count: 1, session_id: sessionId || undefined, kit: kit || undefined })
+  }, [kit, sessionId])
 
-  // Handle fake checkout
-  if (fake === '1' || (isFakeCheckout && session_id.startsWith('fake_'))) {
-    if (kind === 'bundle3') {
-      // For bundle3, we'll use default items since custom selection isn't passed in URL
-      purchasedItems = ['fra-usa', 'fra-gbr', 'fra-can']
-      purchaseKind = 'bundle3'
-    } else if (kind === 'bundle10') {
-      purchasedItems = ['fra-usa', 'fra-gbr', 'fra-can', 'fra-mar', 'fra-deu', 'fra-che', 'fra-bel', 'fra-esp', 'fra-ita', 'fra-prt']
-      purchaseKind = 'bundle10'
-    } else if (kind === 'single' && slug) {
-      purchasedItems = [slug]
-      purchaseKind = 'single'
-    } else if (pair) {
-      purchasedItems = [pair]
-      purchaseKind = 'single'
-    } else {
-      purchasedItems = ['fra-usa']
-      purchaseKind = 'single'
-    }
-  } else {
-    try {
-      session = await stripe!.checkout.sessions.retrieve(session_id)
-      
-      if (session.payment_status !== 'paid') {
-        notFound()
-      }
-
-      purchaseKind = session.metadata?.kind || ''
-      const slugs = session.metadata?.slugs || session.metadata?.slug || ''
-      
-      if (purchaseKind === 'single') {
-        purchasedItems = [slugs]
-      } else {
-        purchasedItems = slugs.split(',').filter(Boolean)
-      }
-    } catch (error) {
-      console.error('Error retrieving session:', error)
-      notFound()
-    }
-  }
+  const downloadHref = useMemo(() => {
+    if (!kit) return ''
+    const [a, b] = kit.toUpperCase().split('-')
+    if (!a || !b) return ''
+    const params = new URLSearchParams()
+    params.set('country1', a)
+    params.set('country2', b)
+    params.set('pair', `${a}-${b}`)
+    if (sessionId) params.set('session_id', sessionId)
+    return `/api/download?${params.toString()}`
+  }, [kit, sessionId])
 
   return (
-    <SuccessPageClient 
-      purchasedItems={purchasedItems} 
-      purchaseKind={purchaseKind}
-      sessionId={session_id}
-      isFake={fake === '1'}
-    />
+    <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: '/' },
+              { '@type': 'ListItem', position: 2, name: 'Success' },
+            ],
+          }),
+        }}
+      />
+
+      {/* Confirmation Hero */}
+      <section className="section">
+        <div className="container text-center">
+          <motion.div
+            initial={prefersReducedMotion ? undefined : { opacity: 0, scale: 0.7 }}
+            animate={prefersReducedMotion ? undefined : { opacity: 1, scale: 1 }}
+            transition={prefersReducedMotion ? undefined : { type: 'spring', stiffness: 220, damping: 18 }}
+            aria-hidden
+            className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[--la-primary] text-[--la-accent] shadow"
+          >
+            ✓
+          </motion.div>
+          <motion.h1
+            className="text-3xl font-bold tracking-tight md:text-4xl"
+            variants={fadeInUp}
+            initial="hidden"
+            animate="show"
+          >
+            Payment Successful
+          </motion.h1>
+          <motion.p
+            className="mt-2 text-muted-foreground"
+            variants={fadeInUp}
+            initial="hidden"
+            animate="show"
+          >
+            Thank you for your purchase. Your kit is ready to download.
+          </motion.p>
+          <div className="mt-1 text-xs text-muted-foreground">Instant download • Lifetime access • One‑time payment</div>
+        </div>
+      </section>
+
+      {/* Primary CTA Card */}
+      <section className="section pt-0 pb-8 md:pb-12">
+        <div className="container">
+          <motion.div
+            className="mx-auto max-w-xl rounded-2xl border bg-card p-5 text-center shadow-sm"
+            variants={containerStagger}
+            initial={prefersReducedMotion ? undefined : 'hidden'}
+            animate={prefersReducedMotion ? undefined : 'show'}
+          >
+            <motion.div className="text-sm text-[--la-accent]" variants={fadeInUp}>You purchased</motion.div>
+            <motion.div className="mt-1 text-lg font-semibold" variants={fadeInUp}>{title}</motion.div>
+            <motion.div className="mt-4 grid gap-3 sm:grid-cols-2" variants={fadeInUp}>
+              {downloadHref ? (
+                <motion.a
+                  href={downloadHref}
+                  download
+                  aria-label="Download your purchased marriage kit"
+                  className="inline-flex items-center justify-center rounded-xl border px-4 py-2 font-medium ring-offset-background transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--la-accent] active:translate-y-[1px]"
+                  onClick={() => track('kit_download_click', { kit: kit || undefined })}
+                >
+                  Download Your Kit
+                </motion.a>
+              ) : (
+                <motion.div
+                  className="inline-flex items-center justify-center rounded-xl px-4 py-2 font-medium ring-offset-background transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--la-accent] active:translate-y-[1px]"
+                >
+                  <Link href="/kit">Browse Kits</Link>
+                </motion.div>
+              )}
+              <motion.div
+                className="inline-flex items-center justify-center rounded-xl border px-4 py-2 font-medium transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--la-accent] active:translate-y-[1px]"
+                onClick={() => track('browse_more_click', { from: 'success', kit: kit || undefined })}
+                variants={fadeInUp}
+              >
+                <Link href="/kit">Browse More Kits</Link>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      
+
+      {/* Support */}
+      <section className="section pt-2 md:pt-3">
+        <div className="container text-center">
+          <motion.div
+            variants={containerStagger}
+            initial={prefersReducedMotion ? undefined : 'hidden'}
+            animate={prefersReducedMotion ? undefined : 'show'}
+          >
+            <motion.div className="text-sm font-medium text-[--la-accent]" variants={fadeInUp}>Need help?</motion.div>
+            <motion.div variants={fadeInUp} className="mt-2 inline-flex items-center justify-center">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center rounded-xl border px-4 py-2 font-medium transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--la-accent] active:translate-y-[1px]"
+              >
+                Contact Support
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      
+    </main>
+  )
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading…</div>}>
+      <SuccessInner />
+    </Suspense>
   )
 }

@@ -25,20 +25,20 @@ export function HeaderBlock({ title, lede, right, compact = false }: { title: Re
       <div className="container">
         <div className="flex justify-between gap-4 items-start md:items-center">
           <div className="min-w-0 flex-1">
-            <motion.h1
+            <motion.h1 key={mounted ? 'mounted' : 'ssr'}
               className="text-3xl font-bold tracking-tight md:text-4xl"
               initial={mounted ? 'hidden' : false}
-              whileInView="visible"
+              animate="visible"
               exit="exit"
               viewport={{ once: true, margin: '-10% 0%' }}
               variants={titleVariants}
             >
               {title}
             </motion.h1>
-            <motion.p
+            <motion.p key={mounted ? 'mounted-p' : 'ssr-p'}
               className="lede mt-2 max-w-2xl text-muted-foreground"
               initial={mounted ? 'hidden' : false}
-              whileInView="visible"
+              animate="visible"
               exit="exit"
               viewport={{ once: true, margin: '-10% 0%' }}
               variants={ledeVariants}
@@ -48,7 +48,7 @@ export function HeaderBlock({ title, lede, right, compact = false }: { title: Re
             <motion.div
               className="mt-3 text-sm text-muted-foreground"
               initial={mounted ? { opacity: 0, y: 8 } : false}
-              whileInView={{ opacity: 1, y: 0 }}
+              animate={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10% 0%' }}
               transition={{ duration: 0.45, delay: 0.15 }}
             >
@@ -56,7 +56,7 @@ export function HeaderBlock({ title, lede, right, compact = false }: { title: Re
             </motion.div>
           </div>
           {right && (
-            <motion.div className="hidden md:block shrink-0" aria-hidden initial={mounted ? 'hidden' : false} whileInView="visible" exit="exit" viewport={{ once: true, margin: '-10% 0%' }} variants={rightVariants}>
+            <motion.div key={mounted ? 'mounted-right' : 'ssr-right'} className="hidden md:block shrink-0" aria-hidden initial={mounted ? 'hidden' : false} animate="visible" exit="exit" viewport={{ once: true, margin: '-10% 0%' }} variants={rightVariants}>
               {right}
             </motion.div>
           )}

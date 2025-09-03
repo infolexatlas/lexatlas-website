@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+export const dynamic = 'force-dynamic'
 import { parsePair, isValidCode } from '@/lib/countries'
 import { cookies } from 'next/headers'
 

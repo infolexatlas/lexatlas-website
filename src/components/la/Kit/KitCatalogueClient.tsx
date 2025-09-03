@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { KitSearchBar } from '@/components/la/Kit/KitSearchBar'
 import { KitGrid } from '@/components/la/Kit/KitGrid'
 import { countryPairs, allCountries } from '@/lib/kits-country-data'
+import { motion } from 'framer-motion'
 
 export function KitCatalogueClient() {
   const [filters, setFilters] = useState({ query: '', region: 'all', country: 'all' })
@@ -26,8 +27,12 @@ export function KitCatalogueClient() {
   })
   return (
     <div>
-      <KitSearchBar onChange={setFilters} totalCount={filtered.length} />
-      <KitGrid pairs={filtered} />
+      <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.45 }}>
+        <KitSearchBar onChange={setFilters} totalCount={filtered.length} />
+      </motion.div>
+      <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
+        <KitGrid pairs={filtered} />
+      </motion.div>
     </div>
   )
 }
