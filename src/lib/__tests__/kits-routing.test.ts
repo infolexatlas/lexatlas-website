@@ -6,7 +6,10 @@ import {
   expandPairTitle, 
   slugToPairKey,
   isValidPrioritySlug,
-  PRIORITY_SLUGS 
+  PRIORITY_SLUGS,
+  toISO3,
+  canonicalFraSlug,
+  SUPPORTED_FRA_SLUGS
 } from '../kits.config'
 
 describe('Kits Routing', () => {
@@ -103,6 +106,81 @@ describe('Kits Routing', () => {
       PRIORITY_SLUGS.forEach(slug => {
         expect(slug).toMatch(/^fra-/)
       })
+    })
+  })
+
+  describe('toISO3', () => {
+    it('should convert country names to ISO3 codes', () => {
+      expect(toISO3('France')).toBe('FRA')
+      expect(toISO3('United States')).toBe('USA')
+      expect(toISO3('United Kingdom')).toBe('GBR')
+      expect(toISO3('Germany')).toBe('DEU')
+    })
+
+    it('should convert ISO2 codes to ISO3 codes', () => {
+      expect(toISO3('FR')).toBe('FRA')
+      expect(toISO3('US')).toBe('USA')
+      expect(toISO3('GB')).toBe('GBR')
+      expect(toISO3('DE')).toBe('DEU')
+    })
+
+    it('should handle case insensitive input', () => {
+      expect(toISO3('france')).toBe('FRA')
+      expect(toISO3('fr')).toBe('FRA')
+      expect(toISO3('FRA')).toBe('FRA')
+    })
+
+    it('should return null for unknown countries', () => {
+      expect(toISO3('Unknown Country')).toBeNull()
+      expect(toISO3('XX')).toBeNull()
+      expect(toISO3('')).toBeNull()
+    })
+  })
+
+  describe('canonicalFraSlug', () => {
+    it('should create FRA-X slugs when France is first', () => {
+      expect(canonicalFraSlug('FRA', 'USA')).toBe('fra-usa')
+      expect(canonicalFraSlug('FRA', 'GBR')).toBe('fra-gbr')
+      expect(canonicalFraSlug('FRA', 'DEU')).toBe('fra-deu')
+    })
+
+    it('should create FRA-X slugs when France is second', () => {
+      expect(canonicalFraSlug('USA', 'FRA')).toBe('fra-usa')
+      expect(canonicalFraSlug('GBR', 'FRA')).toBe('fra-gbr')
+      expect(canonicalFraSlug('DEU', 'FRA')).toBe('fra-deu')
+    })
+
+    it('should return null for non-FRA pairs', () => {
+      expect(canonicalFraSlug('USA', 'GBR')).toBeNull()
+      expect(canonicalFraSlug('DEU', 'ITA')).toBeNull()
+      expect(canonicalFraSlug('FRA', 'FRA')).toBeNull()
+    })
+
+    it('should return null for unsupported FRA-X pairs', () => {
+      expect(canonicalFraSlug('FRA', 'XXX')).toBeNull()
+      expect(canonicalFraSlug('FRA', 'JPN')).toBeNull()
+    })
+
+    it('should handle case insensitive input', () => {
+      expect(canonicalFraSlug('fra', 'usa')).toBe('fra-usa')
+      expect(canonicalFraSlug('USA', 'fra')).toBe('fra-usa')
+    })
+  })
+
+  describe('SUPPORTED_FRA_SLUGS', () => {
+    it('should contain exactly 10 supported FRA-X slugs', () => {
+      expect(SUPPORTED_FRA_SLUGS).toHaveLength(10)
+    })
+
+    it('should all be valid FRA-X slugs', () => {
+      SUPPORTED_FRA_SLUGS.forEach(slug => {
+        expect(slug).toMatch(/^fra-/)
+        expect(canonicalFraSlug('FRA', slug.substring(4).toUpperCase())).toBe(slug)
+      })
+    })
+
+    it('should match PRIORITY_SLUGS', () => {
+      expect(SUPPORTED_FRA_SLUGS).toEqual(PRIORITY_SLUGS)
     })
   })
 })

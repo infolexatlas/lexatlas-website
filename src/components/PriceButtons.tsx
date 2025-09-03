@@ -27,37 +27,48 @@ export function PriceButtons({ productId, pair, country1, country2, price, curre
   const country2Name = getCountryName(country2)
   const displayName = country1Name && country2Name ? `${country1Name} ↔ ${country2Name}` : pair
 
+  async function startCheckout(url: string, payload: any) {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+    
+    // Handle redirect response (fake checkout)
+    if (res.redirected) {
+      window.location.href = res.url
+      return
+    }
+    
+    // Handle JSON response (real Stripe checkout)
+    const data = await res.json()
+    if (!res.ok || !data?.ok || !data?.url) {
+      console.error('Checkout error', data)
+      throw new Error(data?.detail || data?.message || 'Failed to create a checkout session')
+    }
+    window.location.href = data.url
+  }
+
   const handleCheckout = async (priceType: 'single' | 'bundle') => {
     setLoading(priceType)
     
     try {
-      const response = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          priceId: priceType === 'single' ? 'marriageKit' : 'bundle',
+      if (priceType === 'single') {
+        await startCheckout('/api/checkout/single', { 
+          kind: 'single', 
+          slug: pair.toLowerCase() 
+        })
+      } else {
+        await startCheckout('/api/checkout', {
+          priceId: 'bundle',
           country1,
           country2,
           pair,
-        }),
-      })
-
-      const { url, error } = await response.json()
-      
-      if (error) {
-        console.error('Checkout error:', error)
-        alert('Checkout failed. Please try again.')
-        return
+        })
       }
-
-      if (url) {
-        window.location.href = url
-      }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Checkout error:', error)
-      alert('Checkout failed. Please try again.')
+      alert(error.message || 'Checkout failed. Please try again.')
     } finally {
       setLoading(null)
     }
@@ -146,7 +157,7 @@ export function PriceButtons({ productId, pair, country1, country2, price, curre
         >
           <Card className="h-full border-2 border-brand-gold relative">
             <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-              <div className="bg-brand-gold text-brand-deep px-4 py-1 rounded-full text-sm font-medium">
+              <div className="bg-brand-gold text-white px-4 py-1 rounded-full text-sm font-medium">
                 Most Popular
               </div>
             </div>

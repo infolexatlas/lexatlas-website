@@ -100,6 +100,11 @@ export function parseCountryPair(pairCode: string): CountryPair | null {
     return null
   }
   
+  // Check for same country
+  if (country1.code === country2.code) {
+    return null
+  }
+  
   // Ensure alphabetical order
   const [first, second] = [country1, country2].sort((a, b) => 
     a.code.localeCompare(b.code)

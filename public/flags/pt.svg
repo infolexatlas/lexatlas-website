@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 10" width="16" height="10" aria-label="Flag of Portugal">
+  <!-- Green (2/5) and Red (3/5) fields -->
+  <rect x="0" y="0" width="6.4" height="10" fill="#006600"/>
+  <rect x="6.4" y="0" width="9.6" height="10" fill="#FF0000"/>
+
+  <!-- Coat of Arms (highly simplified for 16x10) centered on the color boundary -->
+  <!-- Armillary sphere -->
+  <g transform="translate(6.4,5)">
+    <!-- outer ring -->
+    <circle r="2.25" fill="none" stroke="#FFC400" stroke-width="0.4"/>
+    <!-- meridians/parallels -->
+    <ellipse rx="2.25" ry="0.6" fill="none" stroke="#FFC400" stroke-width="0.25"/>
+    <ellipse rx="0.9" ry="2.25" fill="none" stroke="#FFC400" stroke-width="0.25"/>
+    <line x1="-2.25" y1="0" x2="2.25" y2="0" stroke="#FFC400" stroke-width="0.25"/>
+    <line x1="0" y1="-2.25" x2="0" y2="2.25" stroke="#FFC400" stroke-width="0.25"/>
+
+    <!-- Shield (escutcheon) -->
+    <g transform="translate(0,0)">
+      <!-- red border (gules) -->
+      <path d="M -0.95 -1.25 h 1.9 v 1.2 c 0 0.65 -0.45 1.25 -0.95 1.55 c -0.5 -0.3 -0.95 -0.9 -0.95 -1.55 v -1.2 z" fill="#D40000" stroke="#B30000" stroke-width="0.08"/>
+      <!-- white field -->
+      <path d="M -0.78 -1.08 h 1.56 v 1.05 c 0 0.55 -0.38 1.05 -0.78 1.3 c -0.4 -0.25 -0.78 -0.75 -0.78 -1.3 v -1.05 z" fill="#FFFFFF"/>
+      <!-- five blue quinas (very simplified as dots) -->
+      <g fill="#003399">
+        <circle cx="0" cy="-0.45" r="0.12"/>
+        <circle cx="-0.38" cy="-0.05" r="0.12"/>
+        <circle cx="0.38" cy="-0.05" r="0.12"/>
+        <circle cx="-0.2" cy="0.35" r="0.12"/>
+        <circle cx="0.2" cy="0.35" r="0.12"/>
+      </g>
+    </g>
+  </g>
+</svg>
+
+

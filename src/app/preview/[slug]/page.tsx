@@ -1,14 +1,12 @@
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
-import fs from 'fs'
-import path from 'path'
-import { slugToPairKey, expandPairTitle, isValidPrioritySlug, getSamplePdfPath } from '@/lib/kits.config'
+import { slugToPairKey, expandPairTitle, isValidPrioritySlug, getFullPairNameFromSlug } from '@/lib/kits.config'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Container } from '@/components/ui/container'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
+import { LeadMagnetBanner } from '@/components/LeadMagnetBanner'
+import { JsonLd } from '@/components/JsonLd'
+import { getPreviewPageSchema } from '@/lib/jsonLd'
 
 interface PageProps {
   params: { slug: string }
@@ -16,29 +14,69 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = params
-  const pairKey = slugToPairKey(slug)
   
-  if (!pairKey) {
-    return {
-      title: 'Preview Not Found',
-      description: 'The requested preview could not be found.'
-    }
-  }
-
-  const title = expandPairTitle(pairKey)
+  // Get full pair name with France-first ordering
+  const { fullName } = getFullPairNameFromSlug(slug)
+  
+  // Build metadata
+  const title = `Preview – ${fullName} Marriage Kit – LexAtlas`
+  const description = `Get a free preview of the ${fullName} marriage kit. See what's inside before you buy.`
+  
+  // Build URL
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+  const url = new URL(`/preview/${slug}`, baseUrl)
+  
+  // Use /og/kits.png as fallback since /og/preview.png doesn't exist
+  const ogImage = '/og/kits.png'
   
   return {
-    title: `Free Preview - ${title} Marriage Kit - LexAtlas`,
-    description: `Get a free preview of our ${title} marriage kit. Enter your email to receive a sample.`,
+    title,
+    description,
+    alternates: { canonical: url.toString() },
+    openGraph: {
+      type: 'website',
+      url: url.toString(),
+      title,
+      description,
+      images: [{ url: ogImage, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImage],
+    },
   }
 }
 
 export default function PreviewPage({ params }: PageProps) {
   const { slug } = params
   
-  // Validate slug
+  // Validate slug is one of the 10 FRA-X pairs
   if (!isValidPrioritySlug(slug)) {
-    notFound()
+    return (
+      <Container className="py-12">
+        <div className="max-w-2xl mx-auto text-center">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-2xl font-serif text-brand-deep">
+                Preview Not Available
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-slate-600 mb-6">
+                This pair isn't available yet. More kits are in production and released daily.
+              </p>
+              <Button asChild>
+                <a href="/preview">
+                  Browse Available Previews
+                </a>
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </Container>
+    )
   }
 
   const pairKey = slugToPairKey(slug)
@@ -47,86 +85,50 @@ export default function PreviewPage({ params }: PageProps) {
   }
 
   const title = expandPairTitle(pairKey)
-  
-  // Check if sample PDF exists using the new helper
-  const samplePath = getSamplePdfPath(slug)
-  const publicDir = path.join(process.cwd(), 'public')
-  const fullSamplePath = path.join(publicDir, samplePath.substring(1)) // Remove leading slash
-  const hasSample = fs.existsSync(fullSamplePath)
+
+  // Generate JSON-LD structured data
+  const previewSchema = getPreviewPageSchema({
+    pairNameFull: title,
+    slug
+  })
 
   return (
-    <Container className="py-12">
+    <>
+      {/* JSON-LD Structured Data */}
+      <JsonLd data={previewSchema} />
+      
+      <Container className="py-12 space-y-8">
+      {/* Hero Section */}
+      <div className="text-center max-w-2xl mx-auto space-y-4">
+        <h1 className="text-3xl lg:text-4xl font-serif font-bold text-brand-deep">
+          Free Preview: {title}
+        </h1>
+        <p className="text-lg text-slate-600">
+          Get a free sample of our comprehensive {title} marriage guide
+        </p>
+      </div>
+
+      {/* Lead Magnet Form */}
       <div className="max-w-2xl mx-auto">
+        <LeadMagnetBanner source={`preview-${slug}`} />
+      </div>
+
+      {/* Global Sample Link */}
+      <div className="text-center max-w-2xl mx-auto">
         <Card>
-          <CardHeader className="text-center">
-            <CardTitle className="text-3xl">
-              Free Preview: {title}
-            </CardTitle>
-            <CardDescription className="text-lg">
-              Get a sample of our comprehensive marriage guide
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {hasSample ? (
-              <form action="/api/preview/send" method="POST" className="space-y-6">
-                <input type="hidden" name="slug" value={slug} />
-                
-                <div className="space-y-2">
-                  <Label htmlFor="name">Name</Label>
-                  <Input
-                    id="name"
-                    name="name"
-                    type="text"
-                    placeholder="Your full name"
-                    required
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="your@email.com"
-                    required
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="message">Message (Optional)</Label>
-                  <Textarea
-                    id="message"
-                    name="message"
-                    placeholder="Tell us about your marriage plans or ask any questions..."
-                    rows={3}
-                  />
-                </div>
-                
-                <Button type="submit" className="w-full" size="lg">
-                  Get Free Preview
-                </Button>
-                
-                <p className="text-sm text-muted-foreground text-center">
-                  We'll send you a sample PDF with key information about the {title} marriage process.
-                  No spam, unsubscribe anytime.
-                </p>
-              </form>
-            ) : (
-              <div className="text-center space-y-4">
-                <p className="text-muted-foreground">
-                  Preview coming soon for {title}
-                </p>
-                <Button asChild>
-                  <a href={`/kits/${slug}`}>
-                    View Full Kit
-                  </a>
-                </Button>
-              </div>
-            )}
+          <CardContent className="pt-6">
+            <p className="text-slate-600 mb-4">
+              Or download our global sample to see what's included in our guides
+            </p>
+            <Button asChild>
+              <a href="/kits/samples/LEXATLAS-global-sample.pdf" download>
+                Download Global Sample (PDF)
+              </a>
+            </Button>
           </CardContent>
         </Card>
       </div>
-    </Container>
+      </Container>
+    </>
   )
 }

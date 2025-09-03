@@ -41,7 +41,7 @@ export default function SuccessPage() {
         >
           <div className="mb-8">
             <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
-              <CheckCircle className="h-8 w-8 text-green-600" />
+              <CheckCircle className="h-8 w-8 text-emerald-700" />
             </div>
             <h1 className="text-4xl lg:text-5xl font-serif font-bold text-brand-deep mb-4">
               Payment Successful!
@@ -115,8 +115,8 @@ export default function SuccessPage() {
             <div className="text-sm text-gray-600">
               <p>
                 Need help? Contact us at{' '}
-                <a href="mailto:support@lexatlas.com" className="text-brand-gold hover:underline">
-                  support@lexatlas.com
+                <a href="mailto:contact.lexatlas@gmail.com" className="text-brand-gold hover:underline">
+                  contact.lexatlas@gmail.com
                 </a>
               </p>
             </div>

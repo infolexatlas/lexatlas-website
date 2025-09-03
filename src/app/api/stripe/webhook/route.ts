@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { stripe } from '@/lib/stripe'
+import { isFakeCheckout, assertStripe, stripe } from '@/lib/stripe'
 import { headers } from 'next/headers'
 
 export async function POST(request: NextRequest) {
+  // Skip webhook processing in fake checkout mode
+  if (isFakeCheckout) {
+    return NextResponse.json({ received: true })
+  }
+
   const body = await request.text()
   const signature = headers().get('stripe-signature')
 
@@ -26,7 +31,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
+    event = stripe!.webhooks.constructEvent(body, signature, webhookSecret)
   } catch (err) {
     console.error('Webhook signature verification failed:', err)
     return NextResponse.json(

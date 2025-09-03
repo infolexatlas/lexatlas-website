@@ -25,7 +25,7 @@ export function Pricing() {
               <Card className={`h-full relative ${product.isBundle ? 'border-brand-gold shadow-lg' : 'border-gray-200'}`}>
                 {product.isBundle && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                    <div className="bg-brand-gold text-brand-deep px-4 py-1 rounded-full text-sm font-medium flex items-center gap-1">
+                    <div className="bg-amber-600 text-white px-4 py-1 rounded-full text-sm font-medium flex items-center gap-1">
                       <Star className="h-4 w-4" />
                       Most Popular
                     </div>

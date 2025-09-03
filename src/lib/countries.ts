@@ -39,9 +39,11 @@ export function parsePair(param: string): { country1: string; country2: string; 
   
   const pair = pairKey(code1, code2)
   
+  const [first, second] = [code1, code2].sort()
+  
   return {
-    country1: code1,
-    country2: code2,
+    country1: first,
+    country2: second,
     pair
   }
 }

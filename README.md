@@ -1,484 +1,271 @@
-# LexAtlas - Your Global Legal Compass
+# LexAtlas Website
 
 Expert-built, country-specific PDF guides to handle international legal procedures with clarity and confidence.
 
-## 🌍 Priority Kits System
+## Features
 
-LexAtlas now supports **10 priority FRA–X country combinations** for international marriage guidance, with centralized EUR pricing and Stripe checkout integration.
+- **Marriage Kits**: Comprehensive guides for international marriage procedures
+- **Multiple Countries**: Support for 10+ country pairs
+- **Secure Payments**: Stripe integration for safe transactions
+- **Instant Downloads**: Immediate access to purchased guides
+- **Lead Generation**: Email collection with free sample downloads
+- **Analytics**: Plausible integration for conversion tracking
 
-### 📊 Coverage
+## Getting Started
 
-- **10 Priority Kits**: FRA–USA, FRA–GBR, FRA–CAN, FRA–MAR, FRA–DEU, FRA–CHE, FRA–BEL, FRA–ESP, FRA–ITA, FRA–PRT
-- Each kit covers marriage procedures between France and another country
-- Centralized EUR pricing: 29€ single, 75€ bundle of 3, 200€ full pack
+### Prerequisites
 
+- Node.js 18+ 
+- npm or yarn
+- Stripe account
+- Resend account (for email sending)
+- Plausible account (for analytics)
 
+### Installation
 
-### 🗂️ File Structure
-
-#### Full PDFs (ISO3 upper case)
-```
-public/kits/
-├── FRA-USA.pdf        # France ↔ United States
-├── FRA-GBR.pdf        # France ↔ United Kingdom
-├── FRA-CAN.pdf        # France ↔ Canada
-└── [ISO3]-[ISO3].pdf
-```
-
-#### Sample PDFs (Free previews)
-```
-public/kits/samples/
-├── FRA-USA-sample.pdf # France ↔ United States sample
-├── FRA-GBR-sample.pdf # France ↔ United Kingdom sample
-├── FRA-CAN-sample.pdf # France ↔ Canada sample
-└── [ISO3]-[ISO3]-sample.pdf
-```
-
-#### Open Graph Images
-```
-public/og/pairs/
-├── fra-usa.svg        # Custom image for FRA-USA
-├── fra-usa.png        # PNG version for FRA-USA
-├── fra-gbr.svg        # Custom image for FRA-GBR
-├── fra-gbr.png        # PNG version for FRA-GBR
-└── [slug].{svg,png}
-```
-
-### 🔧 Adding New Priority Kits
-
-#### 1. Adding a New Priority Kit
-
-1. **Add to priority slugs**:
-   ```typescript
-   // src/lib/kits.config.ts
-   export const PRIORITY_SLUGS = [
-     // ... existing slugs
-     'fra-new' // Add new FRA-X combination
-   ]
-   ```
-
-2. **Add ISO mappings**:
-   ```typescript
-   // src/lib/kits.config.ts
-   export const ISO3_TO_2: Record<string,string> = {
-     // ... existing mappings
-     NEW: 'NE' // Add new country mapping
-   }
-   
-   export const ISO2_NAMES: Record<string,string> = {
-     // ... existing names
-     NE: 'New Country' // Add new country name
-   }
-   ```
-
-#### 2. Adding Content Files
-
-**Full PDFs** (for paid downloads):
+1. Clone the repository:
 ```bash
-# Create PDF file for the pair
-public/kits/FRA-NEW.pdf
+git clone <repository-url>
+cd lexatlas-website
 ```
 
-**Sample PDFs** (for free previews):
+2. Install dependencies:
 ```bash
-# Create sample PDF file for the pair
-public/kits/samples/FRA-NEW-sample.pdf
-```
-
-#### 3. Content Structure
-
-**Full PDFs** should include:
-- Complete step-by-step procedures
-- All document requirements
-- Embassy/consulate information
-- Processing timelines
-- Common pitfalls and tips
-- Professional, branded design
-- Optimized for printing
-
-**Sample PDFs** should include:
-- Overview of the marriage process
-- Key document requirements
-- Important timelines
-- Contact information for authorities
-- Preview of full content
-
-#### 4. Testing & Deployment
-
-1. **Run tests**:
-   ```bash
-   npm run test:all
-   ```
-
-2. **Verify routes**:
-   - Check `/kits/fra-new`
-   - Verify pricing displays correctly (29€)
-   - Test download functionality
-   - Test preview functionality
-
-3. **Deploy**:
-   - Push to main branch
-   - CI/CD will automatically deploy
-   - New routes will be generated
-
-#### 5. Missing Content Handling
-
-For kits without content:
-- System shows "Preview coming soon" for missing samples
-- Full kit pages still display with pricing
-- Maintains consistent user experience
-- Graceful degradation for missing PDFs
-
-### 🚀 Features
-
-#### Core Functionality
-- **Priority Kit Routes**: `/kits/fra-usa` (ISO3 lowercased)
-- **Centralized EUR Pricing**: 29€ single, 75€ bundle of 3, 200€ full pack
-- **Stripe Checkout Integration**: Test keys in dev, live in production
-- **Lead Magnet System**: Free preview with email collection
-- **SEO Optimized**: Unique metadata for each kit
-- **Download Protection**: Secure PDF delivery after purchase
-
-#### Content Management
-- **Centralized Kit System**: Unified content management for PDFs
-- **Sample System**: Free preview PDFs for lead generation
-- **Smart Fallbacks**: Graceful handling of missing files
-- **Content Validation**: Ensures all required files exist
-
-#### User Experience
-- **Premium Animations**: Smooth Framer Motion transitions
-- **Responsive Design**: Optimized for all devices
-- **Loading States**: Professional loading indicators
-- **Error Handling**: User-friendly error messages
-- **Accessibility**: WCAG compliant components
-
-### 🧪 Testing
-
-#### Test Commands
-```bash
-# Run unit tests only (Vitest)
-npm run test:unit
-
-# Run E2E tests only (Playwright)
-npm run test:e2e
-
-# Run all tests sequentially
-npm run test:all
-
-# Watch mode for unit tests
-npm run test:watch
-
-# E2E tests with UI
-npm run test:e2e:ui
-
-# E2E tests in headed mode
-npm run test:e2e:headed
-
-# Seed Stripe products/prices (dev only)
-npm run dev:seed:stripe
-
-# Generate OG images
-npm run generate:og:pairs
-```
-
-#### Test Coverage
-- **Unit Tests**: Pricing system, country validation, utility functions
-- **E2E Tests**: Full user flows, payment integration, download functionality
-- **Integration Tests**: API endpoints, Stripe webhooks
-
-### 🚀 CI/CD Pipeline
-
-#### GitHub Actions Workflows
-
-**CI Workflow** (`.github/workflows/ci.yml`):
-- Triggers on push and pull requests
-- Runs unit tests, type checking, linting
-- Builds application
-- Runs E2E tests
-- Uploads test artifacts
-
-**Deploy Workflow** (`.github/workflows/deploy.yml`):
-- Triggers on push to `main` branch
-- Deploys to Vercel production
-- Requires CI to pass first
-
-#### Required Secrets
-```bash
-VERCEL_TOKEN=your_vercel_token
-VERCEL_ORG_ID=your_org_id
-VERCEL_PROJECT_ID=your_project_id
-```
-
-### 🛠️ Development
-
-#### Getting Started
-```bash
-# Install dependencies
 npm install
-
-# Start development server
-npm run dev
-
-# Run type checking
-npm run typecheck
-
-# Run linting
-npm run lint
-
-# Format code
-npm run format
 ```
 
-#### Environment Variables
+3. Copy environment variables:
 ```bash
-# Required for production
-NEXT_PUBLIC_BASE_URL=https://your-domain.com
+cp env.example .env.local
+```
+
+4. Configure environment variables in `.env.local`:
+```bash
+# Stripe Configuration
 STRIPE_SECRET_KEY=sk_test_...
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+
+# Base URL
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+
+# Email Service (Resend)
 RESEND_API_KEY=re_...
-NEXT_PUBLIC_FAKE_CHECKOUT=0 # Set to 1 in CI to stub Stripe
+
+# Email Sender Configuration
+# In development: you don't need RESEND_FROM; the app will use onboarding@resend.dev
+# In production: set RESEND_FROM="LexAtlas <hello@lexatlas.com>" and verify your domain in Resend
+RESEND_FROM="LexAtlas <hello@lexatlas.com>"
+
+# Analytics (Plausible)
+NEXT_PUBLIC_PLAUSIBLE_DOMAIN=lexatlas.com
 ```
 
-# Optional
-NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+5. Start the development server:
+```bash
+npm run dev
 ```
 
-#### Project Structure
+## Development Scripts
+
+### Dev Server Management
+
+If you encounter issues with the development server (hanging, chunk errors, etc.), use these scripts:
+
+- **`npm run dev:kill`** — Kill orphaned processes on ports 3000–3002
+- **`npm run dev:reset:only`** — Just clean caches (no restart)
+- **`npm run dev:reset`** — Clean caches then start dev server
+- **`npm run dev:reset:hard`** — Full nuke (includes dependency reinstall) then starts dev
+
+### Troubleshooting Dev Server Issues
+
+1. **Server hangs on startup**: Run `npm run dev:kill` then `npm run dev:reset`
+2. **"Cannot find module './###.js'" errors**: Run `npm run dev:reset:hard`
+3. **Port already in use**: Run `npm run dev:kill` then `npm run dev`
+4. **Hot reload not working**: Run `npm run dev:reset:only`
+
+### Other Useful Scripts
+
+- **`npm run diagnose:chunks`** — Check for missing webpack chunks
+- **`npm run clean`** — Clean build caches using rimraf
+
+## Testing Lead Magnet & Analytics
+
+### Lead Magnet Testing
+
+1. **Home Page Lead Magnet**:
+   - Navigate to `/` (home page)
+   - Scroll down to find the "Not ready to buy? Get a free checklist sample" banner
+   - Enter a valid email address
+   - Click "Get Free Sample"
+   - Check your email for the download link
+
+2. **Pricing Page Lead Magnet**:
+   - Navigate to `/pricing`
+   - Scroll down past the pricing cards
+   - Test the lead magnet banner with different email addresses
+
+3. **Footer Newsletter**:
+   - Scroll to the footer on any page
+   - Find the "Stay updated with new country kits" section
+   - Enter an email and click "Subscribe"
+
+### Analytics Testing
+
+The following events are tracked automatically:
+
+- **`lead_magnet_submit`**: When someone submits the lead magnet form
+  - Props: `source` (banner/footer)
+- **`newsletter_submit`**: When someone subscribes to the newsletter
+  - Props: `source` (footer)
+- **`checkout_click`**: When someone clicks a checkout button
+  - Props: `type` (single/bundle3/bundle10)
+- **`checkout_success`**: When a purchase is completed
+  - Props: `type`, `items_count`, `session_id`
+
+### Testing Analytics Events
+
+1. **Check Plausible Dashboard**:
+   - Log into your Plausible account
+   - Navigate to your domain dashboard
+   - Look for custom events in the "Events" section
+
+2. **Browser Console**:
+   - Open browser developer tools
+   - Check the console for analytics calls
+   - Events are sent to `plausible.io`
+
+3. **Test Event Tracking**:
+   ```javascript
+   // Manual event testing in browser console
+   window.plausible('test_event', { props: { test: true } })
+   ```
+
+### Email Testing
+
+#### Development Mode (Save-Only)
+When `RESEND_API_KEY` is not set in development:
+- ✅ Leads are saved to `.data/leads.jsonl`
+- ✅ Success UI is shown to users
+- ✅ Non-blocking warning appears: "📬 Email not sent in development (missing RESEND_API_KEY). Your lead is saved."
+- ✅ Console warning: `[Email] RESEND_API_KEY not set — emails will NOT be sent in development.`
+
+#### Production Mode
+When `RESEND_API_KEY` is missing in production:
+- ❌ API returns 500 error
+- ❌ User sees friendly error message
+- ❌ Lead is still saved but email fails
+
+#### Testing Email Functionality
+
+1. **Development Testing**:
+   ```bash
+   # Test without API key (save-only mode)
+   curl -X POST http://localhost:3000/api/leads \
+     -H "Content-Type: application/json" \
+     -d '{"email":"test@example.com","source":"test"}'
+   
+   # Test with API key (full functionality)
+   # Set RESEND_API_KEY in your .env.local first
+   ```
+
+2. **Debug Endpoint** (dev only):
+   ```bash
+   # Test email sending directly
+   curl "http://localhost:3000/api/dev/ping-email?email=test@example.com"
+   ```
+
+3. **Resend Dashboard**:
+   - Log into your Resend account
+   - Check the "Logs" section for sent emails
+   - Verify email delivery and content
+
+4. **Email Templates**:
+   - Lead magnet emails include download links
+   - Newsletter emails include welcome content
+   - Both use responsive HTML templates
+
+### Data Storage
+
+Lead data is stored in `.data/leads.jsonl`:
+```json
+{"email":"test@example.com","source":"lead_magnet_banner","timestamp":"2024-01-01T00:00:00.000Z","ip":"captured-if-available"}
+```
+
+### Troubleshooting
+
+1. **Email Not Sending**:
+   - **Development**: Check console for `[Email] RESEND_API_KEY missing` warning
+   - **Production**: Check `RESEND_API_KEY` is set correctly in environment
+   - Verify Resend account is active
+   - Check server logs for API errors
+   - Use debug endpoint: `GET /api/dev/ping-email?email=test@example.com` (dev only)
+
+2. **Analytics Not Tracking**:
+   - Verify `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` is set
+   - Check browser console for script loading
+   - Ensure domain is configured in Plausible
+
+3. **Lead Data Not Saving**:
+   - Check `.data/` directory permissions
+   - Verify `.gitignore` includes `.data/`
+   - Check server logs for file system errors
+
+## Development
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run test` - Run tests
+- `npm run generate:og:pairs` - Generate OG images for kit pairs
+- `npm run generate:icons` - Generate favicon and app icons
+
+### Project Structure
+
 ```
 src/
 ├── app/                    # Next.js app router
 │   ├── api/               # API routes
+│   │   └── leads/         # Lead collection endpoint
+│   ├── about/             # About page
 │   ├── kits/              # Kit pages
-│   └── globals.css        # Global styles
+│   ├── pricing/           # Pricing page
+│   └── success/           # Success page
 ├── components/            # React components
-│   ├── ui/               # Shadcn UI components
-│   └── layout/           # Layout components
-├── content/              # MDX content
-├── data/                 # Static data
-├── lib/                  # Utility functions
+│   ├── layout/           # Layout components
+│   │   ├── footer.tsx    # Footer with newsletter
+│   │   └── NewsletterForm.tsx
+│   └── LeadMagnetBanner.tsx
+├── lib/                   # Utility functions
+│   ├── email.ts          # Email sending utilities
+│   └── stripe.ts         # Stripe integration
 └── types/                # TypeScript types
 ```
 
-### 📱 API Endpoints
+## Brand
 
-#### Single Kit Checkout
-```typescript
-POST /api/checkout/single
-{
-  "slug": "fra-usa",
-  "pairKey": "FR-US"
-}
-```
+### Logo Management
 
-#### Bundle Checkout
-```typescript
-POST /api/checkout/bundle3
-{
-  "slugs": ["fra-usa", "fra-gbr", "fra-can"]
-}
+To change the logo, replace `/public/logo/lexatlas.svg`. The logo is used consistently across:
+- Header (28x28)
+- Hero section (48x48) 
+- Footer (28x28)
 
-POST /api/checkout/bundle10
-// No body - fixed list of all priority slugs
-```
+All components import the logo path from `src/lib/brand.ts` to ensure consistency.
 
-#### Preview Lead Magnet
-```typescript
-POST /api/preview/send
-{
-  "email": "user@example.com",
-  "name": "John Doe",
-  "slug": "fra-usa"
-}
-```
+## Deployment
 
-### 🔒 Security
+The application is configured for deployment on Vercel with the following considerations:
 
-- **Hotlink Protection**: Downloads only from authorized domains
-- **Payment Verification**: Stripe session validation
-- **Country Pair Validation**: Prevents invalid combinations
-- **Cookie-based Access**: Temporary download access after payment
+- Environment variables must be set in Vercel dashboard
+- `.data/` directory is gitignored (use external database for production)
+- OG images are generated at build time
+- Analytics script loads conditionally based on domain
 
-### 📈 SEO
+## License
 
-Each country pair page includes:
-- Unique title: `Marriage Kit — France and United States | LexAtlas`
-- Unique description: Specific to the country pair
-- Open Graph images: Custom or default fallback
-- Structured data: For search engines
+MIT License - see LICENSE file for details.
 
-### 🎯 URL Structure
-
-```
-/kits/[slug]          # Individual kit page (e.g., /kits/fra-usa)
-/preview/[slug]       # Free preview page (e.g., /preview/fra-usa)
-/pricing              # Pricing page with all tiers
-/success              # Payment success page
-/cancel               # Payment cancellation page
-```
-
-**Examples:**
-- `/kits/fra-usa` (France ↔ United States)
-- `/kits/fra-gbr` (France ↔ United Kingdom)
-- `/preview/fra-can` (Free preview for France ↔ Canada)
-
-### 📋 Priority Kits
-
-- **FRA–USA**: France ↔ United States
-- **FRA–GBR**: France ↔ United Kingdom  
-- **FRA–CAN**: France ↔ Canada
-- **FRA–MAR**: France ↔ Morocco
-- **FRA–DEU**: France ↔ Germany
-- **FRA–CHE**: France ↔ Switzerland
-- **FRA–BEL**: France ↔ Belgium
-- **FRA–ESP**: France ↔ Spain
-- **FRA–ITA**: France ↔ Italy
-- **FRA–PRT**: France ↔ Portugal
-
-### 🔄 Scalable Architecture
-
-The system is designed for easy expansion:
-- Add new priority slugs to `PRIORITY_SLUGS` array
-- Add corresponding ISO mappings
-- Create PDF files in the correct locations
-- System automatically handles routing and pricing
-
-### 🚀 Deploy Checklist
-
-#### Environment Variables (Vercel)
-```env
-NEXT_PUBLIC_BASE_URL=https://lexatlas.com
-STRIPE_SECRET_KEY=sk_live_...
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
-RESEND_API_KEY=re_...
-NEXT_PUBLIC_FAKE_CHECKOUT=0
-```
-
-#### Stripe Configuration
-- **Products**: Created automatically via `npm run dev:seed:stripe`
-- **Lookup Keys**: `single_kit_eur_2900`, `bundle_3_eur_7500`, `bundle_10_eur_20000`
-- **Webhook**: `https://lexatlas.com/api/stripe/webhook` (for future use)
-
-### 📁 Assets Drop
-
-#### Production PDFs
-Place the 10 production PDFs in `/public/kits/`:
-- `FRA-USA.pdf`
-- `FRA-GBR.pdf`
-- `FRA-CAN.pdf`
-- `FRA-MAR.pdf`
-- `FRA-DEU.pdf`
-- `FRA-CHE.pdf`
-- `FRA-BEL.pdf`
-- `FRA-ESP.pdf`
-- `FRA-ITA.pdf`
-- `FRA-PRT.pdf`
-
-#### Sample PDFs
-You have two options for sample PDFs:
-
-**Option 1: Per-slug samples** (placed in `/public/kits/samples/`)
-- `FRA-USA-sample.pdf`
-- `FRA-GBR-sample.pdf`
-- etc.
-
-**Option 2: Global sample** (recommended)
-- Place `LEXATLAS-global-sample.pdf` in `/public/kits/samples/`
-- This will be used as fallback for any slug without a specific sample
-
-#### Verification
-Before deploying, run:
-```bash
-npm run verify:kits
-```
-
-This will check that all production PDFs are present and that samples are either specific or global (both acceptable).
-
-#### Testing
-- [ ] Run `npm test` - Unit tests pass
-- [ ] Run `npm run test:e2e` - E2E tests pass
-- [ ] Run `npm run build` - Build succeeds
-- [ ] Test kit page functionality (`/kits/fra-usa`)
-- [ ] Test pricing page with all tiers
-- [ ] Test checkout flow with test card
-- [ ] Test preview lead magnet functionality
-- [ ] Test download functionality
-- [ ] Verify OG images load correctly
-
-#### SEO Verification
-- [ ] Check sitemap includes all 10 priority kits
-- [ ] Verify metadata for sample kit pages
-- [ ] Test Open Graph images
-- [ ] Check canonical URLs and redirects
-
----
-
-## 🛠️ Development
-
-### Prerequisites
-
-- Node.js 18+
-- npm or yarn
-- Stripe account (for payments)
-
-### Installation
-
-```bash
-npm install
-```
-
-### Environment Variables
-
-```env
-NEXT_PUBLIC_BASE_URL=https://lexatlas.com
-STRIPE_SECRET_KEY=sk_test_...
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
-RESEND_API_KEY=re_...
-NEXT_PUBLIC_FAKE_CHECKOUT=0
-```
-
-### Development Server
-
-```bash
-npm run dev
-```
-
-### Build
-
-```bash
-npm run build
-```
-
-### Testing
-
-```bash
-# Unit tests
-npm test
-
-# E2E tests
-npm run test:e2e
-
-# Type checking
-npm run type-check
-```
-
----
-
-## 📄 License
-
-This project is proprietary software. All rights reserved.
-
----
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests
-5. Submit a pull request
-
----
-
-## 📞 Support
-
-For support, email support@lexatlas.com or visit our contact page.

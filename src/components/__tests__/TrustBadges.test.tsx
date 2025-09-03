@@ -6,7 +6,7 @@ describe('TrustBadges', () => {
     render(<TrustBadges />)
     
     expect(screen.getByText('Trusted by International Couples')).toBeInTheDocument()
-    expect(screen.getByText('Your security and privacy are our top priorities')).toBeInTheDocument()
+    expect(screen.getByText(/Your security and privacy are our top priorities/)).toBeInTheDocument()
   })
 
   it('displays all four trust badges', () => {

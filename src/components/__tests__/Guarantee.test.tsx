@@ -6,7 +6,7 @@ describe('Guarantee', () => {
     render(<Guarantee />)
     
     expect(screen.getByText('Our Commitment to You')).toBeInTheDocument()
-    expect(screen.getByText('Clarity-first, expert-built')).toBeInTheDocument()
+    expect(screen.getByText(/Clarity-first, expert-built/)).toBeInTheDocument()
   })
 
   it('displays all three guarantee features', () => {

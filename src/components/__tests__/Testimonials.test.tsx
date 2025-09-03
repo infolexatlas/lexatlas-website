@@ -12,23 +12,23 @@ describe('Testimonials', () => {
   it('displays all three testimonials', () => {
     render(<Testimonials />)
     
-    expect(screen.getByText('Sarah & Marco')).toBeInTheDocument()
-    expect(screen.getByText('Emma & Pierre')).toBeInTheDocument()
-    expect(screen.getByText('David & Ana')).toBeInTheDocument()
+    expect(screen.getByText('Emily & Julien')).toBeInTheDocument()
+    expect(screen.getByText('Sophie & James')).toBeInTheDocument()
+    expect(screen.getByText('Marie & Thomas')).toBeInTheDocument()
   })
 
-  it('shows customer locations', () => {
+  it('shows customer locations for FRA-X kits', () => {
     render(<Testimonials />)
     
-    expect(screen.getByText('Italy → Germany')).toBeInTheDocument()
-    expect(screen.getByText('France → Canada')).toBeInTheDocument()
-    expect(screen.getByText('Spain → Australia')).toBeInTheDocument()
+    expect(screen.getByText('France–USA')).toBeInTheDocument()
+    expect(screen.getByText('France–UK')).toBeInTheDocument()
+    expect(screen.getByText('France–Canada')).toBeInTheDocument()
   })
 
-  it('displays rating summary', () => {
+  it('displays rating badge with correct text', () => {
     render(<Testimonials />)
     
-    expect(screen.getByText('4.9/5 from 200+ reviews')).toBeInTheDocument()
+    expect(screen.getByText('Trusted by hundreds of couples • Rated 4.7/5')).toBeInTheDocument()
   })
 
   it('has proper accessibility attributes', () => {

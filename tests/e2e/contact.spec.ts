@@ -21,8 +21,7 @@ test.describe('Contact Page', () => {
     await page.goto('/contact')
     
     // Check contact info
-    await expect(page.getByText('contact@lexatlas.com')).toBeVisible()
-    await expect(page.getByText('support@lexatlas.com')).toBeVisible()
+    await expect(page.getByText('contact.lexatlas@gmail.com')).toBeVisible()
     await expect(page.getByText('Within 24 hours')).toBeVisible()
   })
 

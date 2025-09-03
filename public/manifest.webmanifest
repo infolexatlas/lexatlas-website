@@ -1,32 +1,23 @@
 {
-  "name": "LexAtlas - Your Global Legal Compass",
+  "name": "LexAtlas",
   "short_name": "LexAtlas",
-  "description": "Expert-built, country-specific PDF guides to handle international legal procedures with clarity and confidence.",
+  "description": "Cross-Border Marriage Kits, Done Right.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#FFFFFF",
-  "theme_color": "#0A2342",
-  "orientation": "portrait-primary",
-  "icons": [
-    {
-      "src": "/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/apple-touch-icon.png",
-      "sizes": "180x180",
-      "type": "image/png"
-    }
-  ],
-  "categories": ["business", "productivity", "education"],
+  "orientation": "portrait",
   "lang": "en",
-  "dir": "ltr"
+  "dir": "ltr",
+  "theme_color": "#1A2E4F",
+  "background_color": "#FFFFFF",
+  "categories": ["business", "productivity", "reference"],
+  "icons": [
+    { "src": "/favicon-16x16.png", "sizes": "16x16", "type": "image/png" },
+    { "src": "/favicon-32x32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
 }

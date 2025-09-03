@@ -1,133 +1,35 @@
+// src/app/sitemap.ts
 import { MetadataRoute } from 'next'
-import { PRIORITY_SLUGS } from '@/lib/kits.config'
+import { priorityKits } from '@/lib/kits.config'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://lexatlas.com'
-  
-  const staticPages = [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/kits`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/pricing`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/faq`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/legal/privacy`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
-      priority: 0.3,
-    },
-    {
-      url: `${baseUrl}/legal/terms`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
-      priority: 0.3,
-    },
-    {
-      url: `${baseUrl}/legal/cookies`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
-      priority: 0.3,
-    },
+  const base = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+  const now = new Date()
+
+  const staticRoutes: MetadataRoute.Sitemap = [
+    { url: `${base}/`, lastModified: now, changeFrequency: 'weekly', priority: 1 },
+    { url: `${base}/pricing`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${base}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${base}/faq`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${base}/contact`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${base}/privacy`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${base}/terms`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${base}/cookie-policy`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
   ]
 
-  // Add OpenGraph images
-  const ogImages = [
-    {
-      url: `${baseUrl}/og/home.svg`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
-      priority: 0.1,
-    },
-    {
-      url: `${baseUrl}/og/home.png`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
-      priority: 0.1,
-    },
-    {
-      url: `${baseUrl}/og/about.svg`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
-      priority: 0.1,
-    },
-    {
-      url: `${baseUrl}/og/about.png`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
-      priority: 0.1,
-    },
-    {
-      url: `${baseUrl}/og/kits.svg`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
-      priority: 0.1,
-    },
-    {
-      url: `${baseUrl}/og/kits.png`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
-      priority: 0.1,
-    },
-    {
-      url: `${baseUrl}/og/marriage/default.svg`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
-      priority: 0.1,
-    },
-    {
-      url: `${baseUrl}/og/marriage/default.png`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
-      priority: 0.1,
-    },
-  ]
-
-  // Add priority kit pages
-  const kitPages = PRIORITY_SLUGS.map(slug => ({
-    url: `${baseUrl}/kits/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.8,
+  const kitRoutes: MetadataRoute.Sitemap = priorityKits.map(kit => ({
+    url: `${base}/kits/${kit.slug}`,
+    lastModified: now,
+    changeFrequency: 'weekly',
+    priority: 0.9,
   }))
 
-  // Add preview pages
-  const previewPages = PRIORITY_SLUGS.map(slug => ({
-    url: `${baseUrl}/preview/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
+  const previewRoutes: MetadataRoute.Sitemap = priorityKits.map(kit => ({
+    url: `${base}/preview/${kit.slug}`,
+    lastModified: now,
+    changeFrequency: 'weekly',
     priority: 0.5,
   }))
 
-  return [...staticPages, ...ogImages, ...kitPages, ...previewPages]
+  return [...staticRoutes, ...kitRoutes, ...previewRoutes]
 }

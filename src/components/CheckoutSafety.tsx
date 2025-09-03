@@ -41,7 +41,7 @@ export function CheckoutSafety() {
         {safetyFeatures.map((feature, index) => (
           <div key={index} className="flex items-start space-x-3">
             <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-              <feature.icon className="w-4 h-4 text-green-600" />
+              <feature.icon className="w-4 h-4 text-emerald-700" />
             </div>
             <div>
               <h4 className="text-sm font-medium text-gray-900">

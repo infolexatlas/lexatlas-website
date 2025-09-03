@@ -4,6 +4,8 @@ import { z } from 'zod'
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Invalid email address'),
+  topic: z.string().min(1, 'Topic is required'),
+  country: z.string().optional(),
   message: z.string().min(10, 'Message must be at least 10 characters'),
 })
 
@@ -23,6 +25,8 @@ export async function POST(request: NextRequest) {
     console.log('Contact form submission:', {
       name: validatedData.name,
       email: validatedData.email,
+      topic: validatedData.topic,
+      country: validatedData.country,
       message: validatedData.message,
       timestamp: new Date().toISOString(),
       ip: request.headers.get('x-forwarded-for') || request.ip,
@@ -33,10 +37,12 @@ export async function POST(request: NextRequest) {
     // Example with a hypothetical email service:
     // await sendEmail({
     //   to: 'contact@lexatlas.com',
-    //   subject: `New contact from ${validatedData.name}`,
+    //   subject: `New contact from ${validatedData.name} - ${validatedData.topic}`,
     //   body: `
     //     Name: ${validatedData.name}
     //     Email: ${validatedData.email}
+    //     Topic: ${validatedData.topic}
+    //     Country: ${validatedData.country || 'Not specified'}
     //     Message: ${validatedData.message}
     //   `
     // })

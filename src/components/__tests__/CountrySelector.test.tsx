@@ -2,9 +2,11 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { CountrySelector } from '../CountrySelector'
 import { COUNTRIES } from '@/content/marriage/countries'
 
+import { vi } from 'vitest'
+
 // Mock Next.js router
-const mockPush = jest.fn()
-jest.mock('next/navigation', () => ({
+const mockPush = vi.fn()
+vi.mock('next/navigation', () => ({
   useRouter: () => ({
     push: mockPush,
   }),
@@ -62,7 +64,7 @@ describe('CountrySelector', () => {
   })
 
   it('calls onSelect callback when provided', () => {
-    const mockOnSelect = jest.fn()
+    const mockOnSelect = vi.fn()
     render(<CountrySelector onSelect={mockOnSelect} />)
     const input = screen.getByPlaceholderText('Select your country...')
     

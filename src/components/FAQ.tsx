@@ -1,8 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Search, ChevronDown } from 'lucide-react'
+import { Search } from 'lucide-react'
 import {
   Accordion,
   AccordionContent,
@@ -94,7 +93,6 @@ export default function FAQ({
   maxItems
 }: FAQProps) {
   const [searchTerm, setSearchTerm] = useState('')
-  const [expandedItem, setExpandedItem] = useState<string | undefined>()
 
   // Filter items based on search term
   const filteredItems = items.filter(item =>
@@ -109,19 +107,19 @@ export default function FAQ({
     <section className={`w-full ${className}`}>
       {/* Search Filter */}
       {showSearch && (
-        <div className="mb-8">
+        <div className="mb-4">
           <div className="relative max-w-md mx-auto">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#444444]" />
             <Input
               type="text"
               placeholder="Search questions..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-3 border-gray-300 focus:border-brand-gold focus:ring-brand-gold"
+              className="pl-12 pr-4 py-4 border-0 rounded-2xl bg-white/75 backdrop-blur ring-1 ring-black/5 shadow-sm focus:ring-2 focus:ring-brand-gold focus:ring-offset-2 text-base"
             />
           </div>
           {searchTerm && (
-            <p className="text-sm text-gray-600 text-center mt-2">
+            <p className="text-sm text-[#444444] text-center mt-3">
               {filteredItems.length} of {items.length} questions found
             </p>
           )}
@@ -129,46 +127,39 @@ export default function FAQ({
       )}
 
       {/* FAQ Accordion */}
-      <div className="space-y-4">
+      <Accordion type="single" collapsible={true} className="space-y-0">
         {displayItems.map((item, index) => (
-          <div
+          <AccordionItem
             key={item.id}
-            className="border border-gray-200 rounded-lg overflow-hidden hover:border-brand-gold transition-colors"
+            value={item.id}
+            className="border-b border-brand-gray/50 last:border-none animate-reveal bg-white/75 backdrop-blur rounded-2xl ring-1 ring-black/5 shadow-sm"
+            style={{ animationDelay: `${index * 0.05}s` }}
           >
-            <AccordionItem>
-              <AccordionTrigger className="px-6 py-4 text-left hover:no-underline group">
-                <h3 className="text-lg font-serif font-semibold text-brand-deep group-hover:text-brand-gold transition-colors">
-                  {item.question}
-                </h3>
-                <ChevronDown className="h-5 w-5 text-brand-gold transition-transform duration-200 flex-shrink-0 ml-4" />
-              </AccordionTrigger>
-              <AccordionContent className="px-6 pb-4">
-                <div className="text-gray-700 leading-relaxed">
-                  {item.answer}
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </div>
+            <AccordionTrigger className="flex items-center justify-between gap-4 py-4 px-6 text-left hover:no-underline group">
+              <h3 className="text-base md:text-lg font-medium text-[#1A2E4F] group-hover:text-brand-gold transition-colors duration-250 leading-relaxed">
+                {item.question}
+              </h3>
+            </AccordionTrigger>
+            <AccordionContent className="text-[#444444] leading-relaxed pt-2 pb-4 px-6 text-base">
+              {item.answer}
+            </AccordionContent>
+          </AccordionItem>
         ))}
-      </div>
+      </Accordion>
 
       {/* No Results Message */}
       {searchTerm && filteredItems.length === 0 && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-center py-12"
-        >
-          <p className="text-gray-600 mb-4">
+        <div className="text-center py-12 animate-reveal">
+          <p className="text-[#444444] mb-4 text-lg">
             No questions found matching "{searchTerm}"
           </p>
           <button
             onClick={() => setSearchTerm('')}
-            className="text-brand-gold hover:text-brand-deep transition-colors underline"
+            className="text-brand-gold hover:text-[#1A2E4F] transition-colors duration-250 underline decoration-brand-gold hover:decoration-[#1A2E4F]"
           >
             Clear search
           </button>
-        </motion.div>
+        </div>
       )}
     </section>
   )

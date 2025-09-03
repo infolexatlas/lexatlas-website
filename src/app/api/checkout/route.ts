@@ -1,15 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { stripe } from '@/lib/stripe'
+import { isFakeCheckout, assertStripe, stripe } from '@/lib/stripe'
 import { parsePair, isValidCode } from '@/lib/countries'
-import { getPriceForPair } from '@/lib/pricing'
+import { getSuccessCancelUrls } from '@/lib/checkout'
 
 export async function POST(request: NextRequest) {
   try {
-    const { priceId, country1, country2, pair } = await request.json()
+    const body = await request.json().catch(() => ({}))
+    const { priceId, country1, country2, pair } = body
 
     if (!priceId) {
       return NextResponse.json(
-        { error: 'Price ID is required' },
+        { ok: false, message: 'missing_price_id', detail: 'Price ID is required' },
         { status: 400 }
       )
     }
@@ -17,14 +18,14 @@ export async function POST(request: NextRequest) {
     // Validate country pair
     if (!country1 || !country2 || !isValidCode(country1) || !isValidCode(country2)) {
       return NextResponse.json(
-        { error: 'Valid country codes are required' },
+        { ok: false, message: 'invalid_country_codes', detail: 'Valid country codes are required' },
         { status: 400 }
       )
     }
 
     if (country1 === country2) {
       return NextResponse.json(
-        { error: 'Countries must be different' },
+        { ok: false, message: 'same_countries', detail: 'Countries must be different' },
         { status: 400 }
       )
     }
@@ -33,17 +34,25 @@ export async function POST(request: NextRequest) {
     const pairData = parsePair(pair || `${country1}-${country2}`)
     if (!pairData) {
       return NextResponse.json(
-        { error: 'Invalid country pair' },
+        { ok: false, message: 'invalid_pair', detail: 'Invalid country pair' },
         { status: 400 }
       )
     }
 
-    // Get pricing information for this pair
-    const priceInfo = getPriceForPair(pairData.pair)
+    const { success_url, cancel_url } = getSuccessCancelUrls(request)
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+    if (isFakeCheckout) {
+      const url = new URL(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/success`);
+      url.searchParams.set('fake', '1');
+      url.searchParams.set('kind', 'single');
+      url.searchParams.set('pair', pairData.pair);
+      url.searchParams.set('session_id', `fake_${Date.now()}`);
+      return Response.redirect(url.toString(), 303);
+    }
 
-    const session = await stripe.checkout.sessions.create({
+    assertStripe(stripe)
+
+    const session = await stripe!.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
         {
@@ -54,27 +63,25 @@ export async function POST(request: NextRequest) {
         },
       ],
       mode: 'payment',
-      success_url: `${baseUrl}/kits/marriage-kit/${pairData.pair}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${baseUrl}/kits/marriage-kit/${pairData.pair}/cancel`,
+      success_url,
+      cancel_url,
       metadata: {
-        product: 'marriage-kit',
+        kind: priceId === 'marriageKit' ? 'single_kit' : 'bundle',
         country1: pairData.country1,
         country2: pairData.country2,
         pair: pairData.pair,
-        price: priceInfo.price.toString(),
-        currency: priceInfo.currency,
-        priceType: priceId,
+        priceId,
       },
       customer_email: undefined, // Will be collected by Stripe
       billing_address_collection: 'auto',
       automatic_tax: { enabled: false },
     })
 
-    return NextResponse.json({ url: session.url })
-  } catch (error) {
-    console.error('Checkout error:', error)
+    return NextResponse.json({ ok: true, url: session.url }, { status: 200 })
+  } catch (error: any) {
+    console.error('[checkout] error:', error)
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { ok: false, message: 'checkout_failed', detail: String(error?.message || error) },
       { status: 500 }
     )
   }

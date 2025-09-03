@@ -2,6 +2,11 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
+  // Skip middleware in development to avoid accidental slow paths
+  if (process.env.NODE_ENV === 'development') {
+    return NextResponse.next();
+  }
+  
   const { pathname } = request.nextUrl
 
   // Redirect old single-country routes to the pair selector
@@ -41,11 +46,32 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(`/kits/marriage-kit/${canonicalPair}`, request.url))
   }
 
-  return NextResponse.next()
+  const res = NextResponse.next()
+  
+  // Add CSP reporting in development
+  if (process.env.NODE_ENV !== 'production') {
+    const csp = [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: data:",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: blob:",
+      "connect-src 'self' https://plausible.io https://*.plausible.io https://*.stripe.com ws:",
+      "font-src 'self' data:",
+      "frame-src 'self' https://*.stripe.com",
+      "worker-src 'self' blob:"
+    ].join('; ');
+
+    res.headers.set('Content-Security-Policy-Report-Only', `${csp}; report-to=csp-endpoint`);
+    res.headers.set('Report-To', JSON.stringify({
+      group: 'csp-endpoint',
+      max_age: 10886400,
+      endpoints: [{ url: '/api/csp-report' }]
+    }));
+  }
+
+  return res
 }
 
 export const config = {
-  matcher: [
-    '/kits/marriage-kit/:path*',
-  ],
+  matcher: ['/((?!_next|api/healthz|__ping|favicon|manifest|logo|og|public).*)'],
 }

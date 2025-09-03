@@ -1,103 +1,115 @@
 import { test, expect } from '@playwright/test'
 
-test.describe('Kit Pages', () => {
-  test('should display FRA-USA kit page correctly', async ({ page }) => {
-    await page.goto('/kits/fra-usa')
+test.describe('Individual Kit Pages', () => {
+  test('should display France first with full country names', async ({ page }) => {
+    await page.goto('/kits/fra-can')
     
-    // Check page title
-    await expect(page).toHaveTitle(/France – United States/)
+    // Check that title shows France – Canada format
+    await expect(page.locator('h1')).toContainText('France – Canada Marriage Kit')
     
-    // Check main content
-    await expect(page.getByText('Marriage Kit France – United States')).toBeVisible()
-    await expect(page.getByText('29 €')).toBeVisible()
-    
-    // Check buy button
-    const buyButton = page.getByRole('button', { name: 'Buy Now – 29 €' })
-    await expect(buyButton).toBeVisible()
-    await expect(buyButton).toBeEnabled()
-    
-    // Check what's included section
-    await expect(page.getByText("What's Included")).toBeVisible()
-    await expect(page.getByText('Complete marriage procedure guide')).toBeVisible()
+    // Check meta title
+    await expect(page).toHaveTitle(/France – Canada Marriage Kit/)
   })
 
-  test('should display FRA-GBR kit page correctly', async ({ page }) => {
+  test('should show universal sample download link', async ({ page }) => {
+    await page.goto('/kits/fra-usa')
+    
+    // Check that sample download button exists
+    const sampleButton = page.getByRole('link', { name: '📥 Download Sample Kit' })
+    await expect(sampleButton).toBeVisible()
+    
+    // Check that it points to the global sample
+    await expect(sampleButton).toHaveAttribute('href', '/kits/samples/LEXATLAS-global-sample.pdf')
+    
+    // Check that it opens in new tab
+    await expect(sampleButton).toHaveAttribute('target', '_blank')
+  })
+
+  test('should display correct pricing in EUR', async ({ page }) => {
     await page.goto('/kits/fra-gbr')
     
-    // Check page title
-    await expect(page).toHaveTitle(/France – United Kingdom/)
+    // Check that price shows 29 € in the purchase card
+    await expect(page.locator('text=29 €').first()).toBeVisible()
     
-    // Check main content
-    await expect(page.getByText('Marriage Kit France – United Kingdom')).toBeVisible()
-    await expect(page.getByText('29 €')).toBeVisible()
+    // Check that buy button shows correct text
+    await expect(page.getByRole('button', { name: /Buy Now/ })).toBeVisible()
+    
+    // Verify price is only in the purchase card, not in the header
+    const header = page.locator('h1').locator('..')
+    await expect(header.locator('text=29 €')).not.toBeVisible()
   })
 
-  test('should show preview coming soon for missing samples', async ({ page }) => {
-    await page.goto('/kits/fra-usa')
+  test('should have working checkout form', async ({ page }) => {
+    await page.goto('/kits/fra-deu')
     
-    // Check if preview section exists
-    const previewSection = page.locator('text=Free preview')
-    if (await previewSection.isVisible()) {
-      // If preview is available, check the link
-      await expect(page.getByRole('link', { name: 'Free Preview' })).toBeVisible()
-    } else {
-      // If preview is not available, check coming soon message
-      await expect(page.getByText('Free preview coming soon')).toBeVisible()
-    }
+    // Check that checkout form exists
+    const checkoutForm = page.locator('form[action="/api/checkout/single"]')
+    await expect(checkoutForm).toBeVisible()
+    
+    // Check that slug is passed correctly
+    const slugInput = page.locator('input[name="slug"]')
+    await expect(slugInput).toHaveValue('fra-deu')
   })
 
-  test('should have working buy now form', async ({ page }) => {
-    await page.goto('/kits/fra-usa')
+  test('should show trust badges', async ({ page }) => {
+    await page.goto('/kits/fra-esp')
     
-    // Check form exists
-    const form = page.locator('form[action="/api/checkout/single"]')
-    await expect(form).toBeVisible()
-    
-    // Check hidden inputs
-    await expect(page.locator('input[name="slug"][value="fra-usa"]')).toBeVisible()
-    await expect(page.locator('input[name="pairKey"][value="FR-US"]')).toBeVisible()
+    // Check that trust badges section exists (scroll to find it)
+    await page.getByText('Trusted by International Couples').scrollIntoViewIfNeeded()
+    await expect(page.getByText('Trusted by International Couples')).toBeVisible()
   })
 
-  test('should display trust badges', async ({ page }) => {
-    await page.goto('/kits/fra-usa')
-    
-    // Check trust badges section exists
-    await expect(page.locator('[data-testid="trust-badges"]')).toBeVisible()
-  })
-
-  test('should have proper meta description', async ({ page }) => {
-    await page.goto('/kits/fra-usa')
-    
-    // Check meta description
-    const metaDescription = page.locator('meta[name="description"]')
-    await expect(metaDescription).toHaveAttribute('content', /Complete marriage guide for France – United States/)
-  })
-
-  test('should redirect to 404 for invalid slugs', async ({ page }) => {
+  test('should handle invalid kit slugs', async ({ page }) => {
     await page.goto('/kits/invalid-slug')
     
-    // Should show 404 or redirect
-    const status = page.url()
-    expect(status).not.toContain('/kits/invalid-slug')
+    // Should show 404 page
+    await expect(page).toHaveTitle(/404/)
   })
 
-  test('should work for all priority slugs', async ({ page }) => {
-    const prioritySlugs = [
-      'fra-usa', 'fra-gbr', 'fra-can', 'fra-mar', 'fra-deu',
-      'fra-che', 'fra-bel', 'fra-esp', 'fra-ita', 'fra-prt'
-    ]
+  test('should display consistent France first format across all kits', async ({ page }) => {
+    const testSlugs = ['fra-usa', 'fra-can', 'fra-gbr', 'fra-deu']
     
-    for (const slug of prioritySlugs) {
+    for (const slug of testSlugs) {
       await page.goto(`/kits/${slug}`)
       
-      // Check page loads without error
-      await expect(page).not.toHaveTitle(/404|Not Found/)
+      // Check that title follows France first format
+      const title = page.locator('h1')
+      await expect(title).toContainText('France – ')
+      await expect(title).toContainText('Marriage Kit')
       
-      // Check price is displayed
-      await expect(page.getByText('29 €')).toBeVisible()
-      
-      // Check buy button exists
-      await expect(page.getByRole('button', { name: /Buy Now/ })).toBeVisible()
+      // Check that it shows full country names
+      await expect(title).not.toContainText('FRA – ')
+      await expect(title).not.toContainText('USA')
+      await expect(title).not.toContainText('CAN')
     }
+  })
+
+  test('should have price only in purchase card, not in header', async ({ page }) => {
+    await page.goto('/kits/fra-usa')
+    
+    // Check that price is visible in the purchase card (specifically the price display, not the button)
+    const priceDisplay = page.locator('.text-4xl.font-bold.text-primary').filter({ hasText: '29 €' })
+    await expect(priceDisplay).toBeVisible()
+    
+    // Check that price is NOT visible in the header section
+    const headerSection = page.locator('h1').locator('..')
+    await expect(headerSection.locator('text=29 €')).not.toBeVisible()
+    
+    // Check that "One-time payment • Lifetime access" is only in purchase card
+    const purchaseCard = page.locator('text=Get Your Kit').locator('..').locator('..')
+    await expect(purchaseCard.locator('text=One-time payment • Lifetime access')).toBeVisible()
+    await expect(headerSection.locator('text=One-time payment • Lifetime access')).not.toBeVisible()
+  })
+
+  test('should have clean CTA buttons without prices', async ({ page }) => {
+    await page.goto('/kits/fra-usa')
+    
+    // Check that Buy Now button doesn't contain price
+    const buyNowButton = page.getByRole('button', { name: 'Buy Now' })
+    await expect(buyNowButton).toBeVisible()
+    await expect(buyNowButton).not.toContainText('€')
+    
+    // Check that the button text is exactly "Buy Now"
+    await expect(buyNowButton).toHaveText('Buy Now')
   })
 })

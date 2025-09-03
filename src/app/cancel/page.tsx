@@ -36,6 +36,15 @@ export default function CancelPage() {
                 <a href="/contact">Contact Support</a>
               </Button>
             </div>
+            
+            <div className="text-sm text-gray-600">
+              <p>
+                Questions? Contact us at{' '}
+                <a href="mailto:contact.lexatlas@gmail.com" className="text-brand-gold hover:underline">
+                  contact.lexatlas@gmail.com
+                </a>
+              </p>
+            </div>
           </CardContent>
         </Card>
       </div>

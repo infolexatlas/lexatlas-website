@@ -156,9 +156,10 @@ describe('countries', () => {
 
     it('should include all valid country combinations', () => {
       const pairs = generateAllPairs()
+
       expect(pairs).toContain('FR-US')
       expect(pairs).toContain('DE-US')
-      expect(pairs).toContain('FR-DE')
+      expect(pairs).toContain('DE-FR')
     })
   })
 

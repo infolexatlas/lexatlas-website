@@ -5,11 +5,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function formatPrice(price: number): string {
-  return new Intl.NumberFormat('en-US', {
+export function formatPrice(cents: number, opts?: Intl.NumberFormatOptions) {
+  const amount = (cents ?? 0) / 100;
+  return new Intl.NumberFormat('fr-FR', {
     style: 'currency',
-    currency: 'USD',
-  }).format(price)
+    currency: 'EUR',
+    maximumFractionDigits: 0,
+    ...opts,
+  }).format(amount);
 }
 
 export function slugify(text: string) {

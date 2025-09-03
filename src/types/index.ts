@@ -45,3 +45,26 @@ export interface Country {
 }
 
 export type StripePriceId = 'marriageKit' | 'bundle'
+
+export interface Kit {
+  slug: string
+  title: string
+  description: string
+  price: number
+  currency: string
+}
+
+export interface PricingTier {
+  name: string
+  price: number
+  currency: string
+  features: string[]
+  popular?: boolean
+}
+
+// Extend Window interface for Plausible analytics
+declare global {
+  interface Window {
+    plausible?: (eventName: string, options?: { props?: Record<string, any> }) => void
+  }
+}

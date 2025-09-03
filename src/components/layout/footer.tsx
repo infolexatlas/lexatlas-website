@@ -1,125 +1,111 @@
+"use client"
 import Link from 'next/link'
-import { Globe, Mail, Shield, FileText } from 'lucide-react'
+import Image from 'next/image'
+ 
+import { NewsletterForm } from './NewsletterForm'
+import { SocialLinks } from './SocialLinks'
+import { BRAND } from '@/lib/brand'
+import { motion } from 'framer-motion'
+import { fadeInUp, stagger } from '@/components/la/Motion'
 
-const navigation = {
-  main: [
-    { name: 'Home', href: '/' },
+const groups = {
+  product: [
     { name: 'Kits', href: '/kits' },
+    { name: 'Pricing', href: '/pricing' },
     { name: 'About', href: '/about' },
     { name: 'FAQ', href: '/faq' },
     { name: 'Contact', href: '/contact' },
   ],
   legal: [
-    { name: 'Privacy Policy', href: '/legal/privacy' },
-    { name: 'Terms of Service', href: '/legal/terms' },
-    { name: 'Cookie Policy', href: '/legal/cookies' },
-  ],
-  social: [
-    {
-      name: 'LinkedIn',
-      href: 'https://linkedin.com/company/lexatlas',
-      icon: Mail, // Placeholder - replace with LinkedIn icon
-    },
-    {
-      name: 'Twitter',
-      href: 'https://twitter.com/lexatlas',
-      icon: Mail, // Placeholder - replace with Twitter icon
-    },
-    {
-      name: 'Email',
-      href: 'mailto:contact@lexatlas.com',
-      icon: Mail,
-    },
+    { name: 'Privacy Policy', href: '/privacy' },
+    { name: 'Terms', href: '/terms' },
+    { name: 'Cookies', href: '/cookie-policy' },
   ],
 }
 
 export function Footer() {
   return (
-    <footer className="bg-brand-deep text-white" aria-labelledby="footer-heading">
-      <h2 id="footer-heading" className="sr-only">
-        Footer
-      </h2>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="xl:grid xl:grid-cols-3 xl:gap-8">
-          <div className="space-y-8 xl:col-span-1">
+    <footer role="contentinfo" className="bg-brand-deep text-white" aria-labelledby="footer-heading">
+      <h2 id="footer-heading" className="sr-only">Footer</h2>
+
+      {/* Main Grid */}
+      <div className="container py-12">
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-10% 0% -10% 0%' }}
+          variants={stagger}
+          className="grid grid-cols-1 gap-10 md:grid-cols-12"
+          aria-label="Footer"
+        >
+          {/* Brand Column */}
+          <motion.div variants={fadeInUp} className="md:col-span-4 lg:col-span-5">
             <div className="flex items-center">
-              <img 
-                src="/logo-lexatlas.svg" 
-                alt="LexAtlas" 
-                className="h-8 w-auto"
+              <Image
+                src={BRAND.logo.src}
+                alt={BRAND.logo.alt}
+                width={56}
+                height={56}
+                loading="lazy"
+                className="h-14 w-14 object-contain select-none"
               />
             </div>
-            <p className="text-sm text-gray-300 max-w-md">
-              Your Global Legal Compass. Expert-built, country-specific PDF guides 
-              to handle international legal procedures with clarity and confidence.
+            <p className="mt-4 max-w-sm text-sm text-white/80">
+              Your Global Legal Compass. Expert-built, country-specific PDF guides to handle international legal procedures with clarity and confidence.
             </p>
-            <div className="flex space-x-6">
-              {navigation.social.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="text-gray-300 hover:text-brand-gold transition-colors"
-                >
-                  <span className="sr-only">{item.name}</span>
-                  <item.icon className="h-6 w-6" aria-hidden="true" />
-                </Link>
-              ))}
-            </div>
-          </div>
-          <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
-            <div className="md:grid md:grid-cols-2 md:gap-8">
-              <div>
-                <h3 className="text-sm font-semibold text-white">Navigation</h3>
-                <ul role="list" className="mt-6 space-y-4">
-                  {navigation.main.map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        href={item.href}
-                        className="text-sm text-gray-300 hover:text-brand-gold transition-colors"
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mt-10 md:mt-0">
-                <h3 className="text-sm font-semibold text-white">Legal</h3>
-                <ul role="list" className="mt-6 space-y-4">
-                  {navigation.legal.map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        href={item.href}
-                        className="text-sm text-gray-300 hover:text-brand-gold transition-colors"
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-            <div className="md:grid md:grid-cols-2 md:gap-8">
-              <div>
-                <h3 className="text-sm font-semibold text-white">Security</h3>
-                <ul role="list" className="mt-6 space-y-4">
-                  <li className="flex items-center text-sm text-gray-300">
-                    <Shield className="h-4 w-4 mr-2 text-brand-gold" />
-                    Secure payments with Stripe
+            <SocialLinks className="mt-4" />
+          </motion.div>
+
+          {/* Link Groups */}
+          <motion.nav variants={fadeInUp} aria-label="Footer links" className="md:col-span-5 lg:col-span-4 grid grid-cols-2 gap-8">
+            <div>
+              <h3 className="text-sm font-semibold">Product</h3>
+              <ul className="mt-4 space-y-2">
+                {groups.product.map((item) => (
+                  <li key={item.name}>
+                    <Link href={item.href} className="text-sm text-white/80 hover:text-brand-gold fx-underline">
+                      {item.name}
+                    </Link>
                   </li>
-                  <li className="flex items-center text-sm text-gray-300">
-                    <FileText className="h-4 w-4 mr-2 text-brand-gold" />
-                    Instant PDF delivery
-                  </li>
-                </ul>
-              </div>
+                ))}
+              </ul>
             </div>
+            <div>
+              <h3 className="text-sm font-semibold">Legal</h3>
+              <ul className="mt-4 space-y-2">
+                {groups.legal.map((item) => (
+                  <li key={item.name}>
+                    <Link href={item.href} className="text-sm text-white/80 hover:text-brand-gold fx-underline">
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </motion.nav>
+
+          {/* Newsletter */}
+          <motion.div variants={fadeInUp} className="md:col-span-3 lg:col-span-3">
+            <h3 className="text-sm font-semibold">Newsletter</h3>
+            <p className="mt-2 text-sm text-white/70">Get product updates and new country kits.</p>
+            <div className="mt-4">
+              <NewsletterForm />
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* Trust strip removed per request */}
+      <div className="container pb-6">
+        <div className="fx-divider" />
+      </div>
+
+      {/* Bottom Bar */}
+      <div className="bg-brand-deep/95">
+        <div className="container py-6">
+          <div className="flex items-center justify-center">
+            <p className="text-xs text-white/70">© 2025 LexAtlas. All rights reserved.</p>
           </div>
-        </div>
-        <div className="mt-12 border-t border-gray-700 pt-8">
-          <p className="text-sm text-gray-300 text-center">
-            &copy; {new Date().getFullYear()} LexAtlas. All rights reserved.
-          </p>
         </div>
       </div>
     </footer>

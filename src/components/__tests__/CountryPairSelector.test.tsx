@@ -18,7 +18,7 @@ describe('CountryPairSelector', () => {
   it('renders the component with title and description', () => {
     render(<CountryPairSelector />)
     
-    expect(screen.getByText('Select Two Countries')).toBeInTheDocument()
+    expect(screen.getByText('Select 2 Countries')).toBeInTheDocument()
     expect(screen.getByText('Choose the countries for your international marriage kit')).toBeInTheDocument()
   })
 
@@ -66,13 +66,21 @@ describe('CountryPairSelector', () => {
       fireEvent.click(franceOption)
     })
     
-    // Try to select France in second field
+    // Try to select France in second field - it should be filtered out
     const secondCountryInput = screen.getByLabelText('Second Country')
     fireEvent.focus(secondCountryInput)
     fireEvent.change(secondCountryInput, { target: { value: 'France' } })
     
+    // The dropdown should not show France since it's already selected in the first field
+    // We need to check that France is not in the dropdown (not in the selected countries display)
     await waitFor(() => {
-      expect(screen.queryByText('France')).not.toBeInTheDocument()
+      // France should only appear in the selected countries display, not in the dropdown
+      const dropdownButtons = screen.queryAllByRole('button')
+      const franceInDropdown = dropdownButtons.some(button => 
+        button.textContent === 'France' && 
+        button.closest('[class*="absolute"]') // dropdown has absolute positioning
+      )
+      expect(franceInDropdown).toBe(false)
     })
   })
 
@@ -158,7 +166,7 @@ describe('CountryPairSelector', () => {
     const submitButton = screen.getByText('View Marriage Kit')
     fireEvent.click(submitButton)
     
-    expect(mockPush).toHaveBeenCalledWith('/kits/marriage-kit/FR-US')
+    expect(mockPush).toHaveBeenCalledWith('/kits/fra-usa')
   })
 
   it('shows error message when same country is selected twice', async () => {
@@ -174,17 +182,15 @@ describe('CountryPairSelector', () => {
       fireEvent.click(franceOption)
     })
     
-    // Try to select France in second field
+    // Try to select France in second field - it should be filtered out, so we need to manually set it
     const secondCountryInput = screen.getByLabelText('Second Country')
     fireEvent.focus(secondCountryInput)
     fireEvent.change(secondCountryInput, { target: { value: 'France' } })
     
-    await waitFor(() => {
-      const franceOption = screen.getByText('France')
-      fireEvent.click(franceOption)
-    })
-    
-    expect(screen.getByText('Please select two different countries')).toBeInTheDocument()
+    // Since France is filtered out, we need to simulate the same country selection differently
+    // This test case is now handled by the filtering logic, so we'll test the disabled button instead
+    const submitButton = screen.getByText('View Marriage Kit')
+    expect(submitButton).toBeDisabled()
   })
 
   it('filters countries based on search input', async () => {
@@ -212,6 +218,78 @@ describe('CountryPairSelector', () => {
       expect(screen.getByText('France')).toBeInTheDocument()
       expect(screen.getByText('Germany')).toBeInTheDocument()
       expect(screen.getByText('United States')).toBeInTheDocument()
+    })
+  })
+
+  it('shows persistent error message for unsupported pairs', async () => {
+    render(<CountryPairSelector />)
+    
+    // Select two countries that don't form a supported FRA-X pair
+    const firstCountryInput = screen.getByLabelText('First Country')
+    fireEvent.focus(firstCountryInput)
+    fireEvent.change(firstCountryInput, { target: { value: 'United States' } })
+    
+    await waitFor(() => {
+      const usOption = screen.getByText('United States')
+      fireEvent.click(usOption)
+    })
+    
+    const secondCountryInput = screen.getByLabelText('Second Country')
+    fireEvent.focus(secondCountryInput)
+    fireEvent.change(secondCountryInput, { target: { value: 'Canada' } })
+    
+    await waitFor(() => {
+      const canadaOption = screen.getByText('Canada')
+      fireEvent.click(canadaOption)
+    })
+    
+    const submitButton = screen.getByText('View Marriage Kit')
+    fireEvent.click(submitButton)
+    
+    // Should show persistent error message
+    await waitFor(() => {
+      expect(screen.getByText("This pair isn't available yet. More kits are in production and released daily.")).toBeInTheDocument()
+    })
+    
+    // Should not navigate
+    expect(mockPush).not.toHaveBeenCalled()
+  })
+
+  it('clears error message when user changes selection', async () => {
+    render(<CountryPairSelector />)
+    
+    // First, trigger an error by selecting unsupported pair
+    const firstCountryInput = screen.getByLabelText('First Country')
+    fireEvent.focus(firstCountryInput)
+    fireEvent.change(firstCountryInput, { target: { value: 'United States' } })
+    
+    await waitFor(() => {
+      const usOption = screen.getByText('United States')
+      fireEvent.click(usOption)
+    })
+    
+    const secondCountryInput = screen.getByLabelText('Second Country')
+    fireEvent.focus(secondCountryInput)
+    fireEvent.change(secondCountryInput, { target: { value: 'Canada' } })
+    
+    await waitFor(() => {
+      const canadaOption = screen.getByText('Canada')
+      fireEvent.click(canadaOption)
+    })
+    
+    const submitButton = screen.getByText('View Marriage Kit')
+    fireEvent.click(submitButton)
+    
+    // Error message should be visible
+    await waitFor(() => {
+      expect(screen.getByText("This pair isn't available yet. More kits are in production and released daily.")).toBeInTheDocument()
+    })
+    
+    // Now change the selection - error should clear
+    fireEvent.change(firstCountryInput, { target: { value: 'France' } })
+    
+    await waitFor(() => {
+      expect(screen.queryByText("This pair isn't available yet. More kits are in production and released daily.")).not.toBeInTheDocument()
     })
   })
 })

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { stripe } from '@/lib/stripe'
+import { isFakeCheckout, assertStripe, stripe } from '@/lib/stripe'
 import { parsePair } from '@/lib/countries'
 
 export async function POST(request: NextRequest) {
@@ -13,8 +13,29 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Handle fake checkout sessions
+    if (isFakeCheckout && sessionId.startsWith('fake_')) {
+      return NextResponse.json({ 
+        success: true,
+        session: {
+          id: sessionId,
+          payment_status: 'paid',
+          metadata: {
+            country1: country1,
+            country2: country2,
+            pair: pair,
+          },
+          pair: pair,
+          country1: country1,
+          country2: country2,
+        }
+      })
+    }
+
+    assertStripe(stripe);
+
     // Retrieve the session from Stripe
-    const session = await stripe.checkout.sessions.retrieve(sessionId)
+    const session = await stripe!.checkout.sessions.retrieve(sessionId)
 
     if (!session) {
       return NextResponse.json(

@@ -99,8 +99,8 @@ export default function PrivacyPage() {
                 </h2>
                 <p className="text-gray-700">
                   If you have questions about this Privacy Policy, please contact us at{' '}
-                  <a href="mailto:privacy@lexatlas.com" className="text-brand-gold hover:underline">
-                    privacy@lexatlas.com
+                  <a href="mailto:contact.lexatlas@gmail.com" className="text-brand-gold hover:underline">
+                    contact.lexatlas@gmail.com
                   </a>
                 </p>
               </section>

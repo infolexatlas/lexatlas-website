@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { COUNTRIES, type Country } from '@/lib/countries'
+import { toISO3, canonicalFraSlug } from '@/lib/kits.config'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -20,6 +21,7 @@ export function CountryPairSelector({ className }: CountryPairSelectorProps) {
   const [search2, setSearch2] = useState('')
   const [showDropdown1, setShowDropdown1] = useState(false)
   const [showDropdown2, setShowDropdown2] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const filteredCountries1 = COUNTRIES.filter(country =>
     country.name.toLowerCase().includes(search1.toLowerCase()) &&
@@ -35,18 +37,38 @@ export function CountryPairSelector({ className }: CountryPairSelectorProps) {
     setCountry1(country)
     setSearch1(country.name)
     setShowDropdown1(false)
+    setErrorMessage(null) // Clear error when selection changes
   }
 
   const handleCountry2Select = (country: Country) => {
     setCountry2(country)
     setSearch2(country.name)
     setShowDropdown2(false)
+    setErrorMessage(null) // Clear error when selection changes
   }
 
   const handleSubmit = () => {
     if (country1 && country2) {
-      const pair = [country1.code, country2.code].sort().join('-')
-      router.push(`/kits/marriage-kit/${pair}`)
+      // Convert country names to ISO3 codes
+      const aIso3 = toISO3(country1.name)
+      const bIso3 = toISO3(country2.name)
+      
+      if (!aIso3 || !bIso3) {
+        setErrorMessage("This pair isn't available yet. More kits are in production and released daily.")
+        return
+      }
+      
+      // Get canonical FRA-X slug
+      const slug = canonicalFraSlug(aIso3, bIso3)
+      
+      if (slug) {
+        // Valid FRA-X pair, navigate to the kit page
+        setErrorMessage(null) // Clear error on successful navigation
+        router.push(`/kits/${slug}`)
+      } else {
+        // Not a supported pair, show persistent error message
+        setErrorMessage("This pair isn't available yet. More kits are in production and released daily.")
+      }
     }
   }
 
@@ -55,7 +77,7 @@ export function CountryPairSelector({ className }: CountryPairSelectorProps) {
   return (
     <Card className={className}>
       <CardHeader>
-        <CardTitle>Select Two Countries</CardTitle>
+        <CardTitle>Select 2 Countries</CardTitle>
         <CardDescription>
           Choose the countries for your international marriage kit
         </CardDescription>
@@ -74,6 +96,7 @@ export function CountryPairSelector({ className }: CountryPairSelectorProps) {
                 onChange={(e) => {
                   setSearch1(e.target.value)
                   setShowDropdown1(true)
+                  setErrorMessage(null) // Clear error when user starts typing
                   if (!e.target.value) {
                     setCountry1(null)
                   }
@@ -109,6 +132,7 @@ export function CountryPairSelector({ className }: CountryPairSelectorProps) {
                 onChange={(e) => {
                   setSearch2(e.target.value)
                   setShowDropdown2(true)
+                  setErrorMessage(null) // Clear error when user starts typing
                   if (!e.target.value) {
                     setCountry2(null)
                   }
@@ -167,6 +191,15 @@ export function CountryPairSelector({ className }: CountryPairSelectorProps) {
           <p className="text-sm text-red-600 text-center">
             Please select two different countries
           </p>
+        )}
+
+        {/* Error Message */}
+        {errorMessage && (
+          <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-sm text-red-800 text-center">
+              {errorMessage}
+            </p>
+          </div>
         )}
       </CardContent>
     </Card>

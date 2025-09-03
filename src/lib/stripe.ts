@@ -1,17 +1,19 @@
 import Stripe from 'stripe'
 
-// Priority to LIVE keys if provided, fallback to TEST keys
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY
-const stripePublicKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+export const isFakeCheckout = process.env.NEXT_PUBLIC_FAKE_CHECKOUT === '1'
 
-if (!stripeSecretKey) {
-  throw new Error('STRIPE_SECRET_KEY is not set')
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY || ''
+
+export const stripe = (!isFakeCheckout && stripeSecretKey)
+  ? new Stripe(stripeSecretKey, { apiVersion: '2023-10-16' })
+  : null
+
+export function assertStripe(stripe: Stripe | null) { 
+  if (!stripe) throw new Error('Stripe unavailable'); 
 }
 
-export const stripe = new Stripe(stripeSecretKey, {
-  apiVersion: '2023-10-16',
-  typescript: true,
-})
+// Priority to LIVE keys if provided, fallback to TEST keys
+const stripePublicKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 
 export { stripePublicKey }
 
@@ -26,4 +28,4 @@ export type StripePriceId = keyof typeof stripePriceIds
 export const isStripeLive = stripeSecretKey?.startsWith('sk_live_')
 
 // Helper to check if we should use fake checkout (for testing)
-export const useFakeCheckout = process.env.NEXT_PUBLIC_FAKE_CHECKOUT === '1'
+export const useFakeCheckout = isFakeCheckout

@@ -6,6 +6,7 @@ import { Download, Lock, CheckCircle, AlertCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { getCountryName } from '@/lib/countries'
+import { HydrationGate } from './HydrationGate'
 
 interface DocDownloadProps {
   productId: string
@@ -58,7 +59,7 @@ export function DocDownload({
     }
 
     checkPaymentStatus()
-  }, [country1, country2, pair])
+  }, [country1, country2, pair, pdfUrl])
 
   const handleDownload = async () => {
     if (!isPaid || !downloadUrl) return
@@ -94,93 +95,73 @@ export function DocDownload({
     }
   }
 
-  if (!isPaid) {
-    return (
-      <Card className={className}>
-        <CardContent className="p-6">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-              <Lock className="h-6 w-6 text-gray-400" />
-            </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-gray-900 mb-1">
-                Purchase Required
-              </h3>
-              <p className="text-sm text-gray-600">
-                Complete your purchase to download the {fileName} for {displayName}
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    )
-  }
-
-  if (!pdfExists) {
-    return (
-      <Card className={className}>
-        <CardContent className="p-6">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-              <AlertCircle className="h-6 w-6 text-yellow-600" />
-            </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-gray-900 mb-1">
-                PDF Not Available
-              </h3>
-              <p className="text-sm text-gray-600">
-                The PDF guide for {displayName} is not uploaded yet. Please contact us for assistance.
-              </p>
-            </div>
-            <Button variant="outline" asChild>
-              <a href="/contact">Contact Support</a>
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    )
-  }
-
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-    >
-      <Card className={className}>
-        <CardContent className="p-6">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-              <CheckCircle className="h-6 w-6 text-green-600" />
+    <HydrationGate>
+      {!isPaid ? (
+        <Card className={className}>
+          <CardContent className="p-6">
+            <div className="flex items-center gap-4">
+              <div className="flex-shrink-0">
+                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
+                  <Lock className="h-6 w-6 text-gray-400" />
+                </div>
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                  Purchase Required
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  This {displayName} marriage kit requires a valid purchase to download.
+                </p>
+              </div>
             </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-gray-900 mb-1">
-                Download Ready
-              </h3>
-              <p className="text-sm text-gray-600">
-                Your {fileName} for {displayName} is ready for download
-              </p>
-            </div>
-            <Button
-              onClick={handleDownload}
-              disabled={isDownloading}
-              className="flex items-center gap-2"
-            >
-              {isDownloading ? (
-                <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                  Downloading...
-                </>
-              ) : (
-                <>
-                  <Download className="h-4 w-4" />
-                  Download PDF
-                </>
-              )}
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    </motion.div>
+          </CardContent>
+        </Card>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <Card className={className}>
+            <CardContent className="p-6">
+              <div className="flex items-center gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                    <CheckCircle className="h-6 w-6 text-emerald-700" />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                    Ready to Download
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4">
+                    Your {displayName} marriage kit is ready for download.
+                  </p>
+                  <Button
+                    onClick={handleDownload}
+                    disabled={isDownloading}
+                    className="w-full sm:w-auto"
+                    size="lg"
+                  >
+                    {isDownloading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                        Downloading...
+                      </>
+                    ) : (
+                      <>
+                        <Download className="h-4 w-4 mr-2" />
+                        Download PDF
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      )}
+    </HydrationGate>
   )
 }

@@ -92,8 +92,8 @@ export default function CancelPage() {
             <div className="text-sm text-gray-600">
               <p>
                 Questions? Contact us at{' '}
-                <a href="mailto:support@lexatlas.com" className="text-brand-gold hover:underline">
-                  support@lexatlas.com
+                <a href="mailto:contact.lexatlas@gmail.com" className="text-brand-gold hover:underline">
+                  contact.lexatlas@gmail.com
                 </a>
               </p>
             </div>
