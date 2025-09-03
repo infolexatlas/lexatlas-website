@@ -7,7 +7,7 @@ export function RelatedKits({ related }: { related: string[] }) {
   const mounted = useMountAnimation()
   if (!related?.length) return null
   return (
-    <section className="section">
+    <section className="section pt-6 md:pt-8">
       <div className="container">
         <motion.h2 className="text-2xl font-semibold tracking-tight" initial={mounted ? { opacity: 0, y: 10 } : false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>You might also like</motion.h2>
         <motion.div className="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-3" initial={mounted ? 'hidden' : false} whileInView="visible" viewport={{ once: true }} variants={{ hidden: { opacity: 1 }, visible: { opacity: 1, transition: { staggerChildren: 0.08 } } }}>
