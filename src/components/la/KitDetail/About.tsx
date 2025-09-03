@@ -7,10 +7,11 @@ export function About({ text, compact = true }: { text: string; compact?: boolea
   return (
     <section className={compact ? 'section pt-6 md:pt-8' : 'section'}>
       <div className="container">
-        <motion.h2 className="text-2xl font-semibold tracking-tight text-brand-gold" initial={mounted ? { opacity: 0, y: 10 } : false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <motion.h2 className="text-2xl font-semibold tracking-tight text-brand-gold underline decoration-brand-gold decoration-4 underline-offset-8" initial={mounted ? { opacity: 0, y: 10 } : false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           About This Kit
         </motion.h2>
-        <motion.p className="mt-3 max-w-prose text-muted-foreground" initial={mounted ? { opacity: 0, y: 12 } : false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <motion.div initial={mounted ? { opacity: 0, y: 8 } : false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.35 }} className="mt-2 h-[2px] w-full bg-brand-gold/60" aria-hidden />
+        <motion.p className="mt-4 text-muted-foreground max-w-none" initial={mounted ? { opacity: 0, y: 12 } : false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           {text}
         </motion.p>
       </div>
