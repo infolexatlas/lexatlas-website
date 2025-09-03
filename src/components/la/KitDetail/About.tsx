@@ -2,10 +2,10 @@
 import { motion } from 'framer-motion'
 import { useMountAnimation } from './useMountAnimation'
 
-export function About({ text }: { text: string }) {
+export function About({ text, compact = true }: { text: string; compact?: boolean }) {
   const mounted = useMountAnimation()
   return (
-    <section className="section">
+    <section className={compact ? 'section pt-6 md:pt-8' : 'section'}>
       <div className="container">
         <motion.h2 className="text-2xl font-semibold tracking-tight" initial={mounted ? { opacity: 0, y: 10 } : false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           About This Kit
