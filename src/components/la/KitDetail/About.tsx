@@ -10,6 +10,14 @@ export function About({ text, compact = true }: { text: string; compact?: boolea
         <motion.h2 className="text-2xl font-semibold tracking-tight text-brand-navy" initial={mounted ? { opacity: 0, y: 10 } : false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           About This Kit
         </motion.h2>
+        <motion.div
+          initial={mounted ? { opacity: 0, y: 6 } : false}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.3 }}
+          className="mt-2 h-px w-full bg-brand-gold/50"
+          aria-hidden
+        />
         <motion.p className="mt-4 text-muted-foreground max-w-none" initial={mounted ? { opacity: 0, y: 12 } : false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           {text}
         </motion.p>
