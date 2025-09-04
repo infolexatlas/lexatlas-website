@@ -1,0 +1,36 @@
+name: License Compliance
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  license-check:
+    name: Scan dependency licenses
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: |
+          npm ci
+
+      - name: Run license scan
+        run: |
+          echo "Running license scan (production deps, fail on GPL)..."
+          npm run scan:licenses || {
+            echo "\nDisallowed licenses detected. See summary above for offending packages.";
+            exit 1;
+          }
+
+
