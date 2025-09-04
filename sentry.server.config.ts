@@ -1,3 +1,4 @@
-// Intentionally empty: Sentry is initialized via instrumentation.ts
+// Sentry initialization moved to instrumentation.ts (App Router)
+export {};
 
 
