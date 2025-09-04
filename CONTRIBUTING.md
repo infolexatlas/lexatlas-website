@@ -17,6 +17,7 @@ npm run typecheck
 npm run build
 npm run test:e2e           # Playwright
 npm run lighthouse:ci      # optional local run
+npm run scan:licenses      # license compliance scan (production deps)
 ```
 
 ## Branches
@@ -30,5 +31,20 @@ npm run lighthouse:ci      # optional local run
 ## Secrets / Safety
 - Never commit secrets.
 - Use env vars documented in `README` and `.env.local.example`.
+
+
+## License Scanning
+
+Run a dependency license scan locally to ensure compliance:
+
+```bash
+npm run scan:licenses
+```
+
+This scans production dependencies, summarizes results, and fails on disallowed licenses (e.g., GPL). Use `--excludePackages` in the script to whitelist specific packages if needed.
+
+---
+
+For vulnerability reporting and response SLAs, see our [Security Policy](./SECURITY.md).
 
 

@@ -1,0 +1,40 @@
+name: License Compliance
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  license-check:
+    name: Scan dependency licenses
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies (including dev)
+        run: |
+          npm ci --include=dev
+
+      - name: Run license scan
+        run: |
+          echo "Running license scan (production deps, fail on GPL)..."
+          npx --no-install license-checker-rseidelsohn --production --summary --failOn 'GPL' --excludePackages 'some-whitelisted-package' || {
+            echo "\nDisallowed licenses detected. See summary above for offending packages.";
+            # Also print a detailed list for readability
+            echo "\nOffending packages (detailed):";
+            npx --no-install license-checker-rseidelsohn --production --json | jq -r 
+              'to_entries[] | select(.value.licenses|tostring|test("GPL")) | "- \(.key) (license: \(.value.licenses))"' || true;
+            exit 1;
+          }
+
+

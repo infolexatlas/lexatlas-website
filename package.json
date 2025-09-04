@@ -9,7 +9,8 @@
     "lint": "next lint",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test:e2e": "playwright test",
-    "lighthouse:ci": "lhci autorun"
+    "lighthouse:ci": "lhci autorun",
+    "scan:licenses": "license-checker-rseidelsohn --production --summary --failOn 'GPL' --excludePackages 'some-whitelisted-package'"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
@@ -46,6 +47,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.4.6",
     "husky": "^9.1.7",
+    "license-checker-rseidelsohn": "^4.4.2",
     "lighthouse": "^12.8.2",
     "lint-staged": "^16.1.5",
     "prettier": "^3.6.2",
