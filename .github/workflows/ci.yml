@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.11.1]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Build
+        env:
+          NEXT_PUBLIC_BASE_URL: https://lexatlas.com
+          NEXT_PUBLIC_PLAUSIBLE_DOMAIN: lexatlas.com
+          STRIPE_SECRET_KEY: sk_test_dummy
+        run: npm run build --if-present
