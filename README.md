@@ -37,9 +37,11 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## Observability
 
-- **Sentry**: Minimal error monitoring is wired for client and server. It is disabled when `SENTRY_DSN` is empty.
-  - **Env**: Add `SENTRY_DSN` to `.env.local` (leave empty for local dev).
-  - **Sampling**: `tracesSampleRate=0.05`, `replaysOnErrorSampleRate=0.1`. No blocking on failure.
+- **Sentry**: Initialized via `instrumentation.ts` (App Router).
+  - **Init**: `src` or project root `instrumentation.ts` implements `export async function register()`.
+  - **Env**: Add `SENTRY_DSN` to environment (leave empty for local dev). `environment` derives from `VERCEL_ENV` or `NODE_ENV`.
+  - **Sampling**: `tracesSampleRate=0.05`, `replaysOnErrorSampleRate=0.1`.
+  - **Global Error Boundary**: `app/global-error.tsx` captures unhandled client errors and reports to Sentry.
 
 ## Deployment guardrails (Vercel)
 
