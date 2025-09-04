@@ -41,8 +41,9 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
   - npm updates run daily at 06:00 UTC with grouped minor/patch updates.
   - GitHub Actions updates run weekly on Mondays at 06:00 UTC.
   - Dependabot PRs are labeled `dependencies`.
-- **CodeQL**: Static analysis security scanning for JavaScript/TypeScript.
-  - Runs on push and pull requests targeting `main`, and weekly on Monday 07:00 UTC.
+- **Security Scanning**: Static analysis for JavaScript/TypeScript.
+  - Public/GHAS-enabled repos: CodeQL runs on push/PR to `main` and weekly (Mon 07:00 UTC).
+  - Private repos without GHAS: Semgrep (OSS rules) runs on push/PR to `main`.
 
 ## CI Performance
 
