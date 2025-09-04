@@ -1,0 +1,9 @@
+# Require review from owner by default
+*       @infolexatlas
+
+# Optional: restrict critical paths
+src/app/kits/**   @infolexatlas
+src/lib/**        @infolexatlas
+.github/**        @infolexatlas
+
+
