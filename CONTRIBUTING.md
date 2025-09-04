@@ -47,4 +47,20 @@ This scans production dependencies, summarizes results, and fails on disallowed 
 
 For vulnerability reporting and response SLAs, see our [Security Policy](./SECURITY.md).
 
+## Visual Regression
+
+Run VR tests locally against a running production build:
+
+```bash
+npm run build && (npm start & echo $! > .next_pid) && npx wait-on http://127.0.0.1:3000 && BASE_URL=http://127.0.0.1:3000 npm run test:vr; kill -9 $(cat .next_pid) && rm .next_pid
+```
+
+Update snapshots after intentional UI changes:
+
+```bash
+BASE_URL=http://127.0.0.1:3000 npx playwright test -g @vr --update-snapshots
+```
+
+In CI, visual diffs are uploaded as the `playwright-visual-diffs` artifact. Open it to review differences; snapshots are not auto-updated in CI.
+
 
