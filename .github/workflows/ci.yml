@@ -171,6 +171,8 @@ jobs:
           NEXT_PUBLIC_PLAUSIBLE_DOMAIN: lexatlas.com
           STRIPE_SECRET_KEY: sk_test_dummy
         run: npm run build --if-present
+      - name: Bundle size (Size Limit)
+        run: npm run size
 
   e2e:
     runs-on: ubuntu-latest
@@ -191,6 +193,30 @@ jobs:
         env:
           BASE_URL: http://localhost:3000
         run: npm run test:e2e
+
+  analyze:
+    name: Bundle analyzer report
+    runs-on: ubuntu-latest
+    needs: ci
+    continue-on-error: true
+    strategy:
+      matrix:
+        node-version: [20.11.1]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm ci
+      - name: Build with analyzer
+        run: |
+          ANALYZE=true npm run build
+          tar -czf bundle-analyzer-report.tgz .next/analyze || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bundle-analyzer-report
+          path: bundle-analyzer-report.tgz
 
   visual:
     runs-on: ubuntu-latest

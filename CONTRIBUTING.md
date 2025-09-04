@@ -47,4 +47,38 @@ This scans production dependencies, summarizes results, and fails on disallowed 
 
 For vulnerability reporting and response SLAs, see our [Security Policy](./SECURITY.md).
 
+## Visual Regression
+
+Run VR tests locally against a running production build:
+
+```bash
+npm run build && (npm start & echo $! > .next_pid) && npx wait-on http://127.0.0.1:3000 && BASE_URL=http://127.0.0.1:3000 npm run test:vr; kill -9 $(cat .next_pid) && rm .next_pid
+```
+
+Update snapshots after intentional UI changes:
+
+```bash
+BASE_URL=http://127.0.0.1:3000 npx playwright test -g @vr --update-snapshots
+```
+
+In CI, visual diffs are uploaded as the `playwright-visual-diffs` artifact. Open it to review differences; snapshots are not auto-updated in CI.
+
+## Bundle size
+
+We enforce JS budgets with Size Limit and provide analyzer reports for PR review.
+
+- Run budgets locally:
+
+```bash
+npm run size
+```
+
+- Generate analyzer report:
+
+```bash
+npm run analyze
+```
+
+If a PR fails Size Limit, reduce payload or justify and adjust limits in `.size-limit.json` within the same PR, stating rationale and current measured sizes.
+
 

@@ -1,4 +1,6 @@
 import type { NextConfig } from "next";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const withBundleAnalyzer = require('@next/bundle-analyzer')({ enabled: process.env.ANALYZE === 'true' });
 // Sentry plugin wrapper (optional)
 // We use require here to avoid type dependency when the package is not yet installed
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -57,4 +59,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default maybeWithSentry(nextConfig);
+export default maybeWithSentry(withBundleAnalyzer(nextConfig));

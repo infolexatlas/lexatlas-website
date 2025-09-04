@@ -10,6 +10,9 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test:e2e": "playwright test",
     "lighthouse:ci": "lhci autorun",
+    "analyze": "ANALYZE=true next build",
+    "size": "size-limit",
+    "prebuild": "node -e \"process.exit(0)\""
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
@@ -34,7 +37,9 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@lhci/cli": "^0.13.0",
+    "@next/bundle-analyzer": "^15.5.2",
     "@playwright/test": "^1.45.0",
+    "@size-limit/file": "^11.2.0",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.7.0",
     "@testing-library/react": "^16.3.0",
@@ -50,6 +55,7 @@
     "lighthouse": "^12.8.2",
     "lint-staged": "^16.1.5",
     "prettier": "^3.6.2",
+    "size-limit": "^11.2.0",
     "tailwindcss": "^4",
     "typescript": "^5.4.0",
     "vitest": "^3.2.4"
