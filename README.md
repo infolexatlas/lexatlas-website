@@ -67,3 +67,27 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
   - `STRIPE_SECRET_KEY`: required if server-side Stripe is used
   - `BASE_URL`: optional (auto-computed)
 
+## Deployment guardrails (Vercel)
+
+- **Preview BASE_URL injection**: On Vercel, `BASE_URL` is computed as `https://$VERCEL_URL` during build if not already provided. This ensures absolute URLs work reliably in Preview (`VERCEL_ENV=preview`).
+- **Healthcheck**: `vercel.json` defines a probe hitting `/api/health` before marking the deployment ready.
+- **Env validation**: Build runs `scripts/validate-env.js`.
+  - Fails deployment on Preview/Production if any of the following are missing:
+    - `SENTRY_DSN`
+    - `STRIPE_SECRET_KEY` (if Stripe server calls are used)
+- **Sentry environments**:
+  - Sentry initializes only when `SENTRY_DSN` is set and environment is Preview or Production.
+  - `environment` is set from `VERCEL_ENV` (fallback `NODE_ENV`). Replays/errors are reported in Preview/Prod only.
+
+### Required environment variables
+
+- **Preview (`VERCEL_ENV=preview`)**:
+  - `SENTRY_DSN`: required
+  - `STRIPE_SECRET_KEY`: required if server-side Stripe is used
+  - `BASE_URL`: optional (auto-computed)
+
+- **Production (`VERCEL_ENV=production`)**:
+  - `SENTRY_DSN`: required
+  - `STRIPE_SECRET_KEY`: required if server-side Stripe is used
+  - `BASE_URL`: optional (auto-computed)
+
