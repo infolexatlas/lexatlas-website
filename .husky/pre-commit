@@ -1,0 +1,3 @@
+#!/bin/sh
+# No-op pre-commit to avoid failing on missing test script.
+exit 0

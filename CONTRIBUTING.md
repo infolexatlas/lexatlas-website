@@ -28,6 +28,14 @@ npm run scan:licenses      # license compliance scan (production deps)
 ## Commit Style
 - Conventional commits: `feat`, `fix`, `chore`, `docs`, `ci`, `test`, `refactor`, `perf`
 
+### Commit & PR style (Conventional Commits)
+
+Examples:
+- `feat(kits): add XYZ`
+- `fix(middleware): handle em dash in slugs`
+- `chore(ci): add Size Limit guardrails`
+- `docs: update README for Sentry setup`
+
 ## Secrets / Safety
 - Never commit secrets.
 - Use env vars documented in `README` and `.env.local.example`.
