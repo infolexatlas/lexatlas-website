@@ -14,16 +14,26 @@ jobs:
           node-version: 20.11.1
           cache: 'npm'
       - run: npm ci
-      - name: Kill port 3000 if occupied
+      # Kill anything on port 3000 just in case
+      - name: Free port 3000
         run: |
-          if lsof -i :3000 -sTCP:LISTEN -t >/dev/null ; then
-            kill -9 $(lsof -i :3000 -sTCP:LISTEN -t)
-          fi
-      - name: Run Lighthouse CI
-        run: npm run lighthouse:ci
+          (sudo lsof -ti:3000 | xargs -r kill -9) || true
+      # Build once (LHCI will only 'start')
+      - name: Build Next app
+        run: npm run build
         env:
+          NODE_ENV: production
           NEXT_PUBLIC_BASE_URL: http://localhost:3000
           NEXT_PUBLIC_PLAUSIBLE_DOMAIN: localhost
           STRIPE_SECRET_KEY: sk_test_dummy
+          SENTRY_SUPPRESS_GLOBAL_ERROR_HANDLER_FILE_WARNING: "1"
+      - name: Run Lighthouse CI
+        run: npm run lighthouse:ci
+        env:
+          NODE_ENV: production
+          NEXT_PUBLIC_BASE_URL: http://localhost:3000
+          NEXT_PUBLIC_PLAUSIBLE_DOMAIN: localhost
+          STRIPE_SECRET_KEY: sk_test_dummy
+          SENTRY_SUPPRESS_GLOBAL_ERROR_HANDLER_FILE_WARNING: "1"
 
 
