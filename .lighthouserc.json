@@ -5,7 +5,9 @@
         "http://127.0.0.1:3000/",
         "http://127.0.0.1:3000/kits/fra-usa"
       ],
-      "numberOfRuns": 2
+      "numberOfRuns": 1,
+      "startServerCommand": "",
+      "isSinglePageApplication": false
     },
     "assert": {
       "assertions": {

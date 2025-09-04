@@ -6,12 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "start:ci": "NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 SENTRY_SUPPRESS_GLOBAL_ERROR_HANDLER_FILE_WARNING=1 next start --hostname 127.0.0.1 --port 3000",
+    "start:ci": "next start --hostname 127.0.0.1 --port 3000",
     "lint": "next lint",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test:e2e": "playwright test",
-    "lighthouse:collect": "lhci collect --config=.lighthouserc.json",
-    "lighthouse:assert": "lhci assert --config=.lighthouserc.json",
+    "lighthouse:collect": "lhci collect",
+    "lighthouse:assert": "lhci assert",
     "lighthouse:ci": "npm run lighthouse:collect && npm run lighthouse:assert"
   },
   "dependencies": {
