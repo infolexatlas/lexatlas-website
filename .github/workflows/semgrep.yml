@@ -1,5 +1,4 @@
-name: "Semgrep"
-
+name: Semgrep (OSS)
 on:
   pull_request:
     branches: [main]
@@ -12,20 +11,37 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      security-events: write
     steps:
       - uses: actions/checkout@v4
-      - name: Run Semgrep (OSS rules)
+
+      # PRs: non-blocking (report-only)
+      - name: Semgrep scan (PR – non-blocking)
+        if: github.event_name == 'pull_request'
         uses: returntocorp/semgrep-action@v1
         with:
-          config: >-
+          config: >
             p/javascript
             p/typescript
           generateSarif: true
-      - name: Upload SARIF
-        if: ${{ !github.event.repository.private }}
-        uses: github/codeql-action/upload-sarif@v3
+        continue-on-error: true
+
+      # main: blocking
+      - name: Semgrep scan (main – blocking)
+        if: github.event_name != 'pull_request'
+        uses: returntocorp/semgrep-action@v1
         with:
-          sarif_file: semgrep.sarif
+          config: >
+            p/javascript
+            p/typescript
+          generateSarif: true
+
+      # keep SARIF for manual review
+      - name: Upload SARIF as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: semgrep-sarif
+          path: semgrep.sarif
+          if-no-files-found: ignore
 
 

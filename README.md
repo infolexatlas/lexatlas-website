@@ -42,8 +42,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
   - GitHub Actions updates run weekly on Mondays at 06:00 UTC.
   - Dependabot PRs are labeled `dependencies`.
 - **Security Scanning**: Static analysis for JavaScript/TypeScript.
-  - Public/GHAS-enabled repos: CodeQL runs on push/PR to `main` and weekly (Mon 07:00 UTC).
-  - Private repos without GHAS: Semgrep (OSS rules) runs on push/PR to `main`.
+  - For private repos on the free plan, we use Semgrep OSS on PRs (non-blocking) and on main (blocking). We can switch to CodeQL if GitHub Advanced Security is enabled.
 
 ## CI Performance
 
