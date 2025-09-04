@@ -15,35 +15,50 @@ jobs:
           cache: 'npm'
       - name: Install deps
         run: npm ci
+      - name: Print tool versions
+        run: |
+          node -v
+          npm -v
+          npx next -v || true
+          npx lhci --version || true
       - name: Build Next
         env:
           NODE_ENV: production
           NEXT_TELEMETRY_DISABLED: '1'
           SENTRY_SUPPRESS_GLOBAL_ERROR_HANDLER_FILE_WARNING: '1'
         run: npm run build
-      - name: Kill port 3000 if busy
+      - name: Free port 3000 if busy
         run: |
           if lsof -i:3000 -t >/dev/null 2>&1; then
             kill -9 $(lsof -i:3000 -t) || true
           fi
-      - name: Start Next in background
+      - name: Start Next (background) and capture logs
         env:
           NODE_ENV: production
           NEXT_TELEMETRY_DISABLED: '1'
           SENTRY_SUPPRESS_GLOBAL_ERROR_HANDLER_FILE_WARNING: '1'
           NEXT_PUBLIC_BASE_URL: 'http://127.0.0.1:3000'
         run: |
-          nohup npx next start --hostname 127.0.0.1 --port 3000 >/dev/null 2>&1 &
+          nohup npm run start:ci > .next_stdout.log 2> .next_stderr.log &
           echo $! > .next_pid
       - name: Wait for server (127.0.0.1:3000)
-        run: npx wait-on http://127.0.0.1:3000
+        run: npx wait-on --timeout 240000 --httpTimeout 15000 http://127.0.0.1:3000
       - name: Run Lighthouse CI (collect + assert)
         env:
           NODE_ENV: production
           NEXT_TELEMETRY_DISABLED: '1'
           SENTRY_SUPPRESS_GLOBAL_ERROR_HANDLER_FILE_WARNING: '1'
           LHCI_COLLECT_SETTINGS_CHROME_FLAGS: "--no-sandbox --disable-dev-shm-usage --ignore-certificate-errors --allow-insecure-localhost"
-        run: npm run lighthouse:ci
+        run: |
+          set -e
+          npm run lighthouse:ci
+      - name: Debug dump on failure
+        if: failure()
+        run: |
+          echo "---- NEXT STDOUT (tail) ----"
+          tail -n 200 .next_stdout.log || true
+          echo "---- NEXT STDERR (tail) ----"
+          tail -n 200 .next_stderr.log || true
       - name: Cleanup server
         if: always()
         run: |
