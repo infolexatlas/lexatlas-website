@@ -9,7 +9,9 @@
     "lint": "next lint",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test:e2e": "playwright test",
-    "lighthouse:ci": "lhci autorun"
+    "lighthouse:collect": "lhci collect --config=.lighthouserc.json",
+    "lighthouse:assert": "lhci assert --config=.lighthouserc.json",
+    "lighthouse:ci": "npm run lighthouse:collect && npm run lighthouse:assert"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
@@ -51,6 +53,7 @@
     "prettier": "^3.6.2",
     "tailwindcss": "^4",
     "typescript": "^5.4.0",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "wait-on": "^7.2.0"
   }
 }
