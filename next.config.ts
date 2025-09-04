@@ -1,4 +1,16 @@
 import type { NextConfig } from "next";
+// Sentry plugin wrapper (optional)
+// We use require here to avoid type dependency when the package is not yet installed
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const maybeWithSentry = (() => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { withSentryConfig } = require("@sentry/nextjs");
+    return (config: NextConfig) => withSentryConfig(config, { silent: true });
+  } catch {
+    return (config: NextConfig) => config;
+  }
+})();
 
 /**
  * Add modern security headers.
@@ -45,4 +57,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default maybeWithSentry(nextConfig);
