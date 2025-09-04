@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "buildCommand": "sh ./scripts/vercel-build.sh",
+  "probes": [
+    {
+      "path": "/api/health",
+      "method": "GET",
+      "interval": 5000,
+      "timeout": 3000,
+      "initialDelay": 0,
+      "status": 200,
+      "tries": 10
+    }
+  ],
+  "env": {
+    "NEXT_TELEMETRY_DISABLED": "1"
+  },
+  "build": {
+    "env": {
+      "NEXT_TELEMETRY_DISABLED": "1"
+    }
+  },
+  "functions": {
+    "api/**/*": {
+      "maxDuration": 10
+    }
+  }
+}
+
