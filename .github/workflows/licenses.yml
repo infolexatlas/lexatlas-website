@@ -21,15 +21,19 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencies
+      - name: Install dependencies (including dev)
         run: |
-          npm ci
+          npm ci --include=dev
 
       - name: Run license scan
         run: |
           echo "Running license scan (production deps, fail on GPL)..."
-          npm run scan:licenses || {
+          npx --no-install license-checker-rseidelsohn --production --summary --failOn 'GPL' --excludePackages 'some-whitelisted-package' || {
             echo "\nDisallowed licenses detected. See summary above for offending packages.";
+            # Also print a detailed list for readability
+            echo "\nOffending packages (detailed):";
+            npx --no-install license-checker-rseidelsohn --production --json | jq -r 
+              'to_entries[] | select(.value.licenses|tostring|test("GPL")) | "- \(.key) (license: \(.value.licenses))"' || true;
             exit 1;
           }
 
