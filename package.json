@@ -10,8 +10,6 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test:e2e": "playwright test",
     "lighthouse:ci": "lhci autorun",
-    "scan:licenses": "license-checker-rseidelsohn --production --summary --failOn 'GPL' --excludePackages 'some-whitelisted-package'",
-    "test:vr": "playwright test -g @vr"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
