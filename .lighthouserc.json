@@ -1,9 +1,6 @@
 {
   "ci": {
     "collect": {
-      "startServerCommand": "next start -p 3000",
-      "startServerReadyPattern": "Local:\\s*http://localhost:3000|started server on|ready - started server on",
-      "startServerReadyTimeout": 180000,
       "url": [
         "http://localhost:3000/",
         "http://localhost:3000/kits/fra-can"
