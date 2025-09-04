@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /checkout
+Allow: /
+
+Sitemap: https://lexatlas.com/sitemap.xml
+
+
