@@ -35,6 +35,19 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
+## Security & Maintenance
+
+- **Dependabot**: Automatically monitors and updates dependencies.
+  - npm updates run daily at 06:00 UTC with grouped minor/patch updates.
+  - GitHub Actions updates run weekly on Mondays at 06:00 UTC.
+  - Dependabot PRs are labeled `dependencies`.
+- **CodeQL**: Static analysis security scanning for JavaScript/TypeScript.
+  - Runs on push and pull requests targeting `main`, and weekly on Monday 07:00 UTC.
+
+## CI Performance
+
+- The CI workflow caches Next.js build artifacts at `.next/cache` to speed up subsequent builds. The cache key includes OS, `package-lock.json`, `tsconfig.json`, Next config, and source `.ts/.tsx` files to ensure correctness while maximizing reuse.
+
 ## Observability
 
 - **Sentry**: Initialized via `instrumentation.ts` (App Router).
