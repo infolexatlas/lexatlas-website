@@ -3,7 +3,7 @@
     "collect": {
       "url": [
         "http://127.0.0.1:3000/",
-        "http://127.0.0.1:3000/kits/fra-can"
+        "http://127.0.0.1:3000/kits/fra-usa"
       ],
       "numberOfRuns": 2
     },

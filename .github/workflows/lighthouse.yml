@@ -41,8 +41,12 @@ jobs:
         run: |
           nohup npm run start:ci > .next_stdout.log 2> .next_stderr.log &
           echo $! > .next_pid
-      - name: Wait for server (127.0.0.1:3000)
-        run: npx wait-on --timeout 240000 --httpTimeout 15000 http://127.0.0.1:3000
+      - name: Wait for server health
+        run: npx wait-on --timeout 240000 --httpTimeout 15000 http://127.0.0.1:3000/api/health
+      - name: Sanity check health
+        run: |
+          curl -sf http://127.0.0.1:3000/api/health | head -c 200
+          echo
       - name: Run Lighthouse CI (collect + assert)
         env:
           NODE_ENV: production
