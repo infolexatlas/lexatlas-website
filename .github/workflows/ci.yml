@@ -245,7 +245,8 @@ jobs:
           NODE_ENV: production
         run: |
           npx kill-port 3000 || true
-          npx playwright install --with-deps chromium chromium-headless-shell
+          export PLAYWRIGHT_CHROMIUM_USE_HEADLESS_SHELL=0
+          npx playwright install --with-deps chromium
           (npm start & echo $! > .next_pid) &
           npx wait-on http://127.0.0.1:3000 --timeout 180000
           BASE_URL=http://127.0.0.1:3000 npm run test:vr
