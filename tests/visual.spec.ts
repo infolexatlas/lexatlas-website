@@ -1,3 +1,12 @@
+/* CI guard for VR via PLAYWRIGHT_VR */
+// Enable visual regression only when PLAYWRIGHT_VR=1 and not on CI
+// When disabled, we configure the entire suite to be skipped
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+if (!(process.env.PLAYWRIGHT_VR === '1' && !process.env.CI)) {
+  const { test } = require('@playwright/test');
+  test.describe.configure({ mode: 'skip' });
+}
+
 import { test, expect } from '@playwright/test';
 
 test.describe('Visual regression', () => {

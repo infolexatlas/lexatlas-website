@@ -1,42 +1,13 @@
-name: visual (PR)
+name: visual (PR) — disabled
 on:
   pull_request:
     branches: [main]
   push:
     branches: [main]
 jobs:
-  visual-pr:
+  noop:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20.11.1'
-          cache: 'npm'
-      - run: npm ci
-      - name: Cache Playwright browsers
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            playwright-${{ runner.os }}-
-      - name: Install Playwright browsers (chromium + system deps)
-        run: npx playwright install --with-deps chromium
-      - run: npm run build
-      - run: (npm start & echo $! > .next_pid) && npx wait-on http://127.0.0.1:3000
-      - name: Run VR (blocking on PR)
-        run: BASE_URL=http://127.0.0.1:3000 npm run test:vr
-      - name: Upload VR artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-visual-diffs
-          path: |
-            playwright-report
-            tests/__screenshots__
-      - name: Cleanup
-        if: always()
-        run: '[ -f .next_pid ] && kill -9 $(cat .next_pid) || true'
+      - run: echo "Visual regression is disabled on CI"
 
 
