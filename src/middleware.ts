@@ -1,32 +1,68 @@
 import { NextResponse, NextRequest } from 'next/server';
 
-// Normalize "kits" slug:
-// - lowercase
-// - replace "_" with "-"
-// - collapse "-6" between country codes (e.g., FRA-6CAN -> fra-can)
-// - leave invalid patterns alone (pass through)
+const IGNORE_PREFIXES = [
+  '/_next',
+  '/static',
+  '/assets',
+  '/api',
+  '/favicon',
+  '/robots.txt',
+  '/sitemap.xml',
+];
+
+function normalizeKitsPath(pathname: string): string | null {
+  if (!pathname.startsWith('/kits/')) return null;
+
+  // Collapse multiple slashes in the path portion
+  let collapsed = pathname.replace(/\/+/g, '/');
+
+  // Extract slug part after /kits/
+  const rest = collapsed.slice('/kits/'.length);
+
+  // Remove trailing slashes from slug (but not removing /kits/ root itself)
+  let slug = rest.replace(/\/+$/, '');
+
+  // Lowercase and convert underscores to hyphens; collapse multiple hyphens; trim hyphens
+  slug = slug
+    .toLowerCase()
+    .replace(/_/g, '-')
+    .replace(/--+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+  // Special legacy alias: FRA-6CAN -> fra-can
+  if (slug === 'fra-6can') slug = 'fra-can';
+
+  const normalizedPath = '/kits/' + slug;
+  return normalizedPath;
+}
+
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  if (!pathname.startsWith('/kits/')) return;
 
-  const [, , raw = ''] = pathname.split('/'); // ["", "kits", "<slug>"]
-  if (!raw) return;
+  // Ignore non-app/static routes explicitly
+  if (IGNORE_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + '/'))) {
+    return NextResponse.next();
+  }
 
-  const norm = raw
-    .toLowerCase()
-    .replaceAll('_', '-')
-    .replace(/(^[a-z]{3})-6([a-z]{3}$)/i, '$1-$2'); // FRA-6CAN -> fra-can
+  if (!pathname.startsWith('/kits/')) return NextResponse.next();
 
-  if (norm !== raw.toLowerCase()) {
+  const normalized = normalizeKitsPath(pathname);
+  // Compare against pathname without trailing slashes
+  const current = pathname.replace(/\/+$/, '');
+
+  if (normalized && normalized !== current) {
     const url = req.nextUrl.clone();
-    url.pathname = `/kits/${norm}`;
-    // 308 permanent preserves query automatically in NextResponse.redirect
+    url.pathname = normalized;
+    // Query string is preserved by cloning. Fragments are not available server-side.
     return NextResponse.redirect(url, 308);
   }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/kits/:path*'],
+  // Restrict to app paths, but we still guard inside to only act on /kits/
+  matcher: ['/((?!_next|static|assets|api|favicon\\.ico|robots\\.txt|sitemap\\.xml).*)'],
 };
 
 

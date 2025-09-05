@@ -14,6 +14,14 @@ test.describe('kits canonical redirects', () => {
     expect(res.headers()['location']).toBe('/kits/fra-usa');
   });
 
+  test('uppercase, trailing slash and hash normalize; preserves query', async ({ context }) => {
+    const res = await context.request.get('/kits/FRA-CAN/?a=1#h');
+    expect(res.status()).toBe(308);
+    const loc = res.headers()['location'];
+    // FRA-CAN should lowercase to fra-can (existing slug) and preserve query
+    expect(loc).toBe('/kits/fra-can?a=1');
+  });
+
   test('invalid pair passes through', async ({ context }) => {
     const res = await context.request.get('/kits/abc-def-xyz');
     expect([200, 404]).toContain(res.status());
