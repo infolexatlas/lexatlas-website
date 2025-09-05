@@ -1,23 +1,33 @@
-import { defineConfig, devices } from '@playwright/test';
+import type { PlaywrightTestConfig } from '@playwright/test';
 
-export default defineConfig({
-  testDir: 'tests',
-  timeout: 30_000,
-  expect: {
-    toMatchSnapshot: { threshold: 0.2 },
-    toHaveScreenshot: { maxDiffPixelRatio: 0.01 },
-  },
+const config: PlaywrightTestConfig = {
+  // Keep Playwright defaults for snapshot paths (no snapshotPathTemplate)
+  testDir: './',
+  projects: [
+    {
+      name: 'chromium',
+      use: {
+        browserName: 'chromium',
+      },
+    },
+  ],
   use: {
+    browserName: 'chromium',
     baseURL: process.env.BASE_URL || 'http://127.0.0.1:3000',
-    headless: true,
-    viewport: { width: 1366, height: 768 },
-    deviceScaleFactor: 1,
     timezoneId: 'UTC',
     locale: 'en-US',
+    viewport: { width: 1280, height: 800 },
     colorScheme: 'light',
+    ignoreHTTPSErrors: true,
+    launchOptions: { args: ['--disable-dev-shm-usage'] },
   },
-  projects: [
-    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
-  ],
-  reporter: [['list']],
-});
+  expect: {
+    toHaveScreenshot: {
+      animations: 'disabled',
+      caret: 'hide',
+      maxDiffPixelRatio: 0.01,
+    },
+  },
+};
+
+export default config;
