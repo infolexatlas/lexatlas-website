@@ -28,9 +28,11 @@ test.describe('prod headers, robots, sitemap @prod-headers-robots', () => {
   test('wp-sitemap.xml redirects to /sitemap.xml', async () => {
     const api = await request.newContext();
     const res = await api.get(`${BASE_URL}/wp-sitemap.xml`, { maxRedirects: 0 });
-    expect([301, 308]).toContain(res.status());
-    const loc = res.headers()['location'] || res.headers()['Location'] || '';
-    expect(loc).toBe('/sitemap.xml');
+    expect(res.status()).toBe(308);
+    const loc = res.headers()['location'] as string;
+    // Normalize to pathname+query (ignore host differences)
+    const u = new URL(loc, BASE_URL);
+    expect(u.pathname + u.search).toBe('/sitemap.xml');
   });
 });
 
