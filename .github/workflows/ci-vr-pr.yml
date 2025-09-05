@@ -14,8 +14,15 @@ jobs:
           node-version: '20.11.1'
           cache: 'npm'
       - run: npm ci
-      - name: Install Playwright browsers (+ system deps)
-        uses: microsoft/playwright-github-action@v1
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
+      - name: Install Playwright browsers (chromium + system deps)
+        run: npx playwright install --with-deps chromium
       - run: npm run build
       - run: (npm start & echo $! > .next_pid) && npx wait-on http://127.0.0.1:3000
       - name: Run VR (blocking on PR)

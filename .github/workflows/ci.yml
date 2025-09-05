@@ -187,8 +187,15 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
-      - name: Install Playwright browsers (+ system deps)
-        uses: microsoft/playwright-github-action@v1
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
+      - name: Install Playwright browsers (chromium + system deps)
+        run: npx playwright install --with-deps chromium
       - name: Run Playwright tests
         env:
           BASE_URL: http://localhost:3000
@@ -209,8 +216,15 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
-      - name: Install Playwright browsers (+ system deps)
-        uses: microsoft/playwright-github-action@v1
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
+      - name: Install Playwright browsers (chromium + system deps)
+        run: npx playwright install --with-deps chromium
       - name: Build with analyzer
         run: |
           ANALYZE=true npm run build
@@ -241,8 +255,8 @@ jobs:
           key: playwright-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             playwright-${{ runner.os }}-
-      - name: Install Playwright browsers (+ system deps)
-        uses: microsoft/playwright-github-action@v1
+      - name: Install Playwright browsers (chromium + system deps)
+        run: npx playwright install --with-deps chromium
       - name: Build app
         env:
           NODE_ENV: production
@@ -285,8 +299,15 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
-      - name: Install Playwright browsers (+ system deps)
-        uses: microsoft/playwright-github-action@v1
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
+      - name: Install Playwright browsers (chromium + system deps)
+        run: npx playwright install --with-deps chromium
       - name: Build app
         env:
           NODE_ENV: production
