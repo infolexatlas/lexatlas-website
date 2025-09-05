@@ -9,6 +9,7 @@
     "lint": "next lint",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test:e2e": "playwright test",
+    "check:prod-local": "(npx kill-port 3000 || true) && (npm start & echo $! > .next_pid) && npx wait-on http://127.0.0.1:3000 --timeout 180000 && echo '--- HEADERS / ---' && curl -sI http://127.0.0.1:3000/ | cat && echo '\n--- ROBOTS ---' && curl -s http://127.0.0.1:3000/robots.txt | cat && echo '\n--- WP-SITEMAP ---' && curl -sI http://127.0.0.1:3000/wp-sitemap.xml | cat && (kill -9 $(cat .next_pid) || true) && rm -f .next_pid",
     "lighthouse:ci": "lhci autorun",
     "analyze": "ANALYZE=true next build",
     "size": "size-limit",
