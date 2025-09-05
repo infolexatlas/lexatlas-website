@@ -4,7 +4,8 @@ on:
   pull_request:
   push:
     branches:
-      - chore/prod-headers-robots-sitemap
+      - main
+      - fix/vr-baselines
 
 jobs:
   vr:
