@@ -12,7 +12,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20.11.1'
+          cache: 'npm'
       - run: npm ci
+      - name: Install Playwright browsers (+ system deps)
+        uses: microsoft/playwright-github-action@v1
       - run: npm run build
       - run: (npm start & echo $! > .next_pid) && npx wait-on http://127.0.0.1:3000
       - name: Run VR (blocking on PR)

@@ -74,6 +74,14 @@ In CI, visual diffs are uploaded as the `playwright-visual-diffs` artifact. Open
 
 - On PRs, VR is blocking. If your change updates UI intentionally, include the updated snapshots in the PR.
 
+If tests complain about missing browsers locally, install Playwright browsers:
+
+```bash
+npx playwright install
+# On Linux with missing system deps:
+npx playwright install --with-deps
+```
+
 ## Bundle size
 
 We enforce JS budgets with Size Limit and provide analyzer reports for PR review.
