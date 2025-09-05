@@ -38,32 +38,11 @@ jobs:
       - name: Install Playwright browsers (Chromium only)
         run: npx playwright install --with-deps chromium
 
-      - name: Seed snapshots if missing
-        shell: bash
-        run: |
-          set -euo pipefail
-          SNAP_DIR="tests/visual.spec.ts-snapshots"
-          if [ ! -d "$SNAP_DIR" ] || [ -z "$(ls -A "$SNAP_DIR" 2>/dev/null || true)" ]; then
-            echo "No baselines found in $SNAP_DIR — seeding with --update-snapshots"
-            BASE_URL=http://127.0.0.1:3000 npx playwright test tests/visual.spec.ts -g @vr --update-snapshots
-          else
-            echo "Baselines present, skipping seeding."
-          fi
-
       - name: Run visual regression (compare)
         env:
           BASE_URL: http://127.0.0.1:3000
         run: |
           npx playwright test tests/visual.spec.ts -g @vr
-
-      - name: Upload VR baselines (artifact)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-vr-baselines
-          path: tests/visual.spec.ts-snapshots
-          if-no-files-found: ignore
-          retention-days: 7
 
       - name: Upload VR results (artifact)
         if: failure() || cancelled()
