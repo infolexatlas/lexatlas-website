@@ -7,15 +7,18 @@ const config: PlaywrightTestConfig = {
   snapshotDir: './tests/__screenshots__',
   expect: {
     toMatchSnapshot: { threshold: 0.2 },
+    snapshotPathTemplate: '{testDir}/__screenshots__/{testFileName}-snapshots/{arg}.png',
   },
   use: {
+    browserName: 'chromium',
     headless: true,
     baseURL: process.env.BASE_URL || 'http://localhost:3000',
-    viewport: { width: 1280, height: 800 },
+    viewport: { width: 1366, height: 768 },
     deviceScaleFactor: 1,
-    colorScheme: 'light',
     timezoneId: 'UTC',
+    geolocation: undefined,
     locale: 'en-US',
+    colorScheme: 'light',
     permissions: [],
     screenshot: 'only-on-failure',
     video: 'off',
@@ -29,11 +32,6 @@ const config: PlaywrightTestConfig = {
   },
   projects: [
     { name: 'chromium', use: { browserName: 'chromium', headless: true, ...devices['Desktop Chrome'] } },
-    {
-      name: 'visual',
-      grep: /@vr/,
-      use: { browserName: 'chromium', headless: true, ...devices['Desktop Chrome'] },
-    },
   ],
 };
 
