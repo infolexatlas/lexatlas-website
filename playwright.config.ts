@@ -17,7 +17,6 @@ const config: PlaywrightTestConfig = {
     timezoneId: 'UTC',
     locale: 'en-US',
     permissions: [],
-    animations: 'disabled',
     screenshot: 'only-on-failure',
     video: 'off',
   },

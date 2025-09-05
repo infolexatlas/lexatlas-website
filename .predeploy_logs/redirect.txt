@@ -1,0 +1,16 @@
+http/1.1 404 not found
+strict-transport-security: max-age=63072000; includesubdomains; preload
+x-content-type-options: nosniff
+referrer-policy: strict-origin-when-cross-origin
+permissions-policy: camera=(), microphone=(), geolocation=()
+content-security-policy-report-only: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' plausible.io js.stripe.com; connect-src 'self' plausible.io api.stripe.com; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; frame-src js.stripe.com
+cache-control: private, no-cache, no-store, max-age=0, must-revalidate
+vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, accept-encoding
+link: </_next/static/media/569ce4b8f30dc480-s.p.woff2>; rel=preload; as="font"; crossorigin=""; type="font/woff2", </_next/static/media/93f479601ee12b01-s.p.woff2>; rel=preload; as="font"; crossorigin=""; type="font/woff2"
+x-powered-by: next.js
+content-type: text/html; charset=utf-8
+date: fri, 05 sep 2025 10:21:45 gmt
+connection: keep-alive
+keep-alive: timeout=5
+transfer-encoding: chunked
+

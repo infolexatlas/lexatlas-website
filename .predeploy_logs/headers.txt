@@ -1,0 +1,20 @@
+http/1.1 200 ok
+strict-transport-security: max-age=63072000; includesubdomains; preload
+x-content-type-options: nosniff
+referrer-policy: strict-origin-when-cross-origin
+permissions-policy: camera=(), microphone=(), geolocation=()
+content-security-policy-report-only: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' plausible.io js.stripe.com; connect-src 'self' plausible.io api.stripe.com; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; frame-src js.stripe.com
+vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, accept-encoding
+x-nextjs-cache: hit
+x-nextjs-prerender: 1
+x-nextjs-prerender: 1
+x-nextjs-stale-time: 300
+x-powered-by: next.js
+cache-control: s-maxage=31536000
+etag: "guwmso4lkaa1b"
+content-type: text/html; charset=utf-8
+content-length: 13011
+date: fri, 05 sep 2025 10:21:45 gmt
+connection: keep-alive
+keep-alive: timeout=5
+

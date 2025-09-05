@@ -1,0 +1,166 @@
+
+Running 9 tests using 3 workers
+
+  ✓  1 [chromium] › tests/e2e.spec.ts:4:5 › home renders without errors (477ms)
+  ✓  4 [chromium] › tests/e2e.spec.ts:15:5 › unknown route shows 404 page (161ms)
+  ✓  5 [chromium] › tests/e2e.spec.ts:21:5 › home has a non-empty page title (147ms)
+  ✘  3 [visual] › tests/visual.spec.ts:4:7 › Visual regression › home @vr (1.1s)
+  ✘  2 [chromium] › tests/visual.spec.ts:4:7 › Visual regression › home @vr (1.2s)
+  ✘  7 [chromium] › tests/visual.spec.ts:15:7 › Visual regression › kits fra-usa @vr (962ms)
+  ✘  6 [visual] › tests/visual.spec.ts:15:7 › Visual regression › kits fra-usa @vr (957ms)
+  ✘  8 [chromium] › tests/visual.spec.ts:21:7 › Visual regression › kits fra-can @vr (955ms)
+  ✘  9 [visual] › tests/visual.spec.ts:21:7 › Visual regression › kits fra-can @vr (955ms)
+
+
+  1) [chromium] › tests/visual.spec.ts:4:7 › Visual regression › home @vr ──────────────────────────
+
+    Error: A snapshot doesn't exist at /Users/alexandreott/Documents/LexAtlas/SITE WEB/tests/__screenshots__/visual.spec.ts-snapshots/home-full-chromium-darwin.png, writing actual.
+
+      10 |         ?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+      11 |     );
+    > 12 |     await expect(page).toHaveScreenshot('home-full.png', { fullPage: true });
+         |     ^
+      13 |   });
+      14 |
+      15 |   test('kits fra-usa @vr', async ({ page }) => {
+        at /Users/alexandreott/Documents/LexAtlas/SITE WEB/tests/visual.spec.ts:12:5
+
+    attachment #1: home-full (image/png) ───────────────────────────────────────────────────────────
+    Expected: tests/__screenshots__/visual.spec.ts-snapshots/home-full-chromium-darwin.png
+    Received: test-results/visual-Visual-regression-home-vr-chromium/home-full-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/visual-Visual-regression-home-vr-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/visual-Visual-regression-home-vr-chromium/error-context.md
+
+  2) [chromium] › tests/visual.spec.ts:15:7 › Visual regression › kits fra-usa @vr ─────────────────
+
+    Error: A snapshot doesn't exist at /Users/alexandreott/Documents/LexAtlas/SITE WEB/tests/__screenshots__/visual.spec.ts-snapshots/kits-fra-usa-full-chromium-darwin.png, writing actual.
+
+      16 |     await page.goto('/kits/fra-usa');
+      17 |     await page.waitForLoadState('networkidle');
+    > 18 |     await expect(page).toHaveScreenshot('kits-fra-usa-full.png', { fullPage: true });
+         |     ^
+      19 |   });
+      20 |
+      21 |   test('kits fra-can @vr', async ({ page }) => {
+        at /Users/alexandreott/Documents/LexAtlas/SITE WEB/tests/visual.spec.ts:18:5
+
+    attachment #1: kits-fra-usa-full (image/png) ───────────────────────────────────────────────────
+    Expected: tests/__screenshots__/visual.spec.ts-snapshots/kits-fra-usa-full-chromium-darwin.png
+    Received: test-results/visual-Visual-regression-kits-fra-usa-vr-chromium/kits-fra-usa-full-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/visual-Visual-regression-kits-fra-usa-vr-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/visual-Visual-regression-kits-fra-usa-vr-chromium/error-context.md
+
+  3) [chromium] › tests/visual.spec.ts:21:7 › Visual regression › kits fra-can @vr ─────────────────
+
+    Error: A snapshot doesn't exist at /Users/alexandreott/Documents/LexAtlas/SITE WEB/tests/__screenshots__/visual.spec.ts-snapshots/kits-fra-can-full-chromium-darwin.png, writing actual.
+
+      22 |     await page.goto('/kits/fra-can');
+      23 |     await page.waitForLoadState('networkidle');
+    > 24 |     await expect(page).toHaveScreenshot('kits-fra-can-full.png', { fullPage: true });
+         |     ^
+      25 |   });
+      26 | });
+      27 |
+        at /Users/alexandreott/Documents/LexAtlas/SITE WEB/tests/visual.spec.ts:24:5
+
+    attachment #1: kits-fra-can-full (image/png) ───────────────────────────────────────────────────
+    Expected: tests/__screenshots__/visual.spec.ts-snapshots/kits-fra-can-full-chromium-darwin.png
+    Received: test-results/visual-Visual-regression-kits-fra-can-vr-chromium/kits-fra-can-full-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/visual-Visual-regression-kits-fra-can-vr-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/visual-Visual-regression-kits-fra-can-vr-chromium/error-context.md
+
+  4) [visual] › tests/visual.spec.ts:4:7 › Visual regression › home @vr ────────────────────────────
+
+    Error: A snapshot doesn't exist at /Users/alexandreott/Documents/LexAtlas/SITE WEB/tests/__screenshots__/visual.spec.ts-snapshots/home-full-visual-darwin.png, writing actual.
+
+      10 |         ?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+      11 |     );
+    > 12 |     await expect(page).toHaveScreenshot('home-full.png', { fullPage: true });
+         |     ^
+      13 |   });
+      14 |
+      15 |   test('kits fra-usa @vr', async ({ page }) => {
+        at /Users/alexandreott/Documents/LexAtlas/SITE WEB/tests/visual.spec.ts:12:5
+
+    attachment #1: home-full (image/png) ───────────────────────────────────────────────────────────
+    Expected: tests/__screenshots__/visual.spec.ts-snapshots/home-full-visual-darwin.png
+    Received: test-results/visual-Visual-regression-home-vr-visual/home-full-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/visual-Visual-regression-home-vr-visual/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/visual-Visual-regression-home-vr-visual/error-context.md
+
+  5) [visual] › tests/visual.spec.ts:15:7 › Visual regression › kits fra-usa @vr ───────────────────
+
+    Error: A snapshot doesn't exist at /Users/alexandreott/Documents/LexAtlas/SITE WEB/tests/__screenshots__/visual.spec.ts-snapshots/kits-fra-usa-full-visual-darwin.png, writing actual.
+
+      16 |     await page.goto('/kits/fra-usa');
+      17 |     await page.waitForLoadState('networkidle');
+    > 18 |     await expect(page).toHaveScreenshot('kits-fra-usa-full.png', { fullPage: true });
+         |     ^
+      19 |   });
+      20 |
+      21 |   test('kits fra-can @vr', async ({ page }) => {
+        at /Users/alexandreott/Documents/LexAtlas/SITE WEB/tests/visual.spec.ts:18:5
+
+    attachment #1: kits-fra-usa-full (image/png) ───────────────────────────────────────────────────
+    Expected: tests/__screenshots__/visual.spec.ts-snapshots/kits-fra-usa-full-visual-darwin.png
+    Received: test-results/visual-Visual-regression-kits-fra-usa-vr-visual/kits-fra-usa-full-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/visual-Visual-regression-kits-fra-usa-vr-visual/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/visual-Visual-regression-kits-fra-usa-vr-visual/error-context.md
+
+  6) [visual] › tests/visual.spec.ts:21:7 › Visual regression › kits fra-can @vr ───────────────────
+
+    Error: A snapshot doesn't exist at /Users/alexandreott/Documents/LexAtlas/SITE WEB/tests/__screenshots__/visual.spec.ts-snapshots/kits-fra-can-full-visual-darwin.png, writing actual.
+
+      22 |     await page.goto('/kits/fra-can');
+      23 |     await page.waitForLoadState('networkidle');
+    > 24 |     await expect(page).toHaveScreenshot('kits-fra-can-full.png', { fullPage: true });
+         |     ^
+      25 |   });
+      26 | });
+      27 |
+        at /Users/alexandreott/Documents/LexAtlas/SITE WEB/tests/visual.spec.ts:24:5
+
+    attachment #1: kits-fra-can-full (image/png) ───────────────────────────────────────────────────
+    Expected: tests/__screenshots__/visual.spec.ts-snapshots/kits-fra-can-full-visual-darwin.png
+    Received: test-results/visual-Visual-regression-kits-fra-can-vr-visual/kits-fra-can-full-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/visual-Visual-regression-kits-fra-can-vr-visual/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/visual-Visual-regression-kits-fra-can-vr-visual/error-context.md
+
+  6 failed
+    [chromium] › tests/visual.spec.ts:4:7 › Visual regression › home @vr ───────────────────────────
+    [chromium] › tests/visual.spec.ts:15:7 › Visual regression › kits fra-usa @vr ──────────────────
+    [chromium] › tests/visual.spec.ts:21:7 › Visual regression › kits fra-can @vr ──────────────────
+    [visual] › tests/visual.spec.ts:4:7 › Visual regression › home @vr ─────────────────────────────
+    [visual] › tests/visual.spec.ts:15:7 › Visual regression › kits fra-usa @vr ────────────────────
+    [visual] › tests/visual.spec.ts:21:7 › Visual regression › kits fra-can @vr ────────────────────
+  3 passed (5.4s)
