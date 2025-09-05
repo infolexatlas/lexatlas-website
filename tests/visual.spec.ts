@@ -1,5 +1,11 @@
 import { test, expect } from '@playwright/test';
 
+const VR_ENABLED = process.env.PLAYWRIGHT_VR === '1' && !process.env.CI;
+
+if (!VR_ENABLED) {
+  test.skip(true, 'VR disabled on CI');
+}
+
 test.describe('Visual regression', () => {
   test('home @vr', async ({ page }) => {
     await page.goto('/');

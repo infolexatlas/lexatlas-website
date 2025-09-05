@@ -41,3 +41,9 @@ test-results/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+!tests/visual.spec.ts-snapshots/**
+!tests/**/__snapshots__/**
+!tests/**/__screenshots__/**
+# Track Playwright VR baselines
+!tests/**/*.spec.ts-snapshots/
+!tests/**/*.spec.ts-snapshots/*.png
