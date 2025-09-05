@@ -221,6 +221,7 @@ jobs:
   visual:
     runs-on: ubuntu-latest
     needs: ci
+    if: github.event_name == 'push'
     strategy:
       matrix:
         node-version: [20.11.1]
@@ -266,6 +267,7 @@ jobs:
     name: Production headers/robots checks
     runs-on: ubuntu-latest
     needs: ci
+    if: always()
     strategy:
       matrix:
         node-version: [20.11.1]
@@ -277,7 +279,7 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps chromium
       - name: Build app
         env:
           NODE_ENV: production
