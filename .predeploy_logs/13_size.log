@@ -1,0 +1,13 @@
+
+> lexatlas-website@0.1.0 size
+> size-limit
+
+  
+  Client JS (gzip)
+  Package size limit has exceeded by 6.71 kB
+  Size limit: 200 kB
+  Size:       206.71 kB brotlied
+  
+  App entry (gzip)
+  Size Limit can’t find files at .next/static/chunks/app-*.js
+  Try to reduce size or increase limit at .size-limit.json

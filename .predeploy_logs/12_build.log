@@ -1,0 +1,41 @@
+
+> lexatlas-website@0.1.0 prebuild
+> node -e "process.exit(0)"
+
+
+> lexatlas-website@0.1.0 build
+> node ./scripts/validate-env.js && next build
+
+Environment validation passed.
+   ▲ Next.js 15.4.6
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · clientTraceMetadata
+
+   Creating an optimized production build ...
+[@sentry/nextjs] The Sentry SDK has enabled source map generation for your Next.js app. If you don't want to serve Source Maps to your users, either set the `sourcemaps.deleteSourcemapsAfterUpload` option to true, or manually delete the source maps after the build. In future Sentry SDK versions `sourcemaps.deleteSourcemapsAfterUpload` will default to `true`. If you do not want to generate and upload sourcemaps, set the `sourcemaps.disable` option in `withSentryConfig()`.
+ ✓ Compiled successfully in 4.0s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/7) ...
+   Generating static pages (1/7) 
+   Generating static pages (3/7) 
+   Generating static pages (5/7) 
+ ✓ Generating static pages (7/7)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    5.75 kB         106 kB
+├ ○ /_not-found                          1.14 kB         101 kB
+├ ƒ /api/health                            294 B         101 kB
+└ ○ /sitemap.xml                           293 B         101 kB
++ First Load JS shared by all             100 kB
+  ├ chunks/4bd1b696-55444e09b7bf787c.js  54.3 kB
+  ├ chunks/964-b989a34c6822fdd8.js       43.7 kB
+  └ other shared chunks (total)          2.32 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
