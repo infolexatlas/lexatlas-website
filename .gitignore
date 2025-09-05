@@ -41,3 +41,4 @@ test-results/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+!tests/visual.spec.ts-snapshots/**
