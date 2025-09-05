@@ -1,0 +1,11 @@
+{
+  "release-type": "node",
+  "packages": {
+    ".": {
+      "component": "lexatlas-website",
+      "changelog-path": "CHANGELOG.md"
+    }
+  }
+}
+
+

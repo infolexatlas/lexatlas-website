@@ -12,7 +12,8 @@
     "lighthouse:ci": "lhci autorun",
     "analyze": "ANALYZE=true next build",
     "size": "size-limit",
-    "prebuild": "node -e \"process.exit(0)\""
+    "prebuild": "node -e \"process.exit(0)\"",
+    "prepare": "husky"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
@@ -35,6 +36,8 @@
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@eslint/eslintrc": "^3",
     "@lhci/cli": "^0.13.0",
     "@next/bundle-analyzer": "^15.5.2",
