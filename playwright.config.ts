@@ -4,7 +4,6 @@ export default defineConfig({
   testDir: 'tests',
   timeout: 30_000,
   expect: {
-    // keep a tiny threshold to avoid flakes, adjust later if needed
     toMatchSnapshot: { threshold: 0.2 },
     toHaveScreenshot: { maxDiffPixelRatio: 0.01 },
   },

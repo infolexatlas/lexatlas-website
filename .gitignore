@@ -42,3 +42,5 @@ test-results/
 *.tsbuildinfo
 next-env.d.ts
 !tests/visual.spec.ts-snapshots/**
+!tests/**/__snapshots__/**
+!tests/**/__screenshots__/**

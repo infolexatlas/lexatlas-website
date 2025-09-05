@@ -1,0 +1,62 @@
+name: Seed VR Baselines (one-time)
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current ref
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.11.1
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Install Playwright (chromium)
+        run: npx playwright install --with-deps chromium
+
+      - name: Build
+        run: npm run build
+
+      - name: Start Next
+        run: |
+          (npx next start --hostname 127.0.0.1 --port 3000 & echo $! > .next_pid)
+          npx wait-on http://127.0.0.1:3000
+
+      - name: Generate snapshots (UPDATE)
+        run: BASE_URL=http://127.0.0.1:3000 npx playwright test tests/visual.spec.ts -g @vr --update-snapshots
+
+      - name: Show generated snapshots
+        run: |
+          ls -la tests || true
+          ls -la tests/visual.spec.ts-snapshots || true
+
+      - name: Stop Next
+        if: always()
+        run: |
+          if [ -f .next_pid ]; then kill -9 $(cat .next_pid) || true; rm .next_pid; fi
+
+      - name: Commit snapshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add tests/visual.spec.ts-snapshots || true
+          if git diff --cached --quiet; then
+            echo "No snapshot changes to commit."
+          else
+            git commit -m "test(vr): seed Playwright Linux baselines"
+            git push
+          fi
+
+
