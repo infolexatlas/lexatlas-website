@@ -80,27 +80,13 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
   - `STRIPE_SECRET_KEY`: required if server-side Stripe is used
   - `BASE_URL`: optional (auto-computed)
 
-## Deployment guardrails (Vercel)
+## Security headers
 
-- **Preview BASE_URL injection**: On Vercel, `BASE_URL` is computed as `https://$VERCEL_URL` during build if not already provided. This ensures absolute URLs work reliably in Preview (`VERCEL_ENV=preview`).
-- **Healthcheck**: `vercel.json` defines a probe hitting `/api/health` before marking the deployment ready.
-- **Env validation**: Build runs `scripts/validate-env.js`.
-  - Fails deployment on Preview/Production if any of the following are missing:
-    - `SENTRY_DSN`
-    - `STRIPE_SECRET_KEY` (if Stripe server calls are used)
-- **Sentry environments**:
-  - Sentry initializes only when `SENTRY_DSN` is set and environment is Preview or Production.
-  - `environment` is set from `VERCEL_ENV` (fallback `NODE_ENV`). Replays/errors are reported in Preview/Prod only.
+Security headers are centralized in `src/lib/securityHeaders.ts` and applied via `headers()` in `next.config.ts`.
 
-### Required environment variables
+- HSTS, nosniff, referrer-policy, and permissions-policy are always sent.
+- CSP is set to Report-Only by default to avoid blocking rendering locally and in preview.
+- To switch to a blocking CSP in the future, set `CONTENT_SECURITY_POLICY_MODE=block` in the environment. This will send the `Content-Security-Policy` header instead of `Content-Security-Policy-Report-Only`.
 
-- **Preview (`VERCEL_ENV=preview`)**:
-  - `SENTRY_DSN`: required
-  - `STRIPE_SECRET_KEY`: required if server-side Stripe is used
-  - `BASE_URL`: optional (auto-computed)
-
-- **Production (`VERCEL_ENV=production`)**:
-  - `SENTRY_DSN`: required
-  - `STRIPE_SECRET_KEY`: required if server-side Stripe is used
-  - `BASE_URL`: optional (auto-computed)
+You can adjust the CSP directives in the helper as needed once all violations are addressed.
 
