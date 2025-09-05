@@ -28,11 +28,11 @@ const config: PlaywrightTestConfig = {
     timeout: 120_000,
   },
   projects: [
-    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+    { name: 'chromium', use: { browserName: 'chromium', headless: true, ...devices['Desktop Chrome'] } },
     {
       name: 'visual',
       grep: /@vr/,
-      use: { ...devices['Desktop Chrome'] },
+      use: { browserName: 'chromium', headless: true, ...devices['Desktop Chrome'] },
     },
   ],
 };
