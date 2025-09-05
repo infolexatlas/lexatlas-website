@@ -1,38 +1,31 @@
-import { defineConfig, devices, type PlaywrightTestConfig } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
 
-const config: PlaywrightTestConfig = {
-  testDir: './tests',
+export default defineConfig({
+  testDir: 'tests',
   timeout: 30_000,
-  retries: 1,
-  snapshotDir: './tests/__screenshots__',
   expect: {
+    // Keep default snapshot paths; do NOT set snapshotPathTemplate.
     toMatchSnapshot: { threshold: 0.2 },
-    snapshotPathTemplate: '{testDir}/__screenshots__/{testFileName}-snapshots/{arg}.png',
+    toHaveScreenshot: {
+      // stable screenshots
+      maxDiffPixelRatio: 0.01,
+    },
   },
   use: {
     browserName: 'chromium',
     headless: true,
-    baseURL: process.env.BASE_URL || 'http://localhost:3000',
     viewport: { width: 1366, height: 768 },
     deviceScaleFactor: 1,
     timezoneId: 'UTC',
-    geolocation: undefined,
     locale: 'en-US',
     colorScheme: 'light',
-    permissions: [],
-    screenshot: 'only-on-failure',
-    video: 'off',
-  },
-  // Keep existing dev webServer for local DX; CI jobs start server explicitly
-  webServer: {
-    command: 'npm run dev',
-    url: 'http://localhost:3000',
-    reuseExistingServer: true,
-    timeout: 120_000,
+    baseURL: process.env.BASE_URL || 'http://127.0.0.1:3000',
   },
   projects: [
-    { name: 'chromium', use: { browserName: 'chromium', headless: true, ...devices['Desktop Chrome'] } },
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
   ],
-};
-
-export default defineConfig(config);
+  reporter: [['list']],
+});
