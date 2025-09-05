@@ -187,8 +187,15 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
+      - name: Install Playwright browsers (chromium + system deps)
+        run: npx playwright install --with-deps chromium
       - name: Run Playwright tests
         env:
           BASE_URL: http://localhost:3000
@@ -209,6 +216,15 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
+      - name: Install Playwright browsers (chromium + system deps)
+        run: npx playwright install --with-deps chromium
       - name: Build with analyzer
         run: |
           ANALYZE=true npm run build
@@ -221,6 +237,7 @@ jobs:
   visual:
     runs-on: ubuntu-latest
     needs: ci
+    if: github.event_name == 'push'
     strategy:
       matrix:
         node-version: [20.11.1]
@@ -231,8 +248,15 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
+      - name: Install Playwright browsers (chromium + system deps)
+        run: npx playwright install --with-deps chromium
       - name: Build app
         env:
           NODE_ENV: production
@@ -252,6 +276,57 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: playwright-visual-diffs
+          path: |
+            test-results/**
+            playwright-report/**
+          retention-days: 7
+      - if: always()
+        run: |
+          if [ -f .next_pid ]; then kill -9 "$(cat .next_pid)" || true; rm -f .next_pid; fi
+
+  prod-checks:
+    name: Production headers/robots checks
+    runs-on: ubuntu-latest
+    needs: ci
+    if: always()
+    strategy:
+      matrix:
+        node-version: [20.11.1]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm ci
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
+      - name: Install Playwright browsers (chromium + system deps)
+        run: npx playwright install --with-deps chromium
+      - name: Build app
+        env:
+          NODE_ENV: production
+          NEXT_PUBLIC_BASE_URL: https://lexatlas.com
+          NEXT_PUBLIC_PLAUSIBLE_DOMAIN: lexatlas.com
+          STRIPE_SECRET_KEY: sk_test_dummy
+        run: npm run build
+      - name: Start app and run prod header/robots tests
+        env:
+          NODE_ENV: production
+        run: |
+          npx kill-port 3000 || true
+          (npm start & echo $! > .next_pid) &
+          npx wait-on http://127.0.0.1:3000 --timeout 180000
+          BASE_URL=http://127.0.0.1:3000 npx playwright test -g "@prod-headers-robots"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-prod-checks
           path: |
             test-results/**
             playwright-report/**

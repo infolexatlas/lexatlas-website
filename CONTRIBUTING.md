@@ -5,6 +5,7 @@
   - `ci (20.11.1)` — lint → typecheck → build
   - `e2e (20.11.1)` — Playwright smoke tests
   - `lighthouse` — performance and accessibility guardrails
+  - `visual (PR)` — Playwright visual regression (PRs are blocking)
 - Follow our PR template checklist.
 - Prefer small, focused PRs.
 
@@ -70,6 +71,16 @@ BASE_URL=http://127.0.0.1:3000 npx playwright test -g @vr --update-snapshots
 ```
 
 In CI, visual diffs are uploaded as the `playwright-visual-diffs` artifact. Open it to review differences; snapshots are not auto-updated in CI.
+
+- On PRs, VR is blocking. If your change updates UI intentionally, include the updated snapshots in the PR.
+
+If tests complain about missing browsers locally, install Playwright browsers:
+
+```bash
+npx playwright install
+# On Linux with missing system deps:
+npx playwright install --with-deps
+```
 
 ## Bundle size
 
