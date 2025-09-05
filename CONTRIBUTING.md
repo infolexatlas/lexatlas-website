@@ -56,23 +56,23 @@ This scans production dependencies, summarizes results, and fails on disallowed 
 
 For vulnerability reporting and response SLAs, see our [Security Policy](./SECURITY.md).
 
-## Visual Regression
+## Visual Regression (local-only)
 
-Run VR tests locally against a running production build:
+Visual Regression is disabled in CI. To run locally against a production build:
 
 ```bash
-npm run build && (npm start & echo $! > .next_pid) && npx wait-on http://127.0.0.1:3000 && BASE_URL=http://127.0.0.1:3000 npm run test:vr; kill -9 $(cat .next_pid) && rm .next_pid
+npm run build
+(npm start & echo $! > .next_pid)
+npx wait-on http://127.0.0.1:3000
+BASE_URL=http://127.0.0.1:3000 PLAYWRIGHT_VR=1 npm run test:vr
+kill -9 $(cat .next_pid) && rm .next_pid
 ```
 
 Update snapshots after intentional UI changes:
 
 ```bash
-BASE_URL=http://127.0.0.1:3000 npx playwright test -g @vr --update-snapshots
+BASE_URL=http://127.0.0.1:3000 PLAYWRIGHT_VR=1 npx playwright test -g @vr --update-snapshots
 ```
-
-In CI, visual diffs are uploaded as the `playwright-visual-diffs` artifact. Open it to review differences; snapshots are not auto-updated in CI.
-
-- On PRs, VR is blocking. If your change updates UI intentionally, include the updated snapshots in the PR.
 
 If tests complain about missing browsers locally, install Playwright browsers:
 
