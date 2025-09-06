@@ -159,3 +159,35 @@ jobs:
       - if: always()
         run: |
           if [ -f .next_pid ]; then kill -9 "$(cat .next_pid)" || true; rm -f .next_pid; fi
+
+  deploy:
+    name: deploy (vercel hook)
+    runs-on: ubuntu-latest
+    needs: [e2e]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.e2e.result == 'success'
+    concurrency:
+      group: deploy-main
+      cancel-in-progress: false
+    steps:
+      - name: Check deploy hook secret is present
+        run: |
+          if [ -z "${{ secrets.VERCEL_DEPLOY_HOOK }}" ]; then
+            echo "❌ Missing repo secret VERCEL_DEPLOY_HOOK. Add it in Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+          echo "✅ Found VERCEL_DEPLOY_HOOK secret."
+
+      - name: Trigger Vercel deploy hook
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          set -euo pipefail
+          echo "Calling Vercel Deploy Hook…"
+          # Use -f to fail on HTTP >=400, -sS for clean logs, -X POST to trigger deploy.
+          RESP="$(curl -fsS -X POST "$HOOK")" || {
+            echo "❌ Deploy hook call failed."
+            exit 1
+          }
+          echo "✅ Deploy hook accepted."
+          # Optionally print a short snippet (many hooks return empty body)
+          echo "${RESP:-"(no response body)"}"
