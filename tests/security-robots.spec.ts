@@ -1,11 +1,8 @@
-import { test, expect, request } from '@playwright/test';
-
-const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+import { test, expect } from '@playwright/test';
 
 test.describe('prod headers, robots, sitemap @prod-headers-robots', () => {
-  test('GET / returns 200 and has security headers', async ({}) => {
-    const api = await request.newContext();
-    const res = await api.get(`${BASE_URL}/`);
+  test('GET / returns 200 and has security headers', async ({ request }) => {
+    const res = await request.get('/');
     expect(res.status()).toBe(200);
     const headers = res.headers();
     const has = (name: string) => Object.keys(headers).some((k) => k.toLowerCase() === name.toLowerCase());
@@ -16,22 +13,20 @@ test.describe('prod headers, robots, sitemap @prod-headers-robots', () => {
     expect(has('content-security-policy') || has('content-security-policy-report-only')).toBeTruthy();
   });
 
-  test('robots.txt contents', async () => {
-    const api = await request.newContext();
-    const res = await api.get(`${BASE_URL}/robots.txt`);
+  test('robots.txt contents', async ({ request }) => {
+    const res = await request.get('/robots.txt');
     expect(res.status()).toBe(200);
     const body = await res.text();
     expect(body).toContain('Disallow: /checkout');
     expect(body).toContain('Sitemap: https://lexatlas.com/sitemap.xml');
   });
 
-  test('wp-sitemap.xml redirects to /sitemap.xml', async () => {
-    const api = await request.newContext();
-    const res = await api.get(`${BASE_URL}/wp-sitemap.xml`, { maxRedirects: 0 });
+  test('wp-sitemap.xml redirects to /sitemap.xml', async ({ request }) => {
+    const res = await request.get('/wp-sitemap.xml', { maxRedirects: 0 });
     expect(res.status()).toBe(308);
     const loc = res.headers()['location'] as string;
     // Normalize to pathname+query (ignore host differences)
-    const u = new URL(loc, BASE_URL);
+    const u = new URL(loc, process.env.BASE_URL || 'http://127.0.0.1:3000');
     expect(u.pathname + u.search).toBe('/sitemap.xml');
   });
 });

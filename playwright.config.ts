@@ -1,25 +1,13 @@
-import type { PlaywrightTestConfig } from '@playwright/test';
+import { defineConfig } from '@playwright/test';
 
-const config: PlaywrightTestConfig = {
-  // Keep Playwright defaults for snapshot paths (no snapshotPathTemplate)
+export default defineConfig({
   testDir: './',
-  projects: [
-    {
-      name: 'chromium',
-      use: {
-        browserName: 'chromium',
-      },
-    },
-  ],
   use: {
+    baseURL: process.env.BASE_URL ?? 'http://127.0.0.1:3000',
     browserName: 'chromium',
-    baseURL: process.env.BASE_URL || 'http://127.0.0.1:3000',
-    timezoneId: 'UTC',
-    locale: 'en-US',
-    viewport: { width: 1280, height: 800 },
-    colorScheme: 'light',
+    headless: true,
+    viewport: { width: 1366, height: 900 },
     ignoreHTTPSErrors: true,
-    launchOptions: { args: ['--disable-dev-shm-usage'] },
   },
   expect: {
     toHaveScreenshot: {
@@ -28,6 +16,4 @@ const config: PlaywrightTestConfig = {
       maxDiffPixelRatio: 0.01,
     },
   },
-};
-
-export default config;
+});
