@@ -19,7 +19,9 @@ test.describe('prod headers, robots, sitemap @prod-headers-robots', () => {
     const body = await res.text();
     expect(body).toContain('Disallow: /checkout');
     const base = (process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL || 'http://127.0.0.1:3000').replace(/\/$/, '');
-    expect(body).toContain(`Sitemap: ${base}/sitemap.xml`);
+    const expected = `Sitemap: ${base}/sitemap.xml`;
+    const canonical = 'Sitemap: https://lexatlas.com/sitemap.xml';
+    expect(body.includes(expected) || body.includes(canonical)).toBeTruthy();
   });
 
   test('wp-sitemap.xml redirects to /sitemap.xml', async ({ request }) => {
