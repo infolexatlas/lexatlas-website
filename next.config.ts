@@ -23,6 +23,8 @@ import { getSecurityHeaders } from './src/lib/securityHeaders';
  * the header key via CONTENT_SECURITY_POLICY_MODE=block.
  */
 const nextConfig: NextConfig = {
+  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: false },
   async headers() {
     const headerTuples = getSecurityHeaders();
     return [

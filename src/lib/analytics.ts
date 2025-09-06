@@ -7,6 +7,9 @@ export type PlausibleEvents = {
   lead_magnet_submit: { source: 'kit_detail'|'banner'|'footer'|'preview'; pair?: string };
   preview_email_submit: { pair?: string; error?: string };
   kit_download_click: { kit?: string };
+  checkout_click: { type: 'single'|'bundle3'|'bundle10'; pair?: string };
+  cta_contact_click: { context: 'home'|'kit'|'footer' };
+  kits_card_click: { slug: string };
   '404_view': { path: string };
   '404_action_click': { action: 'browse_kits'|'pricing'|'faq'|'contact' };
 };

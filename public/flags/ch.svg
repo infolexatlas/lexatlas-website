@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 10" width="16" height="10" aria-label="Flag of Switzerland">
+  <rect x="0" y="0" width="16" height="10" fill="#FF0000"/>
+  <!-- Centered Swiss cross: equal arm thickness (2) and lengths (6) -->
+  <!-- Horizontal: x 5..11, y 4..6 ; Vertical: x 7..9, y 2..8 -->
+  <!-- Single union path for cross to avoid red seams/antialiasing at joins -->
+  <path fill="#FFFFFF" d="
+    M 7 2
+    L 9 2
+    L 9 4
+    L 11 4
+    L 11 6
+    L 9 6
+    L 9 8
+    L 7 8
+    L 7 6
+    L 5 6
+    L 5 4
+    L 7 4
+    Z"/>
+</svg>
+
+
