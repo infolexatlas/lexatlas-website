@@ -41,6 +41,18 @@ function printTable(rows) {
   const rows = [];
   const missing = [];
 
+  // Auto-populate on Vercel if REQUIRED are missing but VERCEL_URL is available
+  // This helps preview/production builds succeed without manual config.
+  if (!process.env.NEXT_PUBLIC_BASE_URL && process.env.VERCEL_URL) {
+    process.env.NEXT_PUBLIC_BASE_URL = `https://${process.env.VERCEL_URL}`;
+  }
+  if (!process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && process.env.NEXT_PUBLIC_BASE_URL) {
+    try {
+      const u = new URL(process.env.NEXT_PUBLIC_BASE_URL);
+      process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN = u.hostname;
+    } catch {}
+  }
+
   for (const key of REQUIRED) {
     const ok = truthy(process.env[key]);
     rows.push([`REQ  ${key}`, ok ? '✅ present' : '❌ MISSING', '']);
