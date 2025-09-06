@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test'
+const url = (p: string = '/', base = process.env.BASE_URL || 'http://127.0.0.1:3000') => new URL(p, base).toString()
 
 // Smoke 1: Home loads and body is visible
 test('home renders without errors', async ({ page }) => {

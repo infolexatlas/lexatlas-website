@@ -1,137 +1,4 @@
-Act inside Cursor as a senior Next.js engineer. Implement an edge middleware that canonicalizes /kits/<slug> URLs and redirects bad/variant slugs to the normalized form. Provide self-contained edits I can apply directly.
-
-⸻
-
-0) Scope & Constraints
-	•	Scope: Global middleware.ts at repo root.
-	•	Router: Next.js App Router (works with Pages too; no route changes needed).
-	•	Paths affected: Only /kits/:slug (and deeper), via config.matcher.
-	•	Goal: Normalize and permanently redirect (SEO) variant slugs like FRA_6CAN, fra—usa, fra-usa/ → /kits/fra-can, /kits/fra-usa.
-	•	Keep: No dependency additions; no serverless cold-start work; run at the edge.
-	•	Preserve: Query string + hash, HTTP method; avoid redirect loops.
-	•	Do not touch: Page code, header/hero, or data sources.
-
-1) Canonicalization Rules
-	•	Lowercase the slug.
-	•	Strip whitespace.
-	•	Replace separators [ / _ — – ] with - (space, slash, underscore, em/en-dash).
-	•	Collapse duplicate non-letters to single -.
-	•	Fix fra-6xxx → fra-xxx (the common 6 typo between ISO3 codes).
-	•	Validate the result as <iso3>-<iso3> where both are in:
-fra, usa, gbr, can, mar, deu, che, bel, esp, ita, prt.
-	•	If invalid → pass-through (no redirect, let page handle 404/notFound).
-	•	If already canonical → pass-through.
-	•	If different from incoming → 301/308 redirect to canonical.
-	•	Use 308 Permanent Redirect (preserves method; great for SEO). 301 is acceptable too.
-	•	Preserve query string and hash in the redirect target.
-
-2) Deliverables
-	•	middleware.ts (root): fully implemented normalization + redirect.
-	•	export const config = { matcher: ['/kits/:path*'] } to scope only /kits/*.
-	•	Lightweight, zero external deps.
-
-3) Acceptance Criteria
-	•	/kits/FRA-6CAN → 308 → /kits/fra-can (keep any ?utm=..#hash).
-	•	/kits/fra_usa → 308 → /kits/fra-usa.
-	•	/kits/fra—usa/ → 308 → /kits/fra-usa.
-	•	/kits/fra-xyz (invalid) → no redirect, pass-through (page decides).
-	•	Hitting /kits/fra-usa again does not redirect (no loop).
-	•	Works in dev and production (Vercel) at the edge.
-
-4) Implementation Steps
-	1.	Create middleware.ts at repo root.
-	2.	Implement a pure normalizer inside the file (no imports) mirroring lib logic.
-	3.	Parse the slug from request.nextUrl.pathname.
-	4.	Apply the rules; if different & valid → build canonical URL with same search+hash.
-	5.	Return NextResponse.redirect(canonicalUrl, 308); else NextResponse.next().
-	6.	Export config.matcher = ['/kits/:path*'].
-
-5) Code — paste as-is
-
-// FILE: middleware.ts
-import { NextResponse, type NextRequest } from 'next/server';
-
-// Keep the ISO3 list tight and in lowercase to match normalization output
-const ISO3 = ['fra','usa','gbr','can','mar','deu','che','bel','esp','ita','prt'] as const;
-
-type Iso3 = (typeof ISO3)[number];
-
-type PairSlug = `${Iso3}-${Iso3}`;
-
-// Replace various separators with a dash and sanitize to letters/dashes only
-const CLEAN_SEP = /[\s\/_—–]+/g; // space, slash, underscore, em/en dash
-
-function normalizeSlug(input: string): PairSlug | null {
-  const s = input
-    .toLowerCase()
-    .replace(/\s+/g, '')
-    .replace(CLEAN_SEP, '-')
-    .replace(/([^a-z])+/g, (m) => (m.includes('-') ? '-' : ''));
-  // fix common typo: `fra-6can` → `fra-can`
-  const s2 = s.replace(/([a-z]{3})6([a-z]{3})/, '$1-$2');
-  const [a, b] = s2.split('-');
-  if (!a || !b) return null;
-  if ((ISO3 as readonly string[]).includes(a) && (ISO3 as readonly string[]).includes(b)) {
-    return `${a}-${b}` as PairSlug;
-  }
-  return null;
-}
-
-export function middleware(request: NextRequest) {
-  const { pathname, search, hash } = request.nextUrl;
-  // Only act on /kits/<slug> or /kits/<slug>/...
-  // Example matches: /kits/fra-usa, /kits/FRA_6CAN, /kits/fra—usa/
-  const match = pathname.match(/^\/kits\/([^/]+)(?:\/)?$/);
-  if (!match) return NextResponse.next();
-
-  const rawSlug = match[1];
-  const canonical = normalizeSlug(rawSlug);
-
-  // If invalid pair → let the route handle (can return 404 in the page layer)
-  if (!canonical) return NextResponse.next();
-
-  // Build the canonical path
-  const canonicalPath = `/kits/${canonical}`;
-
-  // If already canonical (case, separators, trailing slash), do nothing
-  if (pathname === canonicalPath) return NextResponse.next();
-
-  // Reconstruct full target URL with preserved query + hash
-  const url = new URL(request.url);
-  url.pathname = canonicalPath;
-  // `search` and `hash` are already on url; ensure we keep them
-  if (search) url.search = search;
-  if (hash) url.hash = hash;
-
-  // Permanent redirect (preserve method)
-  return NextResponse.redirect(url, 308);
-}
-
-// Limit middleware to kits paths only
-export const config = {
-  matcher: ['/kits/:path*'],
-};
-
-6) Verification
-	•	Dev: npm run dev → visit these URLs:
-	•	/kits/FRA-6CAN?utm=test#top → lands at /kits/fra-can?utm=test#top.
-	•	/kits/fra_usa → lands at /kits/fra-usa.
-	•	/kits/fra—usa/ → lands at /kits/fra-usa.
-	•	/kits/fra-xyz → stays on page (no redirect); page likely 404.
-	•	No loops: /kits/fra-usa loads without redirecting.
-	•	Prod (Vercel): middleware runs at the edge out of the box.
-
-7) Notes & Safety
-	•	308 vs 301: We chose 308 to preserve method & be explicit; search engines treat it as permanent.
-	•	Minimal CPU: single regex pass, no imports. Safe for edge.
-	•	If you add more ISO3 pairs later, update the ISO3 array here and in your data source for consistency.
-
-8) Commit & PR
-	•	Commit message: feat(middleware): canonicalize /kits slugs at edge
-	•	Branch: feat/edge-canonical-kits
-	•	Open PR to main.
-
-Now implement exactly as specified and confirm with a short diff summary.name: CI
+name: CI
 
 on:
   push:
@@ -187,19 +54,25 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
-      - name: Cache Playwright browsers
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            playwright-${{ runner.os }}-
-      - name: Install Playwright browsers (chromium + system deps)
+      - name: Install Playwright (chromium + system deps)
         run: npx playwright install --with-deps chromium
-      - name: Run Playwright tests
+      - name: Build
         env:
-          BASE_URL: http://localhost:3000
+          NEXT_PUBLIC_BASE_URL: http://127.0.0.1:3000
+        run: npm run build
+      - name: Start Next server
+        run: |
+          (npx next start --hostname 127.0.0.1 --port 3000 & echo $! > .next_pid)
+      - name: Wait for server
+        run: npx wait-on http://127.0.0.1:3000
+      - name: Run Playwright e2e tests
+        env:
+          BASE_URL: http://127.0.0.1:3000
         run: npm run test:e2e
+      - name: Stop Next
+        if: always()
+        run: |
+          if [ -f .next_pid ]; then kill -9 $(cat .next_pid) || true; rm .next_pid; fi
 
   analyze:
     name: Bundle analyzer report

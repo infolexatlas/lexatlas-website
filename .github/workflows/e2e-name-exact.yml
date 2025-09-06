@@ -1,0 +1,48 @@
+name: e2e (20.11.1)
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.11.1]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - name: Install deps
+        run: npm ci
+      - name: Build
+        env:
+          NODE_ENV: production
+          NEXT_PUBLIC_BASE_URL: https://lexatlas.com
+          NEXT_PUBLIC_PLAUSIBLE_DOMAIN: lexatlas.com
+          STRIPE_SECRET_KEY: sk_test_dummy
+        run: npm run build
+      - name: Install Playwright (chromium)
+        run: npx playwright install --with-deps chromium
+      - name: Start Next (prod) & wait
+        run: |
+          (npx next start --hostname localhost --port 3000 & echo $! > .next_pid)
+          npx wait-on http://localhost:3000
+      - name: Run E2E (exclude VR)
+        env:
+          BASE_URL: http://localhost:3000
+        run: |
+          if npm run | grep -q "test:e2e"; then
+            npm run test:e2e
+          else
+            npx playwright test --grep-invert @vr
+          fi
+      - name: Stop Next
+        if: always()
+        run: |
+          if [ -f .next_pid ]; then kill -9 "$(cat .next_pid)" || true; rm -f .next_pid; fi
+
+
