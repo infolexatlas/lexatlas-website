@@ -1,7 +1,9 @@
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './',
+  testDir: 'tests',
+  testMatch: ['**/*.spec.ts'],
+  testIgnore: ['**/src/**'],
   use: {
     baseURL: process.env.BASE_URL ?? 'http://127.0.0.1:3000',
     browserName: 'chromium',
