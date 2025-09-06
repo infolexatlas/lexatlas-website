@@ -30,7 +30,7 @@
     "dev:kill": "node scripts/kill-ports.mjs || true",
     "diagnose:chunks": "node scripts/check-next-chunks.mjs || echo 'ok'",
     "build": "npm run prepare:world && next build",
-    "start": "next start -p 3000",
+    "start": "next start -H 127.0.0.1 -p 3000",
     "lint": "next lint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

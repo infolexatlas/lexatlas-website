@@ -5,15 +5,15 @@ export default defineConfig({
   timeout: 30_000,
   expect: { timeout: 5000 },
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: process.env.BASE_URL || 'http://127.0.0.1:3000',
     trace: 'on-first-retry',
   },
   projects: [
-    { 
-      name: 'chromium', 
-      use: { 
-        ...devices['Desktop Chrome']
-      } 
+    {
+      name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+      },
     },
   ],
   // webServer: {
