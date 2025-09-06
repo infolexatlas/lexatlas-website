@@ -64,5 +64,6 @@
     "tailwindcss": "^4",
     "typescript": "^5.4.0",
     "vitest": "^3.2.4"
-  }
+  },
+  "engines": { "node": ">=20.11.0 <21" }
 }
