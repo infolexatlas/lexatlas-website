@@ -1,6 +1,6 @@
 import { test, expect, request } from '@playwright/test';
 
-const BASE_URL = process.env.BASE_URL || 'http://127.0.0.1:3000';
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
 
 test.describe('prod headers, robots, sitemap @prod-headers-robots', () => {
   test('GET / returns 200 and has security headers', async ({}) => {
