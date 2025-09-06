@@ -1,4 +1,4 @@
-// scripts/validate-env.js
+/* scripts/validate-env.js */
 'use strict';
 
 /**
@@ -42,7 +42,6 @@ function printTable(rows) {
   const missing = [];
 
   // Auto-populate on Vercel if REQUIRED are missing but VERCEL_URL is available
-  // This helps preview/production builds succeed without manual config.
   if (!process.env.NEXT_PUBLIC_BASE_URL && process.env.VERCEL_URL) {
     process.env.NEXT_PUBLIC_BASE_URL = `https://${process.env.VERCEL_URL}`;
   }
