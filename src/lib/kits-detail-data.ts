@@ -96,7 +96,7 @@ export const kitsDetail: Partial<Record<PairSlug, KitDetail>> = {
     about:
       `With strong cross-border ties, marriages between <strong>France</strong> and <strong>Belgium</strong> are frequent but not always straightforward administratively. This kit explains how to handle <strong>documents</strong>, <strong>banns</strong>, and <strong>recognition</strong> requirements in both countries. Ideal for couples looking for a simple, reliable guide to complete their union without stress.`,
     faqIds: ['recognition-both', 'need-translations', 'receive-kit', 'wrong-kit'],
-    related: ['fra-deu', 'fra-che', 'fra-n/a' as any], // adjust if needed
+    related: ['fra-deu', 'fra-che'],
   },
   'fra-esp': {
     slug: 'fra-esp',

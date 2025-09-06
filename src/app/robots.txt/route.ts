@@ -1,6 +1,6 @@
-import { NextRequest } from 'next/server'
+// robots route
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
   
   const robotsTxt = `User-agent: *
