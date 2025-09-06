@@ -1,64 +1,48 @@
-#!/usr/bin/env node
-const requiredKeys = [
+// scripts/debug-env.js
+'use strict';
+
+const KEYS = [
   'NEXT_PUBLIC_BASE_URL',
   'NEXT_PUBLIC_PLAUSIBLE_DOMAIN',
-];
-
-const optionalKeys = [
   'STRIPE_SECRET_KEY',
   'SENTRY_DSN',
   'SENTRY_AUTH_TOKEN',
 ];
 
-function formatRow(cells, widths) {
-  return cells
-    .map((cell, i) => String(cell).padEnd(widths[i], ' '))
-    .join('  ');
+function truthy(v) {
+  return v !== undefined && v !== null && String(v).trim() !== '';
 }
-
-function buildTable(rows) {
-  const widths = rows[0].map((_, i) =>
-    Math.max(...rows.map(r => String(r[i]).length))
-  );
-  const lines = [];
-  lines.push(formatRow(rows[0], widths));
-  lines.push(formatRow(widths.map(w => '-'.repeat(w)), widths));
-  for (let i = 1; i < rows.length; i++) {
-    lines.push(formatRow(rows[i], widths));
+function pad(s, n) {
+  s = String(s);
+  return s + ' '.repeat(Math.max(0, n - s.length));
+}
+function printTable(rows) {
+  const col1 = Math.max(...rows.map(r => r[0].length)) + 2;
+  const col2 = Math.max(...rows.map(r => r[1].length)) + 2;
+  for (const [k, v, note] of rows) {
+    console.log(`${pad(k, col1)}| ${pad(v, col2)}${note ?? ''}`);
   }
-  return lines.join('\n');
 }
 
-function printContext() {
+(function main() {
   const ctx = {
-    VERCEL: process.env.VERCEL ?? '',
-    VERCEL_ENV: process.env.VERCEL_ENV ?? '',
-    NODE_ENV: process.env.NODE_ENV ?? '',
+    VERCEL: process.env.VERCEL || '',
+    VERCEL_ENV: process.env.VERCEL_ENV || '',
+    NODE_ENV: process.env.NODE_ENV || '',
+    CI: process.env.CI || '',
+    GITHUB_ACTIONS: process.env.GITHUB_ACTIONS || '',
   };
+  console.log('== ENV DEBUG ==');
   console.log(`Context: VERCEL=${ctx.VERCEL} VERCEL_ENV=${ctx.VERCEL_ENV} NODE_ENV=${ctx.NODE_ENV}`);
-}
 
-function main() {
-  const rows = [["Variable", "Required", "Present", "Value"]];
-
-  for (const key of requiredKeys) {
-    const value = process.env[key];
-    const present = value ? 'yes' : 'no';
-    rows.push([key, 'yes', present, value ? value : '']);
+  const rows = [];
+  for (const key of KEYS) {
+    const ok = truthy(process.env[key]);
+    rows.push([key, ok ? '✅ present' : '⚠️  missing', '']);
   }
-
-  for (const key of optionalKeys) {
-    const value = process.env[key];
-    const present = value ? 'yes' : 'no';
-    rows.push([key, 'no', present, value ? value : '']);
-  }
-
-  printContext();
-  console.log(buildTable(rows));
-  process.exit(0);
-}
-
-main();
+  printTable(rows);
+  console.log('\n(Info only; does not fail.)');
+})();
 
 #!/usr/bin/env node
 /* eslint-disable no-console */
