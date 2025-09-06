@@ -1,17 +1,34 @@
-import { NextResponse, type NextRequest } from 'next/server';
+import { NextRequest } from 'next/server'
 
-export const dynamic = 'force-dynamic';
+export async function GET(request: NextRequest) {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+  
+  const robotsTxt = `User-agent: *
+Allow: /
 
-export async function GET(req: NextRequest) {
-  const fromEnv = process.env.NEXT_PUBLIC_BASE_URL?.replace(/\/$/, '');
-  const inferred = `${req.nextUrl.protocol}//${req.nextUrl.host}`.replace(/\/$/, '');
-  const base = fromEnv || inferred;
+# Disallow internal API and preview routes
+Disallow: /api/
+Disallow: /preview/
 
-  const body = `User-agent: *\nDisallow: /checkout\nSitemap: ${base}/sitemap.xml\n`;
-  return new NextResponse(body, {
-    status: 200,
-    headers: { 'content-type': 'text/plain; charset=utf-8' },
-  });
+# Disallow admin and API routes
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /checkout
+Disallow: /kits/*/success
+Disallow: /kits/*/cancel
+
+# Allow marriage kit pages
+Allow: /kits/marriage-kit/
+
+# Crawl delay
+Crawl-delay: 1
+
+# Sitemap
+Sitemap: ${baseUrl}/sitemap.xml`
+
+  return new Response(robotsTxt, {
+    headers: {
+      'Content-Type': 'text/plain',
+    },
+  })
 }
-
-
