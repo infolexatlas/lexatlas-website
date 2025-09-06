@@ -12,10 +12,10 @@ export default function Home() {
           Cross-border legal kits for French companies. Explore popular pairs below.
         </p>
         <nav style={{ display: 'flex', gap: '1rem' }}>
-          <Link href="/kits/fra-usa" prefetch>
+          <Link href="/kits/fra-usa" prefetch={false}>
             Explore Kits: FRA → USA
           </Link>
-          <Link href="/kits/fra-can" prefetch>
+          <Link href="/kits/fra-can" prefetch={false}>
             Explore Kits: FRA → CAN
           </Link>
         </nav>
