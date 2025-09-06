@@ -2,7 +2,7 @@ name: lighthouse
 on:
   push:
     branches: [main]
-  workflow_dispatch:
+  workflow_dispatch: {}
   pull_request:
     branches: [main]
 jobs:
