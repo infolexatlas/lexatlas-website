@@ -34,6 +34,8 @@ function printTable(rows) {
   };
   console.log('== ENV DEBUG ==');
   console.log(`Context: VERCEL=${ctx.VERCEL} VERCEL_ENV=${ctx.VERCEL_ENV} NODE_ENV=${ctx.NODE_ENV}`);
+  console.log(`NEXT_PUBLIC_BASE_URL=${process.env.NEXT_PUBLIC_BASE_URL || ''}`);
+  console.log(`NEXT_PUBLIC_PLAUSIBLE_DOMAIN=${process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN || ''}`);
 
   const rows = [];
   for (const key of KEYS) {

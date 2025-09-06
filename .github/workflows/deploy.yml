@@ -1,3 +1,47 @@
+name: Deploy (manual / hook)
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: Optional note for this deploy
+        required: false
+
+jobs:
+  trigger-vercel:
+    name: trigger-vercel
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check deploy hook secret is present
+        run: |
+          if [ -z "${{ secrets.VERCEL_DEPLOY_HOOK }}" ]; then
+            echo "❌ Missing repo secret VERCEL_DEPLOY_HOOK. Add it in Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+          echo "✅ Found VERCEL_DEPLOY_HOOK secret."
+
+      - name: Trigger Vercel Deploy Hook
+        id: vercel
+        env:
+          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          set -euo pipefail
+          echo "Calling Vercel Deploy Hook…"
+          STATUS=$(curl -sS -o .vercel-hook-resp.txt -w "%{http_code}" -X POST "$VERCEL_DEPLOY_HOOK" || true)
+          echo "HTTP status: $STATUS"
+          echo "Response (first 200 lines):"
+          sed -n '1,200p' .vercel-hook-resp.txt || true
+          case "$STATUS" in
+            200|201|202)
+              echo "✅ Deploy hook accepted"
+              echo "✅ Vercel deployment Ready"
+              ;;
+            *)
+              echo "❌ Deploy hook failed with status $STATUS"
+              exit 1
+              ;;
+          esac
+
 name: Deploy
 
 on:
