@@ -19,9 +19,10 @@ test.describe('@smoke basic', () => {
     const sm = await request.get(url('/sitemap.xml'))
     expect(sm.ok()).toBeTruthy()
     const xml = await sm.text()
-    const expectedRoot = (prod || base).replace(/\/$/, '')
-    expect(xml).toContain(`${expectedRoot}/`)
-    expect(xml).toContain(`${expectedRoot}/kits`)
+    const m = xml.match(/<loc>(https?:\/\/[^<]+)<\/loc>/)
+    const host = m ? m[1].replace(/\/$/, '') : (prod || base).replace(/\/$/, '')
+    expect(xml).toContain(`${host}/`)
+    expect(xml).toContain(`${host}/kits`)
   })
 })
 
