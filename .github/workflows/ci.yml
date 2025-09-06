@@ -9,6 +9,9 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_BASE_URL: "http://localhost:3000"
+      NEXT_PUBLIC_PLAUSIBLE_DOMAIN: "localhost"
     strategy:
       matrix:
         node-version: [20.11.1]

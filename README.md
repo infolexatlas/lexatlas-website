@@ -90,3 +90,4 @@ Security headers are centralized in `src/lib/securityHeaders.ts` and applied via
 
 You can adjust the CSP directives in the helper as needed once all violations are addressed.
 
+
