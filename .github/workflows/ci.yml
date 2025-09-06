@@ -103,6 +103,9 @@ jobs:
       - name: Install Playwright browsers (chromium + system deps)
         run: npx playwright install --with-deps chromium
       - name: Build with analyzer
+        env:
+          NEXT_PUBLIC_BASE_URL: https://lexatlas.com
+          NEXT_PUBLIC_PLAUSIBLE_DOMAIN: lexatlas.com
         run: |
           ANALYZE=true npm run build
           tar -czf bundle-analyzer-report.tgz .next/analyze || true
