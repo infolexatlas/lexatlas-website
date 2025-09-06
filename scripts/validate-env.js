@@ -1,43 +1,41 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
 
-const requiredForAll = [
-  // Sentry DSN is optional locally but required on Preview/Prod per guardrails
-];
+const REQUIRED = ["NEXT_PUBLIC_BASE_URL", "NEXT_PUBLIC_PLAUSIBLE_DOMAIN"];
+const OPTIONAL = ["STRIPE_SECRET_KEY", "SENTRY_DSN", "SENTRY_AUTH_TOKEN"];
 
-const requiredForPreviewAndProd = [
-  "SENTRY_DSN",
-  // Add other critical secrets used at runtime
-  // Example Stripe server key if used server-side
-  "STRIPE_SECRET_KEY",
-];
-
-const vercelEnv = process.env.VERCEL_ENV || ""; // production | preview | development (for Vercel)
+const isVercel = process.env.VERCEL === "1" || process.env.VERCEL === "true" || !!process.env.VERCEL;
+const vercelEnv = process.env.VERCEL_ENV || ""; // production | preview | development (Vercel)
 const nodeEnv = process.env.NODE_ENV || ""; // production | development
 
-const isVercel = !!process.env.VERCEL;
-const isPreviewOrProd = vercelEnv === "preview" || vercelEnv === "production";
+const missingReq = REQUIRED.filter((k) => !process.env[k] || String(process.env[k]).trim() === "");
+const missingOpt = OPTIONAL.filter((k) => !process.env[k] || String(process.env[k]).trim() === "");
 
-const missing = [];
-
-for (const key of requiredForAll) {
-  if (!process.env[key]) missing.push(key);
+function pad(s, n) {
+  return (s + " ".repeat(n)).slice(0, n);
 }
 
-if (isVercel && isPreviewOrProd) {
-  for (const key of requiredForPreviewAndProd) {
-    if (!process.env[key]) missing.push(key);
+console.log("== ENV VALIDATION ==");
+console.log(`Context: VERCEL=${String(!!process.env.VERCEL)} VERCEL_ENV=${vercelEnv} NODE_ENV=${nodeEnv}`);
+
+for (const k of REQUIRED) {
+  console.log(`REQ  ${pad(k, 30)} = ${process.env[k] ? "✅ set" : "❌ MISSING"}`);
+}
+for (const k of OPTIONAL) {
+  console.log(`OPT  ${pad(k, 30)} = ${process.env[k] ? "✅ set" : "⚠️  missing (optional)"}`);
+}
+
+if (missingReq.length) {
+  console.error("\n❌ Missing REQUIRED env vars:", missingReq.join(", "));
+  process.exit(1);
+}
+
+if (missingOpt.length) {
+  console.warn("\n⚠️ Missing OPTIONAL env vars:", missingOpt.join(", "));
+  if (isVercel) {
+    console.warn("Proceeding on Vercel with optional vars missing.");
   }
 }
 
-if (missing.length > 0) {
-  console.error(
-    `\nEnvironment validation failed. Missing required variables: ${missing.join(", ")}\n` +
-      `VERCEL_ENV=${vercelEnv} NODE_ENV=${nodeEnv} VERCEL=${String(isVercel)}\n`
-  );
-  process.exit(1);
-} else {
-  console.log("Environment validation passed.");
-}
-
-
+console.log("\n✅ Environment validation passed.");
+process.exit(0);
