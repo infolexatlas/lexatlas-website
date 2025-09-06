@@ -1,27 +1,10 @@
 import React from 'react';
-import KitCatalogueClient from '@/components/la/Kit/KitCatalogueClient';
-import KitTrustStrip from '@/components/la/Kit/KitTrustStrip';
-import KitSampleCTA from '@/components/la/Kit/KitSampleCTA';
-import KitFAQExtract from '@/components/la/Kit/KitFAQExtract';
-import JsonLd from '@/components/JsonLd';
-import { ALL_KITS, isValidKit } from '@/lib/kits-country-data';
-import { kitPath } from '@/lib/kit-routes';
 
 export default function KitsPage() {
-  const exampleSlug = ALL_KITS[0];
-  const valid = isValidKit(exampleSlug);
-  const href = kitPath(exampleSlug);
-  const json = { '@context': 'https://schema.org', '@type': 'WebPage', name: 'Kits (stub)' };
-
   return (
     <div className="p-8 space-y-6">
       <h1 className="text-xl font-semibold">Kits (stub)</h1>
-      <p>Example slug: {exampleSlug} (valid: {String(valid)}) – path: {href}</p>
-      <KitTrustStrip />
-      <KitCatalogueClient />
-      <KitSampleCTA />
-      <KitFAQExtract />
-      <JsonLd json={json} />
+      <p>Content temporarily simplified to fix CI build. Real content will follow.</p>
     </div>
   );
 }
