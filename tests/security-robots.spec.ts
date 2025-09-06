@@ -18,9 +18,8 @@ test.describe('prod headers, robots, sitemap @prod-headers-robots', () => {
     expect(res.status()).toBe(200);
     const body = await res.text();
     expect(body).toContain('Disallow: /checkout');
-    const base = process.env.BASE_URL || 'http://127.0.0.1:3000';
-    const expected = `Sitemap: ${base.replace(/\/$/, '')}/sitemap.xml`;
-    expect(body).toContain(expected);
+    const base = (process.env.BASE_URL || 'http://127.0.0.1:3000').replace(/\/$/, '');
+    expect(body).toContain(`Sitemap: ${base}/sitemap.xml`);
   });
 
   test('wp-sitemap.xml redirects to /sitemap.xml', async ({ request }) => {
