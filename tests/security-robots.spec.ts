@@ -18,7 +18,7 @@ test.describe('prod headers, robots, sitemap @prod-headers-robots', () => {
     expect(res.status()).toBe(200);
     const body = await res.text();
     expect(body).toContain('Disallow: /checkout');
-    const base = (process.env.BASE_URL || 'http://127.0.0.1:3000').replace(/\/$/, '');
+    const base = (process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL || 'http://127.0.0.1:3000').replace(/\/$/, '');
     expect(body).toContain(`Sitemap: ${base}/sitemap.xml`);
   });
 
