@@ -1,4 +1,73 @@
 #!/usr/bin/env node
+const requiredKeys = [
+  'NEXT_PUBLIC_BASE_URL',
+  'NEXT_PUBLIC_PLAUSIBLE_DOMAIN',
+];
+
+const optionalKeys = [
+  'STRIPE_SECRET_KEY',
+  'SENTRY_DSN',
+  'SENTRY_AUTH_TOKEN',
+];
+
+function formatRow(cells, widths) {
+  return cells
+    .map((cell, i) => String(cell).padEnd(widths[i], ' '))
+    .join('  ');
+}
+
+function buildTable(rows) {
+  const widths = rows[0].map((_, i) =>
+    Math.max(...rows.map(r => String(r[i]).length))
+  );
+  const lines = [];
+  lines.push(formatRow(rows[0], widths));
+  lines.push(formatRow(widths.map(w => '-'.repeat(w)), widths));
+  for (let i = 1; i < rows.length; i++) {
+    lines.push(formatRow(rows[i], widths));
+  }
+  return lines.join('\n');
+}
+
+function printContext() {
+  const ctx = {
+    VERCEL: process.env.VERCEL ?? '',
+    VERCEL_ENV: process.env.VERCEL_ENV ?? '',
+    NODE_ENV: process.env.NODE_ENV ?? '',
+  };
+  console.log(`Context: VERCEL=${ctx.VERCEL} VERCEL_ENV=${ctx.VERCEL_ENV} NODE_ENV=${ctx.NODE_ENV}`);
+}
+
+function main() {
+  const rows = [["Variable", "Required", "Present", "Value"]];
+  const missingRequired = [];
+
+  for (const key of requiredKeys) {
+    const value = process.env[key];
+    const present = value ? 'yes' : 'no';
+    if (!value) missingRequired.push(key);
+    rows.push([key, 'yes', present, value ? value : '']);
+  }
+
+  for (const key of optionalKeys) {
+    const value = process.env[key];
+    const present = value ? 'yes' : 'no';
+    rows.push([key, 'no', present, value ? value : '']);
+  }
+
+  printContext();
+  console.log(buildTable(rows));
+
+  if (missingRequired.length > 0) {
+    console.error(`Missing required env: ${missingRequired.join(', ')}`);
+    process.exit(1);
+  }
+  process.exit(0);
+}
+
+main();
+
+#!/usr/bin/env node
 /* eslint-disable no-console */
 
 const REQUIRED = ["NEXT_PUBLIC_BASE_URL", "NEXT_PUBLIC_PLAUSIBLE_DOMAIN"];
