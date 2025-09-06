@@ -1,4 +1,4 @@
-// scripts/validate-env.js
+/* scripts/validate-env.js */
 'use strict';
 
 /**
@@ -42,7 +42,6 @@ function printTable(rows) {
   const missing = [];
 
   // Auto-populate on Vercel if REQUIRED are missing but VERCEL_URL is available
-  // This helps preview/production builds succeed without manual config.
   if (!process.env.NEXT_PUBLIC_BASE_URL && process.env.VERCEL_URL) {
     process.env.NEXT_PUBLIC_BASE_URL = `https://${process.env.VERCEL_URL}`;
   }
@@ -51,6 +50,17 @@ function printTable(rows) {
       const u = new URL(process.env.NEXT_PUBLIC_BASE_URL);
       process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN = u.hostname;
     } catch {}
+  }
+
+  // Provide sensible defaults for version strip envs if not set
+  if (!process.env.NEXT_PUBLIC_COMMIT_SHA) {
+    process.env.NEXT_PUBLIC_COMMIT_SHA = process.env.VERCEL_GIT_COMMIT_SHA || process.env.GITHUB_SHA || 'dev';
+  }
+  if (!process.env.NEXT_PUBLIC_BRANCH) {
+    process.env.NEXT_PUBLIC_BRANCH = process.env.VERCEL_GIT_COMMIT_REF || process.env.GITHUB_REF_NAME || process.env.GITHUB_REF || 'dev';
+  }
+  if (!process.env.NEXT_PUBLIC_BUILD_TIME) {
+    process.env.NEXT_PUBLIC_BUILD_TIME = new Date().toISOString();
   }
 
   for (const key of REQUIRED) {
