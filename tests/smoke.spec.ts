@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 const base = process.env.BASE_URL || 'http://127.0.0.1:3000'
+const prod = process.env.NEXT_PUBLIC_BASE_URL || ''
 const url = (p = '') => new URL(p, base).toString()
 
 test.describe('@smoke basic', () => {
@@ -18,8 +19,9 @@ test.describe('@smoke basic', () => {
     const sm = await request.get(url('/sitemap.xml'))
     expect(sm.ok()).toBeTruthy()
     const xml = await sm.text()
-    expect(xml).toContain(url('/'))
-    expect(xml).toContain(url('/kits'))
+    const expectedRoot = (prod || base).replace(/\/$/, '')
+    expect(xml).toContain(`${expectedRoot}/`)
+    expect(xml).toContain(`${expectedRoot}/kits`)
   })
 })
 
