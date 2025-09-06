@@ -1,3 +1,41 @@
+name: e2e
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_BASE_URL: "http://127.0.0.1:3000"
+      NEXT_PUBLIC_PLAUSIBLE_DOMAIN: "localhost"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.11.1
+          cache: npm
+      - run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+      - name: Build (with required env)
+        run: npm run build
+      - name: Start Next (prod)
+        run: |
+          (npx next start --hostname 127.0.0.1 --port 3000 & echo $! > .next_pid)
+          npx wait-on http://127.0.0.1:3000
+      - name: Run Playwright E2E
+        env:
+          BASE_URL: "http://127.0.0.1:3000"
+        run: npm run test:e2e
+      - name: Stop Next
+        if: always()
+        run: |
+          if [ -f .next_pid ]; then kill -9 $(cat .next_pid) || true; rm .next_pid; fi
+
 name: E2E
 
 on:
