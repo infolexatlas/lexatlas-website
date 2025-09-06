@@ -1,0 +1,32 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  trigger-vercel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Trigger Vercel deploy hook
+        env:
+          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "${VERCEL_DEPLOY_HOOK}" ]; then
+            echo "Missing VERCEL_DEPLOY_HOOK secret."
+            exit 1
+          fi
+          STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST "${VERCEL_DEPLOY_HOOK}")
+          echo "Vercel hook response status: ${STATUS_CODE}"
+          if [ "${STATUS_CODE}" -ne 200 ]; then
+            echo "Deploy hook failed with status ${STATUS_CODE}"
+            exit 1
+          fi
+          echo "Deploy hook triggered successfully."
+
+
