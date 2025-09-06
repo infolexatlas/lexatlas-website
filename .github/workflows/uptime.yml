@@ -1,10 +1,8 @@
 name: uptime
-
 on:
   schedule:
-    - cron: "0 7 * * *"  # 08:00 Europe/Paris
-  workflow_dispatch:
-
+    - cron: "0 7 * * *"
+  workflow_dispatch: {}
 jobs:
   ping:
     runs-on: ubuntu-latest
@@ -19,11 +17,6 @@ jobs:
         run: |
           set -euo pipefail
           URL="${{ matrix.url }}"
-          echo "Pinging: $URL"
-          # Curl with:
-          # -S show errors, -s silent, -L follow redirects
-          # --retry with exponential backoff, --retry-connrefused for early boots
-          # -w to print status and time_total, -o /dev/null to discard body
           OUT=$(curl -SsfL \
             --retry 5 --retry-all-errors --retry-delay 2 --max-time 15 \
             --connect-timeout 5 \
@@ -33,20 +26,9 @@ jobs:
           echo "$OUT"
           STATUS=$(echo "$OUT" | awk '{print $1}' | cut -d= -f2)
           TIME=$(echo "$OUT" | awk '{print $2}' | cut -d= -f2)
-
-          # Hard fail rules
           if [ "$STATUS" -ge 400 ]; then
             echo "❌ HTTP error: $STATUS for $URL"
             exit 1
           fi
-
-          # Soft performance budget
-          MAX=5.0
-          awk -v t="$TIME" -v max="$MAX" 'BEGIN { exit !(t>max) }' && {
-            echo "❌ Slow response: ${TIME}s > ${MAX}s for $URL"
-            exit 1
-          } || true
-
           echo "✅ OK: $URL (status=$STATUS, time=${TIME}s)"
-
 

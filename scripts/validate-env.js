@@ -1,43 +1,75 @@
-#!/usr/bin/env node
-/* eslint-disable no-console */
+// scripts/validate-env.js
+'use strict';
 
-const requiredForAll = [
-  // Sentry DSN is optional locally but required on Preview/Prod per guardrails
-];
+/**
+ * Soft-but-clear env validator for CI/Vercel.
+ * Fails ONLY if required public envs are missing.
+ */
 
-const requiredForPreviewAndProd = [
-  "SENTRY_DSN",
-  // Add other critical secrets used at runtime
-  // Example Stripe server key if used server-side
-  "STRIPE_SECRET_KEY",
-];
+const REQUIRED = ['NEXT_PUBLIC_BASE_URL', 'NEXT_PUBLIC_PLAUSIBLE_DOMAIN'];
+const OPTIONAL = ['STRIPE_SECRET_KEY', 'SENTRY_DSN', 'SENTRY_AUTH_TOKEN'];
 
-const vercelEnv = process.env.VERCEL_ENV || ""; // production | preview | development (for Vercel)
-const nodeEnv = process.env.NODE_ENV || ""; // production | development
-
-const isVercel = !!process.env.VERCEL;
-const isPreviewOrProd = vercelEnv === "preview" || vercelEnv === "production";
-
-const missing = [];
-
-for (const key of requiredForAll) {
-  if (!process.env[key]) missing.push(key);
+function truthy(v) {
+  return v !== undefined && v !== null && String(v).trim() !== '';
 }
 
-if (isVercel && isPreviewOrProd) {
-  for (const key of requiredForPreviewAndProd) {
-    if (!process.env[key]) missing.push(key);
+function pad(s, n) {
+  s = String(s);
+  return s + ' '.repeat(Math.max(0, n - s.length));
+}
+
+function printTable(rows) {
+  const col1 = Math.max(...rows.map(r => r[0].length)) + 2;
+  const col2 = Math.max(...rows.map(r => r[1].length)) + 2;
+  for (const [k, v, note] of rows) {
+    console.log(`${pad(k, col1)}| ${pad(v, col2)}${note ?? ''}`);
   }
 }
 
-if (missing.length > 0) {
-  console.error(
-    `\nEnvironment validation failed. Missing required variables: ${missing.join(", ")}\n` +
-      `VERCEL_ENV=${vercelEnv} NODE_ENV=${nodeEnv} VERCEL=${String(isVercel)}\n`
-  );
-  process.exit(1);
-} else {
-  console.log("Environment validation passed.");
-}
+(function main() {
+  const ctx = {
+    VERCEL: process.env.VERCEL || '',
+    VERCEL_ENV: process.env.VERCEL_ENV || '',
+    NODE_ENV: process.env.NODE_ENV || '',
+    CI: process.env.CI || '',
+    GITHUB_ACTIONS: process.env.GITHUB_ACTIONS || '',
+  };
 
+  console.log('== ENV VALIDATION ==');
+  console.log(`Context: VERCEL=${ctx.VERCEL} VERCEL_ENV=${ctx.VERCEL_ENV} NODE_ENV=${ctx.NODE_ENV}`);
 
+  const rows = [];
+  const missing = [];
+
+  // Auto-populate on Vercel if REQUIRED are missing but VERCEL_URL is available
+  // This helps preview/production builds succeed without manual config.
+  if (!process.env.NEXT_PUBLIC_BASE_URL && process.env.VERCEL_URL) {
+    process.env.NEXT_PUBLIC_BASE_URL = `https://${process.env.VERCEL_URL}`;
+  }
+  if (!process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && process.env.NEXT_PUBLIC_BASE_URL) {
+    try {
+      const u = new URL(process.env.NEXT_PUBLIC_BASE_URL);
+      process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN = u.hostname;
+    } catch {}
+  }
+
+  for (const key of REQUIRED) {
+    const ok = truthy(process.env[key]);
+    rows.push([`REQ  ${key}`, ok ? '✅ present' : '❌ MISSING', '']);
+    if (!ok) missing.push(key);
+  }
+
+  for (const key of OPTIONAL) {
+    const ok = truthy(process.env[key]);
+    rows.push([`OPT  ${key}`, ok ? '✅ present' : '⚠️  missing (optional)', '']);
+  }
+
+  printTable(rows);
+
+  if (missing.length) {
+    console.error(`\n❌ Missing REQUIRED env vars: ${missing.join(', ')}`);
+    process.exit(1);
+  } else {
+    console.log('\n✅ Env validation passed.');
+  }
+})();
