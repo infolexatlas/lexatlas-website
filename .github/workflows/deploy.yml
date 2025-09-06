@@ -13,20 +13,31 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Trigger Vercel deploy hook
+      - name: Trigger Vercel Deploy Hook
+        id: vercel
         env:
           VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
         run: |
-          if [ -z "${VERCEL_DEPLOY_HOOK}" ]; then
-            echo "Missing VERCEL_DEPLOY_HOOK secret."
-            exit 1
+          set -euo pipefail
+          if [ -z "${VERCEL_DEPLOY_HOOK:-}" ]; then
+            echo "No VERCEL_DEPLOY_HOOK configured. Skipping."
+            exit 0
           fi
-          STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST "${VERCEL_DEPLOY_HOOK}")
-          echo "Vercel hook response status: ${STATUS_CODE}"
-          if [ "${STATUS_CODE}" -ne 200 ]; then
-            echo "Deploy hook failed with status ${STATUS_CODE}"
-            exit 1
-          fi
-          echo "Deploy hook triggered successfully."
+          echo "Calling Vercel Deploy Hook…"
+          STATUS=$(curl -sS -o .vercel-hook-resp.txt -w "%{http_code}" -X POST "$VERCEL_DEPLOY_HOOK" || true)
+          echo "HTTP status: $STATUS"
+          echo "Response:"
+          sed -n '1,200p' .vercel-hook-resp.txt || true
+          case "$STATUS" in
+            200|201|202)
+              echo "✅ Deploy hook accepted."
+              exit 0
+              ;;
+            *)
+              echo "❌ Deploy hook failed with status $STATUS"
+              echo "Tip: Ensure the hook URL matches this project & branch in Vercel (Settings → Git → Deploy Hooks)."
+              exit 1
+              ;;
+          esac
 
 
