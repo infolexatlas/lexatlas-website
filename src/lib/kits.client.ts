@@ -96,5 +96,5 @@ export function slugToPairKey(slug: string): string | null {
  * Validate if a slug is in our priority list
  */
 export function isValidPrioritySlug(slug: string): boolean {
-  return PRIORITY_SLUGS.includes(slug as unknown as typeof PRIORITY_SLUGS[number]);
+  return PRIORITY_SLUGS.includes(slug as any);
 }

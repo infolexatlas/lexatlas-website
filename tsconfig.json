@@ -38,6 +38,7 @@
   ],
   "exclude": [
     "node_modules",
-    "src/content/marriage/__tests__/**"
+    "src/content/marriage/__tests__/**",
+    "src/**/__tests__/**"
   ]
 }

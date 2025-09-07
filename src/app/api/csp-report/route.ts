@@ -1,10 +1,7 @@
-export async function POST(request: Request) {
+export async function POST(req: Request) {
   try {
-    await request.json();
-  } catch {
-    // ignore malformed or empty bodies
-  }
+    const body = await req.json();
+    console.log('[CSP-REPORT]', JSON.stringify(body));
+  } catch {}
   return new Response(null, { status: 204 });
 }
-
-
