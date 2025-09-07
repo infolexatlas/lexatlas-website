@@ -5,6 +5,7 @@ const PREFERRED_HOST = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN || 'lex-atlas.co
 
 const KIT_ALIASES: Record<string, string> = {
   'fra_6can': 'fra-can',
+  'fra-6can': 'fra-can',
   'fra-can': 'fra-can',
   'fra—usa': 'fra-usa',
   'fra_usa': 'fra-usa',
@@ -25,6 +26,10 @@ function canonicalizeKitSlug(input: string) {
 }
 
 export function middleware(req: NextRequest) {
+  // Bypass host canonicalization during local prod checks on CI to avoid redirect loops
+  if (process.env.CI_PROD_CHECKS === '1') {
+    return NextResponse.next();
+  }
   const url = new URL(req.url);
 
   // 1) Force preferred host (apex vs www)

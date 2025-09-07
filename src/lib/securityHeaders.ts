@@ -19,9 +19,10 @@ export function getSecurityHeaders(): HeaderTuple[] {
 
   const headers: HeaderTuple[] = [
     ['Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload'],
+    ['X-Frame-Options', 'DENY'],
     ['X-Content-Type-Options', 'nosniff'],
-    ['Referrer-Policy', 'strict-origin-when-cross-origin'],
-    ['Permissions-Policy', 'geolocation=(), microphone=(), camera=(), fullscreen=(self)'],
+    ['Referrer-Policy', 'no-referrer-when-downgrade'],
+    ['Permissions-Policy', 'geolocation=(), microphone=(), camera=()'],
     [getCspHeaderKey(), cspDirectives],
   ];
 
