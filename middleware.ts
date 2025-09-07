@@ -37,8 +37,7 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  // Match only kits routes explicitly to avoid touching assets or other pages
-  matcher: ['/kits/:path*'],
+  matcher: [],
 };
 
 
