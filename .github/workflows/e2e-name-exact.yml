@@ -37,9 +37,9 @@ jobs:
           BASE_URL: http://127.0.0.1:3000
         run: |
           if npm run | grep -q "test:e2e"; then
-            npx timeout 10m npm run test:e2e || { echo "E2E exceeded 10m"; exit 1; }
+            timeout 10m npm run test:e2e || { echo "E2E exceeded 10m"; exit 1; }
           else
-            npx timeout 10m playwright test --grep-invert @vr || { echo "E2E exceeded 10m"; exit 1; }
+            timeout 10m npx playwright test --grep-invert @vr || { echo "E2E exceeded 10m"; exit 1; }
           fi
       - name: Stop Next
         if: always()
