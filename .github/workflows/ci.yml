@@ -10,8 +10,8 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     env:
-      NEXT_PUBLIC_BASE_URL: "http://localhost:3000"
-      NEXT_PUBLIC_PLAUSIBLE_DOMAIN: "localhost"
+      NEXT_PUBLIC_BASE_URL: "https://lex-atlas.com"
+      NEXT_PUBLIC_PLAUSIBLE_DOMAIN: "lex-atlas.com"
     strategy:
       matrix:
         node-version: [20.11.1]
@@ -37,8 +37,8 @@ jobs:
         run: npm run typecheck
       - name: Build
         env:
-          NEXT_PUBLIC_BASE_URL: https://lexatlas.com
-          NEXT_PUBLIC_PLAUSIBLE_DOMAIN: lexatlas.com
+          NEXT_PUBLIC_BASE_URL: https://lex-atlas.com
+          NEXT_PUBLIC_PLAUSIBLE_DOMAIN: lex-atlas.com
           STRIPE_SECRET_KEY: sk_test_dummy
         run: |
           node scripts/debug-env.js || true
@@ -111,8 +111,8 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Build with analyzer
         env:
-          NEXT_PUBLIC_BASE_URL: https://lexatlas.com
-          NEXT_PUBLIC_PLAUSIBLE_DOMAIN: lexatlas.com
+          NEXT_PUBLIC_BASE_URL: https://lex-atlas.com
+          NEXT_PUBLIC_PLAUSIBLE_DOMAIN: lex-atlas.com
         run: |
           ANALYZE=true npm run build
           tar -czf bundle-analyzer-report.tgz .next/analyze || true
@@ -150,8 +150,8 @@ jobs:
       - name: Build app
         env:
           NODE_ENV: production
-          NEXT_PUBLIC_BASE_URL: https://lexatlas.com
-          NEXT_PUBLIC_PLAUSIBLE_DOMAIN: lexatlas.com
+          NEXT_PUBLIC_BASE_URL: https://lex-atlas.com
+          NEXT_PUBLIC_PLAUSIBLE_DOMAIN: lex-atlas.com
           STRIPE_SECRET_KEY: sk_test_dummy
         run: npm run build
       - name: Start app and run prod header/robots tests
