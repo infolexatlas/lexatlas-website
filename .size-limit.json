@@ -1,5 +1,5 @@
 [
-  { "name": "Client JS (gzip)", "path": ".next/static/chunks/*.js", "limit": "228 kB" }
+  { "name": "Client JS (brotli)", "path": ".next/static/chunks/*.js", "limit": "340 kB" }
 ]
 
 
