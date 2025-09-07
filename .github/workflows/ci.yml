@@ -75,9 +75,9 @@ jobs:
       - name: Wait for server
         run: npx wait-on http://127.0.0.1:3000 --timeout 180000
       - name: Run Playwright smoke
-        run: npx playwright test --grep @smoke --reporter=line
+        run: npx playwright test --grep @smoke --reporter=line --workers=2
       - name: Run full Playwright suite (non-blocking)
-        run: npx playwright test --reporter=line
+        run: npx playwright test --reporter=line --workers=2 || true
         continue-on-error: true
       - name: Stop Next
         if: always()
