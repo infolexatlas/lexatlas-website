@@ -159,7 +159,7 @@ jobs:
           NODE_ENV: production
         run: |
           npx kill-port 3000 || true
-          (npm start & echo $! > .next_pid) &
+          (npx next start -H 127.0.0.1 -p 3000 & echo $! > .next_pid) &
           npx wait-on http://127.0.0.1:3000 --timeout 180000
           BASE_URL=http://127.0.0.1:3000 npx playwright test -g "@prod-headers-robots"
       - if: always()
