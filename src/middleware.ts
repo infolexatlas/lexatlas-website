@@ -57,7 +57,5 @@ export function middleware(req: NextRequest) {
 
 // CRITICAL: do NOT match static assets, images, or files with extensions
 export const config = {
-  matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|wp-sitemap.xml|api|images|fonts|assets|.*\\..*).*)',
-  ],
+  matcher: ['/kits/:path*'],
 };
