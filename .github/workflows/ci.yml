@@ -162,7 +162,8 @@ jobs:
         run: |
           npx kill-port 3000 || true
           (npx next start -H 127.0.0.1 -p 3000 & echo $! > .next_pid) &
-          npx wait-on http://127.0.0.1:3000 --timeout 180000
+          npx wait-on tcp:127.0.0.1:3000 --timeout 180000
+          curl -sS -I http://127.0.0.1:3000/ | sed -n '1,50p' || true
           BASE_URL=http://127.0.0.1:3000 npx playwright test -g "@prod-headers-robots"
       - if: always()
         uses: actions/upload-artifact@v4
