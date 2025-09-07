@@ -5,6 +5,7 @@ const PREFERRED_HOST = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN || 'lex-atlas.co
 
 const KIT_ALIASES: Record<string, string> = {
   'fra_6can': 'fra-can',
+  'fra-6can': 'fra-can',
   'fra-can': 'fra-can',
   'fra—usa': 'fra-usa',
   'fra_usa': 'fra-usa',
