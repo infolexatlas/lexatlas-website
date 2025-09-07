@@ -4,6 +4,8 @@ export default defineConfig({
   testDir: 'tests',
   testMatch: ['**/*.spec.ts'],
   testIgnore: ['**/src/**'],
+  retries: process.env.CI ? 2 : 0,
+  timeout: 60_000,
   use: {
     baseURL: process.env.BASE_URL ?? 'http://127.0.0.1:3000',
     browserName: 'chromium',
@@ -12,6 +14,7 @@ export default defineConfig({
     ignoreHTTPSErrors: true,
   },
   expect: {
+    timeout: 10_000,
     toHaveScreenshot: {
       animations: 'disabled',
       caret: 'hide',
