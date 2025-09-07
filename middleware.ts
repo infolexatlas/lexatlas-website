@@ -37,8 +37,8 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  // Run middleware on all non-static paths; our code no-ops unless path starts with /kits/
-  matcher: ['/((?!_next/|.*\\..*).*)'],
+  // Match only kits routes explicitly to avoid touching assets or other pages
+  matcher: ['/kits/:path*'],
 };
 
 
