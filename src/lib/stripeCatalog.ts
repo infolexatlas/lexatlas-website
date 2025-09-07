@@ -48,6 +48,10 @@ export async function ensurePricesExistDev(): Promise<void> {
     console.log('Skipping price creation in production')
     return
   }
+  if (!stripe) {
+    console.warn('Stripe not configured; skipping price ensure in dev')
+    return
+  }
 
   console.log('Ensuring Stripe prices exist for development...')
 
@@ -60,7 +64,6 @@ export async function ensurePricesExistDev(): Promise<void> {
     }
 
     try {
-      if (!stripe) { console.warn('Stripe not configured; skipping creation.'); continue }
       // Create product first
       const product = await stripe.products.create({
         name: getProductName(key as CatalogKey),

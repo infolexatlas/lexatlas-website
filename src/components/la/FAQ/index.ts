@@ -1,0 +1,5 @@
+export { FAQHero } from './FAQHero'
+export { FAQSearch } from './FAQSearch'
+export { FAQAccordion } from './FAQAccordion'
+export { FAQCTA } from './FAQCTA'
+export { FAQSchema } from './FAQSchema'

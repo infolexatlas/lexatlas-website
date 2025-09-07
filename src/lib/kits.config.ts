@@ -104,7 +104,7 @@ export function slugToPairKey(slug: string): string | null {
  * Validate if a slug is in our priority list
  */
 export function isValidPrioritySlug(slug: string): boolean {
-  return PRIORITY_SLUGS.includes(slug as unknown as typeof PRIORITY_SLUGS[number]);
+  return PRIORITY_SLUGS.includes(slug as any);
 }
 
 /**
@@ -181,7 +181,7 @@ export function canonicalFraSlug(aISO3: string, bISO3: string): string | null {
   }
   
   const slug = `${left}-${right}`.toLowerCase();
-  return (SUPPORTED_FRA_SLUGS as readonly string[]).includes(slug) ? slug : null;
+  return SUPPORTED_FRA_SLUGS.includes(slug as any) ? slug : null;
 }
 
 /**

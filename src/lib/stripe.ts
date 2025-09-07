@@ -5,7 +5,7 @@ export const isFakeCheckout = process.env.NEXT_PUBLIC_FAKE_CHECKOUT === '1'
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY || ''
 
 export const stripe = (!isFakeCheckout && stripeSecretKey)
-  ? new Stripe(stripeSecretKey, { apiVersion: '2025-07-30.basil' as Stripe.LatestApiVersion })
+  ? new Stripe(stripeSecretKey)
   : null
 
 export function assertStripe(stripe: Stripe | null) { 
