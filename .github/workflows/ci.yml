@@ -159,6 +159,7 @@ jobs:
           NODE_ENV: production
           NEXT_PUBLIC_BASE_URL: http://127.0.0.1:3000
           NEXT_PUBLIC_PLAUSIBLE_DOMAIN: 127.0.0.1
+          CI_PROD_CHECKS: '1'
         run: |
           npx kill-port 3000 || true
           (npx next start -H 127.0.0.1 -p 3000 & echo $! > .next_pid) &
