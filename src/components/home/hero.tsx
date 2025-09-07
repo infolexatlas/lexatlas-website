@@ -39,9 +39,9 @@ export default function Hero() {
           </div>
 
           {/* RIGHT: premium globe */}
-          <div className="relative mx-auto aspect-square w-[320px] sm:w-[380px] md:w-[480px] lg:w-[560px] animate-reveal">
+          <section id="hero-globe" data-testid="hero-globe-client" className="relative mx-auto aspect-square w-[320px] sm:w-[380px] md:w-[480px] lg:w-[560px] animate-reveal">
             <HeroGlobeReal />
-          </div>
+          </section>
         </div>
       </div>
     </section>
