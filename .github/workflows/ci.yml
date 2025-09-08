@@ -71,9 +71,14 @@ jobs:
           npm run build
       - name: Start Next server
         run: |
+          npx kill-port 3000 || true
           npx next start -H 127.0.0.1 -p 3000 & echo $! > .next_pid
       - name: Wait for server
-        run: npx wait-on http://127.0.0.1:3000 --timeout 180000
+        run: |
+          npx wait-on tcp:127.0.0.1:3000 --timeout 180000
+          npx wait-on http://127.0.0.1:3000 --timeout 180000
+          echo '--- HEADERS / ---'
+          curl -sSI http://127.0.0.1:3000/ | sed -n '1,80p' || true
       - name: Run Playwright smoke
         run: npx playwright test --grep @smoke --reporter=line --workers=2
       - name: Run full Playwright suite (non-blocking)

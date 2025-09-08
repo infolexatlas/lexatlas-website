@@ -3,11 +3,16 @@ import { NextResponse, NextRequest } from 'next/server'
 
 // Normalize /kits/* slugs only. Do NOT handle host redirects here; Vercel domain settings will.
 function normalizeKitSlug(pathname: string) {
-  const normalized = pathname
+  const lowered = pathname
     .replace(/[\u2012\u2013\u2014\u2015]/g, '-') // unicode dashes → '-'
     .replace(/_/g, '-')
     .toLowerCase()
-  return normalized
+
+  // Collapse stray "6" between ISO3 codes only within /kits/* segment
+  // Examples handled: /kits/fra-6can, /kits/fra6can, /kits/fra-6-can
+  const fixed = lowered.replace(/(\/kits\/)([a-z]{3})-?6-?([a-z]{3})(?=\/|$)/, '$1$2-$3')
+
+  return fixed
 }
 
 export function middleware(req: NextRequest) {

@@ -12,8 +12,10 @@ export function normalizeSlug(input: string): PairSlug | null {
     .replace(/\s+/g, '')
     .replace(CLEAN_SEP, '-')
     .replace(/([^a-z])+/g, (m) => (m.includes('-') ? '-' : ''));
-  // fix common typo: `fra-6can` → `fra-can`
-  const s2 = s.replace(/([a-z]{3})6([a-z]{3})/, '$1-$2');
+  // Fix common typos involving "6" between ISO3 codes:
+  // Handles: fra-6can, fra6can, fra-6-can → fra-can
+  const s2 = s
+    .replace(/([a-z]{3})-?6-?([a-z]{3})/g, '$1-$2');
   const [a, b] = s2.split('-');
   if (!a || !b) return null;
   if (ISO3.includes(a as Iso3) && ISO3.includes(b as Iso3)) {
