@@ -9,7 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NEXT_PUBLIC_BASE_URL: "http://127.0.0.1:3000"
-      NEXT_PUBLIC_PLAUSIBLE_DOMAIN: "localhost"
+      NEXT_PUBLIC_PLAUSIBLE_DOMAIN: "127.0.0.1"
+      CI_PROD_CHECKS: "1"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -20,15 +21,29 @@ jobs:
       - name: Install Playwright (chromium)
         run: npx playwright install --with-deps chromium
       - name: Build
+        env:
+          NODE_ENV: production
+          NEXT_PUBLIC_BASE_URL: http://127.0.0.1:3000
+          NEXT_PUBLIC_PLAUSIBLE_DOMAIN: 127.0.0.1
+          STRIPE_SECRET_KEY: sk_test_dummy
         run: npm run build
       - name: Start Next
+        env:
+          NEXT_PUBLIC_BASE_URL: http://127.0.0.1:3000
+          NEXT_PUBLIC_PLAUSIBLE_DOMAIN: 127.0.0.1
+          CI_PROD_CHECKS: "1"
         run: |
           (npx next start --hostname 127.0.0.1 --port 3000 & echo $! > .next_pid)
-          npx wait-on http://127.0.0.1:3000
+          npx wait-on tcp:127.0.0.1:3000 --timeout 300000
+          echo "--- HEAD / ---" && curl -sS -I http://127.0.0.1:3000/ | sed -n '1,50p' || true
+          echo "--- ROBOTS ---" && curl -sS http://127.0.0.1:3000/robots.txt | sed -n '1,80p' || true
       - name: Run E2E
         env:
           BASE_URL: http://127.0.0.1:3000
-        run: npm run test:e2e
+          NEXT_PUBLIC_BASE_URL: http://127.0.0.1:3000
+          NEXT_PUBLIC_PLAUSIBLE_DOMAIN: 127.0.0.1
+          CI_PROD_CHECKS: "1"
+        run: timeout 10m npm run test:e2e || { echo "E2E exceeded 10m"; exit 1; }
       - name: Stop Next
         if: always()
         run: |
