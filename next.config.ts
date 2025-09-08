@@ -24,6 +24,11 @@ import { getSecurityHeaders } from './src/lib/securityHeaders';
  */
 const nextConfig: NextConfig = {
   eslint: { ignoreDuringBuilds: true },
+  images: {
+    remotePatterns: [
+      { protocol: 'https', hostname: 'cdn.jsdelivr.net' },
+    ],
+  },
   async headers() {
     const headerTuples = getSecurityHeaders();
     return [
