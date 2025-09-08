@@ -25,10 +25,22 @@ export function generateStaticParams() {
   return params
 }
 
-export default function Page({ params }: { params: PageParams } | any) {
+export default function Page({ params, searchParams }: { params: PageParams, searchParams?: Record<string, string | string[]> } | any) {
   const norm = normalizeSlug(params.slug)
   if (!norm) return notFound()
-  if (norm !== params.slug) redirect(`/kits/${norm}`)
+  if (norm !== params.slug) {
+    const sp = new URLSearchParams()
+    for (const key in (searchParams || {})) {
+      const val = (searchParams as any)[key]
+      if (Array.isArray(val)) {
+        val.forEach(v => sp.append(key, String(v)))
+      } else if (val != null) {
+        sp.set(key, String(val))
+      }
+    }
+    const qs = sp.toString()
+    redirect(`/kits/${norm}${qs ? `?${qs}` : ''}`)
+  }
 
   const kit = kitsDetail[norm]
   if (!kit) return notFound()

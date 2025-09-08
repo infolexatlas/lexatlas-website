@@ -1,63 +1,41 @@
 // middleware.ts
-import { NextResponse, NextRequest } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server'
 
-const PREFERRED_HOST = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN || 'lex-atlas.com';
+// Normalize /kits/* slugs only. Do NOT handle host redirects here; Vercel domain settings will.
+function normalizeKitSlug(pathname: string) {
+  const lowered = pathname
+    .replace(/[\u2012\u2013\u2014\u2015]/g, '-') // unicode dashes → '-'
+    .replace(/_/g, '-')
+    .toLowerCase()
 
-const KIT_ALIASES: Record<string, string> = {
-  'fra_6can': 'fra-can',
-  'fra-6can': 'fra-can',
-  'fra-can': 'fra-can',
-  'fra—usa': 'fra-usa',
-  'fra_usa': 'fra-usa',
-  'fra-usa': 'fra-usa',
-  'fra—can': 'fra-can',
-  'fra_can': 'fra-can',
-  'FRA-6CAN': 'fra-can',
-  'FRA_6CAN': 'fra-can',
-  'FRA—USA': 'fra-usa',
-  'FRA_USA': 'fra-usa',
-  'FRA-USA': 'fra-usa',
-};
+  // Collapse stray "6" between ISO3 codes only within /kits/* segment
+  // Examples handled: /kits/fra-6can, /kits/fra6can, /kits/fra-6-can
+  const fixed = lowered.replace(/(\/kits\/)([a-z]{3})-?6-?([a-z]{3})(?=\/|$)/, '$1$2-$3')
 
-function canonicalizeKitSlug(input: string) {
-  const key = input.trim().toLowerCase();
-  const normalized = key.replace(/[_\u2012-\u2015]/g, '-');
-  return KIT_ALIASES[normalized] || normalized;
+  return fixed
 }
 
 export function middleware(req: NextRequest) {
-  // Bypass host canonicalization during local prod checks on CI to avoid redirect loops
-  if (process.env.CI_PROD_CHECKS === '1') {
-    return NextResponse.next();
-  }
-  const url = new URL(req.url);
+  const { pathname, search, hash } = req.nextUrl
 
-  // 1) Force preferred host (apex vs www)
-  if (url.hostname !== PREFERRED_HOST) {
-    url.hostname = PREFERRED_HOST;
-    return NextResponse.redirect(url, { status: 308 });
-  }
-
-  // 2) Canonicalize /kits slugs
-  if (url.pathname.startsWith('/kits/')) {
-    const rest = url.pathname.slice('/kits/'.length);
-    if (rest.length > 0) {
-      const rawSlug = rest.replace(/\/+$/, '');
-      const canonical = canonicalizeKitSlug(rawSlug);
-      const desiredPath = `/kits/${canonical}`;
-      if (`/kits/${rawSlug}` !== desiredPath) {
-        url.pathname = desiredPath;
-        return NextResponse.redirect(url, { status: 308 });
-      }
+  // Only canonicalize /kits/* routes
+  if (pathname.startsWith('/kits/')) {
+    const normalized = normalizeKitSlug(pathname)
+    if (normalized !== pathname) {
+      const url = req.nextUrl.clone()
+      url.pathname = normalized
+      url.search = search
+      url.hash = hash
+      return NextResponse.redirect(url, 308)
     }
   }
 
-  return NextResponse.next();
+  return NextResponse.next()
 }
 
-// CRITICAL: do NOT match static assets, images, or files with extensions
+// IMPORTANT: Exclude static assets and system routes so CSS/JS/images/fonts are never intercepted.
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|wp-sitemap.xml|api|images|fonts|assets|.*\\..*).*)',
+    '/((?!_next/|images/|fonts/|favicon.ico|robots.txt|sitemap.xml|wp-sitemap.xml|api/).*)',
   ],
-};
+}
