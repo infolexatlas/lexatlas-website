@@ -10,7 +10,8 @@ export function getSecurityHeaders(): HeaderTuple[] {
   const cspDirectives = [
     "default-src 'self'",
     "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
-    "style-src 'self' 'unsafe-inline'",
+    // Allow styles from self and inline; also permit blob: for Next/font runtime styles if needed
+    "style-src 'self' 'unsafe-inline' blob:",
     "img-src 'self' data: https:",
     "font-src 'self' data:",
     "connect-src 'self' https:",
