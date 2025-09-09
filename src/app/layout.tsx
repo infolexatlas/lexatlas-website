@@ -37,20 +37,15 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://lexatlas.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://lex-atlas.com'),
   alternates: {
     canonical: '/',
   },
   icons: {
     icon: [
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" }
+      { url: "/favicon.ico", type: "image/x-icon" },
     ],
     shortcut: ["/favicon.ico"],
-    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
-    other: [
-      { rel: "mask-icon", url: "/maskable-192.png" }
-    ]
   },
   other: {
     'theme-color': '#1A2E4F',
@@ -62,12 +57,6 @@ export const metadata: Metadata = {
     url: '/',
     siteName: 'LexAtlas',
     images: [
-      {
-        url: '/og/home.svg',
-        width: 1200,
-        height: 630,
-        alt: 'LexAtlas - Your Global Legal Compass',
-      },
       {
         url: '/og/home.png',
         width: 1200,
@@ -82,7 +71,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'LexAtlas - Your Global Legal Compass',
     description: 'Expert-built, country-specific PDF guides to handle international legal procedures with clarity and confidence.',
-    images: ['/og/home.svg', '/og/home.png'],
+    images: ['/og/home.png'],
   },
   robots: {
     index: true,

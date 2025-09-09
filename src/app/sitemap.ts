@@ -3,7 +3,7 @@ import { MetadataRoute } from 'next'
 import { priorityKits } from '@/lib/kits.config'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+  const base = process.env.NEXT_PUBLIC_BASE_URL || 'https://lex-atlas.com'
   const now = new Date()
 
   const staticRoutes: MetadataRoute.Sitemap = [

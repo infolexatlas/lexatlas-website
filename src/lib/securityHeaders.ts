@@ -15,6 +15,7 @@ export function getSecurityHeaders(): HeaderTuple[] {
     "img-src 'self' data: https:",
     "font-src 'self' data:",
     "connect-src 'self' https:",
+    `report-uri ${process.env.NEXT_PUBLIC_BASE_URL || 'https://lex-atlas.com'}/api/csp-report`,
     "frame-ancestors 'none'",
   ].join('; ');
 
