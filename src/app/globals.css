@@ -15,9 +15,7 @@
     --la-text: var(--brand-deep);
   }
 
-  * {
-    @apply border-gray-200;
-  }
+  /* Avoid applying borders globally; this caused unintended large outlines */
 
   body {
     @apply bg-white text-slate-900 antialiased;
