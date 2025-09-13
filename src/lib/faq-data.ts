@@ -63,7 +63,7 @@ export const faqs: FAQ[] = [
   {
     id: 'buy-multiple-kits',
     question: 'Can we buy multiple kits?',
-    answer: 'Yes. We offer flexible packages: Single Kit (€29), Bundle of 3 (€75, save 14%), and Full Pack with all 10 priority country pairs (€200, save 31%). Perfect for comparing different country pairs or if you\'re considering multiple options. Contact support for custom pricing on larger orders.',
+    answer: 'Yes. We offer flexible packages: Single Kit (€29) and Bundle of 3 (€75, save 14%). Perfect for comparing different country pairs or if you\'re considering multiple options. Contact support for custom pricing on larger orders.',
     tags: ['pricing', 'bundles', 'multiple']
   },
   {
