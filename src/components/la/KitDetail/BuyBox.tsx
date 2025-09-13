@@ -22,20 +22,13 @@ export function BuyBox({ priceEUR, slug }: { priceEUR: number; slug: string }) {
         (window as any).plausible('checkout_start', { props: { kit: slug } })
       }
 
-      // Get price ID for this kit
-      const priceId = getStripePriceId(slug)
-      if (!priceId) {
-        throw new Error('Price not configured for this kit')
-      }
-
-      // Create checkout session
+      // Create checkout session - let the server handle price ID lookup
       const response = await fetch('/api/checkout/session', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          priceId,
           kitSlug: slug,
           successPath: '/checkout/success',
           cancelPath: '/checkout/cancel',

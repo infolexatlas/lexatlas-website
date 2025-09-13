@@ -1,6 +1,7 @@
 // src/app/api/checkout/session/route.ts
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import { getStripePriceId } from '@/lib/stripe-prices';
 
 export const runtime = 'nodejs'; // important: Stripe SDK needs Node
 
@@ -25,9 +26,9 @@ function getBaseUrl() {
 type CreateSessionBody =
   | {
       mode?: 'payment' | 'subscription';
-      priceId: string;               // A Stripe Price ID (recommended)
+      priceId?: string;              // A Stripe Price ID (optional, can be derived from kitSlug)
+      kitSlug?: string;              // e.g., 'fra-usa' (for metadata and price lookup)
       quantity?: number;             // default 1
-      kitSlug?: string;              // e.g., 'fra-usa' (for metadata)
       successPath?: string;          // optional override, default '/checkout/success'
       cancelPath?: string;           // optional override, default '/checkout/cancel'
     }
@@ -69,9 +70,15 @@ export async function POST(req: Request) {
     // Build line_items either from a single Price ID or custom ad-hoc items
     let line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
-    if ('priceId' in body! && body?.priceId) {
+    // Try to get price ID from body or derive from kitSlug
+    let priceId = body?.priceId;
+    if (!priceId && body?.kitSlug) {
+      priceId = getStripePriceId(body.kitSlug);
+    }
+
+    if (priceId) {
       const qty = Math.max(1, Number(body?.quantity ?? 1));
-      line_items = [{ price: body!.priceId, quantity: qty }];
+      line_items = [{ price: priceId, quantity: qty }];
     } else if ('lineItems' in body! && Array.isArray(body?.lineItems) && body!.lineItems!.length) {
       // Ad-hoc price (not recommended for prod unless you have a clear policy)
       line_items = body!.lineItems!.map((li) => ({
@@ -84,7 +91,7 @@ export async function POST(req: Request) {
       }));
     } else {
       return NextResponse.json(
-        { error: 'Provide either { priceId } or { lineItems: [...] }.' },
+        { error: `Price not configured for kit: ${body?.kitSlug || 'unknown'}. Please provide either { priceId }, { kitSlug }, or { lineItems: [...] }` },
         { status: 400 }
       );
     }
