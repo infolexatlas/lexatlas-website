@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import PricingCard from './PricingCard'
-import { DEFAULT_EUR, PRICE_BUNDLE_3, PRICE_BUNDLE_10 } from '@/lib/pricing'
+import { DEFAULT_EUR, PRICE_BUNDLE_3 } from '@/lib/pricing'
 import { PRIORITY_SLUGS } from '@/lib/kits.client'
 import { getDisplayPairFromSlug } from '@/lib/kits.display'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
@@ -13,13 +13,12 @@ import { Checkbox } from '@/components/ui/checkbox'
 type Props = {
   onSingleCheckout: (slug: string) => Promise<void>
   onBundle3Checkout: (slugs: string[]) => Promise<void>
-  onBundle10Checkout: () => Promise<void>
 }
 
-export default function PricingCards({ onSingleCheckout, onBundle3Checkout, onBundle10Checkout }: Props) {
+export default function PricingCards({ onSingleCheckout, onBundle3Checkout }: Props) {
   const [single, setSingle] = useState<string>('')
   const [bundle3, setBundle3] = useState<string[]>([])
-  const [loading, setLoading] = useState<'single' | 'bundle3' | 'bundle10' | null>(null)
+  const [loading, setLoading] = useState<'single' | 'bundle3' | null>(null)
   const [openSingle, setOpenSingle] = useState(false)
   const [openBundle, setOpenBundle] = useState(false)
 
@@ -32,12 +31,11 @@ export default function PricingCards({ onSingleCheckout, onBundle3Checkout, onBu
   }
 
   // Expose simple global hooks for the comparison table CTAs
-  // Allows opening dialogs or triggering full checkout from elsewhere on the page
+  // Allows opening dialogs from elsewhere on the page
   if (typeof window !== 'undefined') {
     ;(window as any).LA_pricing = {
       openSingle: () => setOpenSingle(true),
       openBundle3: () => setOpenBundle(true),
-      buyFull: async () => { setLoading('bundle10'); try { await onBundle10Checkout() } finally { setLoading(null) } },
     }
   }
 
@@ -45,7 +43,7 @@ export default function PricingCards({ onSingleCheckout, onBundle3Checkout, onBu
     <section aria-labelledby="pricing-cards-title" className="section-premium pt-0">
       <div className="container">
         <h2 id="pricing-cards-title" className="sr-only">Packages</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto">
           {/* Single */}
           <Dialog open={openSingle} onOpenChange={setOpenSingle}>
             <PricingCard
@@ -185,22 +183,6 @@ export default function PricingCards({ onSingleCheckout, onBundle3Checkout, onBu
             </DialogContent>
           </Dialog>
 
-          {/* Full Pack */}
-          <PricingCard
-            id="bundle10"
-            title="Full Pack"
-            subtitle="All 10 priority country pairs"
-            priceCents={PRICE_BUNDLE_10.price}
-            currency={PRICE_BUNDLE_10.currency}
-            features={[
-              'All 10 guides',
-              'Complete collection',
-              'Maximum value',
-              'Instant downloads'
-            ]}
-            ctaLabel={`Get Full Pack – ${(PRICE_BUNDLE_10.price / 100).toFixed(0)} €`}
-            onCta={async () => { setLoading('bundle10'); try { await onBundle10Checkout() } finally { setLoading(null) } }}
-          />
         </div>
       </div>
     </section>
