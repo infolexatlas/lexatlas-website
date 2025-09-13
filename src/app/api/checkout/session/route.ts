@@ -23,22 +23,15 @@ function getBaseUrl() {
   return process.env.NEXT_PUBLIC_BASE_URL?.replace(/\/+$/, '') || '';
 }
 
-type CreateSessionBody =
-  | {
-      mode?: 'payment' | 'subscription';
-      priceId?: string;              // A Stripe Price ID (optional, can be derived from kitSlug)
-      kitSlug?: string;              // e.g., 'fra-usa' (for metadata and price lookup)
-      quantity?: number;             // default 1
-      successPath?: string;          // optional override, default '/checkout/success'
-      cancelPath?: string;           // optional override, default '/checkout/cancel'
-    }
-  | {
-      mode?: 'payment';
-      lineItems: Array<{ name?: string; price: number; currency: string; quantity?: number }>;
-      kitSlug?: string;
-      successPath?: string;
-      cancelPath?: string;
-    };
+type CreateSessionBody = {
+  mode?: 'payment' | 'subscription';
+  priceId?: string;              // A Stripe Price ID (optional, can be derived from kitSlug)
+  kitSlug?: string;              // e.g., 'fra-usa' (for metadata and price lookup)
+  quantity?: number;             // default 1
+  successPath?: string;          // optional override, default '/checkout/success'
+  cancelPath?: string;           // optional override, default '/checkout/cancel'
+  lineItems?: Array<{ name?: string; price: number; currency: string; quantity?: number }>;
+};
 
 export async function POST(req: Request) {
   try {
@@ -79,9 +72,9 @@ export async function POST(req: Request) {
     if (priceId) {
       const qty = Math.max(1, Number(body?.quantity ?? 1));
       line_items = [{ price: priceId, quantity: qty }];
-    } else if ('lineItems' in body! && Array.isArray(body?.lineItems) && body!.lineItems!.length) {
+    } else if (Array.isArray(body?.lineItems) && body.lineItems.length) {
       // Ad-hoc price (not recommended for prod unless you have a clear policy)
-      line_items = body!.lineItems!.map((li) => ({
+      line_items = body.lineItems.map((li) => ({
         quantity: Math.max(1, Number(li.quantity ?? 1)),
         price_data: {
           currency: li.currency,
