@@ -69,6 +69,14 @@ export async function POST(req: Request) {
       priceId = getStripePriceId(body.kitSlug) || undefined;
     }
 
+    // Validate price ID is present
+    if (!priceId) {
+      return NextResponse.json(
+        { error: `Missing price for slug: ${body?.kitSlug || 'unknown'}. Please provide either { priceId }, { kitSlug }, or { lineItems: [...] }` },
+        { status: 400 }
+      );
+    }
+
     if (priceId) {
       const qty = Math.max(1, Number(body?.quantity ?? 1));
       line_items = [{ price: priceId, quantity: qty }];
@@ -110,7 +118,18 @@ export async function POST(req: Request) {
       { status: 200 }
     );
   } catch (err: any) {
+    // Handle specific Stripe errors
+    if (err.type === 'StripeInvalidRequestError' && err.code === 'resource_missing') {
+      // Log the specific price ID that failed (server-side only)
+      console.error(`Stripe price ID not found: ${err.param || 'unknown'}`);
+      return NextResponse.json(
+        { error: 'Price configuration error. Please contact support.' },
+        { status: 400 }
+      );
+    }
+    
     // Do NOT log secrets; log minimal error
+    console.error('Stripe session creation failed:', err.message);
     return NextResponse.json(
       { error: err?.message || 'Stripe session creation failed' },
       { status: 500 }
