@@ -10,13 +10,13 @@ export const metadata: Metadata = {
 }
 
 interface CancelPageProps {
-  searchParams: { 
+  searchParams: Promise<{ 
     kit?: string
-  }
+  }>
 }
 
-export default function CheckoutCancelPage({ searchParams }: CancelPageProps) {
-  const { kit } = searchParams
+export default async function CheckoutCancelPage({ searchParams }: CancelPageProps) {
+  const { kit } = await searchParams
 
   return (
     <main className="min-h-screen bg-brand-ivory flex items-center justify-center px-4">

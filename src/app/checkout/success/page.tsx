@@ -10,14 +10,14 @@ export const metadata: Metadata = {
 }
 
 interface SuccessPageProps {
-  searchParams: { 
+  searchParams: Promise<{ 
     session_id?: string
     kit?: string
-  }
+  }>
 }
 
-export default function CheckoutSuccessPage({ searchParams }: SuccessPageProps) {
-  const { session_id, kit } = searchParams
+export default async function CheckoutSuccessPage({ searchParams }: SuccessPageProps) {
+  const { session_id, kit } = await searchParams
 
   return (
     <main className="min-h-screen bg-brand-ivory flex items-center justify-center px-4">
