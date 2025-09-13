@@ -25,12 +25,13 @@ export function generateStaticParams() {
   return params
 }
 
-export default function Page({ params }: { params: { slug: string } }) {
-  const norm = normalizeSlug(params.slug)
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const norm = normalizeSlug(slug)
   if (!norm) return notFound()
   
   // Only redirect if the slug actually needs normalization
-  if (norm !== params.slug) {
+  if (norm !== slug) {
     redirect(`/kits/${norm}`)
   }
 
