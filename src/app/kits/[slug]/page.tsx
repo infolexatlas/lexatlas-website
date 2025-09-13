@@ -25,23 +25,13 @@ export function generateStaticParams() {
   return params
 }
 
-export default async function Page({ params, searchParams }: { params: Promise<PageParams>, searchParams?: Promise<Record<string, string | string[]>> } | any) {
-  const resolvedParams = await params
-  const resolvedSearchParams = await searchParams
-  const norm = normalizeSlug(resolvedParams.slug)
+export default function Page({ params }: { params: { slug: string } }) {
+  const norm = normalizeSlug(params.slug)
   if (!norm) return notFound()
-  if (norm !== resolvedParams.slug) {
-    const sp = new URLSearchParams()
-    for (const key in (resolvedSearchParams || {})) {
-      const val = (resolvedSearchParams as any)[key]
-      if (Array.isArray(val)) {
-        val.forEach(v => sp.append(key, String(v)))
-      } else if (val != null) {
-        sp.set(key, String(val))
-      }
-    }
-    const qs = sp.toString()
-    redirect(`/kits/${norm}${qs ? `?${qs}` : ''}`)
+  
+  // Only redirect if the slug actually needs normalization
+  if (norm !== params.slug) {
+    redirect(`/kits/${norm}`)
   }
 
   const kit = kitsDetail[norm]

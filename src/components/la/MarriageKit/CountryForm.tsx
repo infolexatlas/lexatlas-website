@@ -33,7 +33,7 @@ export default function CountryForm() {
   const canSubmit = !!countryA && !!countryB && countryA.code !== countryB.code
 
   return (
-    <section className="section-premium bg-white">
+    <section id="select-countries" className="section-premium bg-white">
       <div className="container">
         <motion.div
           initial="hidden"

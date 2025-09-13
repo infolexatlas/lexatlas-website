@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, Link as LinkIcon, Copy, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { FAQ } from '@/lib/faq-data'
+import Link from 'next/link'
 
 interface FAQAccordionProps {
   faqs: FAQ[]
@@ -70,6 +71,38 @@ export const FAQAccordion = ({
     } catch (err) {
       console.error('Failed to copy link:', err)
     }
+  }
+
+  // Convert markdown links to JSX elements and highlight search terms
+  const renderTextWithLinksAndHighlight = (text: string, query: string) => {
+    // First, convert markdown links to JSX
+    const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g
+    const parts = text.split(linkRegex)
+    
+    const processedParts = parts.map((part, index) => {
+      // Check if this part is a link text or URL
+      if (index % 3 === 1) {
+        // This is link text
+        const url = parts[index + 1]
+        return (
+          <Link 
+            key={index} 
+            href={url}
+            className="text-brand-gold hover:text-brand-navy underline transition-colors duration-200"
+          >
+            {highlightText(part, query)}
+          </Link>
+        )
+      } else if (index % 3 === 2) {
+        // This is URL, skip it as we already used it
+        return null
+      } else {
+        // This is regular text
+        return highlightText(part, query)
+      }
+    }).filter(Boolean)
+    
+    return processedParts
   }
 
   // Highlight search terms in text
@@ -175,7 +208,7 @@ export const FAQAccordion = ({
                   >
                     <div className="px-6 pb-6 text-brand-textMuted leading-relaxed">
                       <div className="prose prose-sm max-w-none">
-                        {highlightText(faq.answer, searchQuery)}
+                        {renderTextWithLinksAndHighlight(faq.answer, searchQuery)}
                       </div>
                       
                       {/* Tags */}

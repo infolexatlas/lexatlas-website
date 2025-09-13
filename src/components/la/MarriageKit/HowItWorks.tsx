@@ -5,14 +5,21 @@ import { fadeInUp, staggerContainer, useReducedMotionVariants } from '@/componen
 import { Globe, FileText, CheckCircle2 } from 'lucide-react'
 
 const steps = [
-  { icon: Globe, title: 'Select Countries', desc: 'Choose the two countries involved in your marriage process.' },
-  { icon: FileText, title: 'Get Your Guide', desc: 'Receive a tailored PDF covering requirements and steps.' },
-  { icon: CheckCircle2, title: 'Follow Steps', desc: 'Use the checklist to proceed with confidence.' }
+  { icon: Globe, title: 'Select Countries', desc: 'Choose the two countries involved in your marriage process.', onClick: 'select-countries' },
+  { icon: FileText, title: 'Get Your Guide', desc: 'Receive a tailored PDF covering requirements and steps.', onClick: 'whats-included' },
+  { icon: CheckCircle2, title: 'Follow Steps', desc: 'Use the checklist to proceed with confidence.', onClick: null }
 ]
 
 export default function HowItWorks() {
   const container = useReducedMotionVariants(staggerContainer)
   const item = useReducedMotionVariants(fadeInUp)
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
   return (
     <section className="py-12 lg:py-16 bg-brand-muted">
       <div className="container">
@@ -31,7 +38,8 @@ export default function HowItWorks() {
               key={s.title}
               variants={item}
               whileHover={{ y: -4, scale: 1.01, transition: { duration: 0.18, ease: [0.2,0.8,0.2,1] } }}
-              className="card p-6 rounded-2xl border bg-card shadow-sm transition will-change-transform motion-reduce:transform-none"
+              className={`card p-6 rounded-2xl border bg-card shadow-sm transition will-change-transform motion-reduce:transform-none ${s.onClick ? 'cursor-pointer' : ''}`}
+              onClick={s.onClick ? () => scrollToSection(s.onClick!) : undefined}
             >
               <div className="flex items-center gap-3">
                 <div aria-hidden className="h-10 w-10 rounded-xl grid place-items-center bg-white border">

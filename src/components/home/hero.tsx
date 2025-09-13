@@ -5,7 +5,7 @@ import { ScrollAnimation, HoverAnimation } from "@/components/ui/animations";
 export default function Hero() {
   return (
     <section className="relative bg-transparent py-20 lg:py-28">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* LEFT: copy + CTAs */}
           <ScrollAnimation>
@@ -47,7 +47,7 @@ export default function Hero() {
 
           {/* RIGHT: premium globe */}
           <ScrollAnimation variant={{ hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 1, scale: 1, transition: { duration: 0.8, ease: [0.2, 0.8, 0.2, 1] } } }}>
-            <section id="hero-globe" data-testid="hero-globe-client" className="relative mx-auto aspect-square w-[320px] sm:w-[380px] md:w-[480px] lg:w-[560px]">
+            <section id="hero-globe" data-testid="hero-globe-client" className="relative mx-auto aspect-square w-[280px] sm:w-[320px] md:w-[400px] lg:w-[480px] xl:w-[560px] max-w-[90vw]">
               <HeroGlobeReal />
             </section>
           </ScrollAnimation>

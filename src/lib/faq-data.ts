@@ -15,7 +15,7 @@ export const faqs: FAQ[] = [
   {
     id: 'replace-lawyer',
     question: 'Does the kit replace a lawyer?',
-    answer: 'No. It is not a substitute for personalized legal advice. It provides reliable, practical, and clear information so most couples can complete the process themselves without expensive legal fees. For complex cases or specific legal questions, we recommend consulting a qualified attorney.',
+    answer: 'No. It is not a substitute for personalized legal advice. It provides reliable, practical, and clear information so most couples can complete the process themselves without expensive legal fees. For complex cases or specific legal questions, you can [contact us](/contact) directly.',
     tags: ['legal-advice', 'lawyer']
   },
   {

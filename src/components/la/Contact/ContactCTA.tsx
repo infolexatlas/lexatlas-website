@@ -25,7 +25,7 @@ export function ContactCTA() {
             textTransform: 'uppercase', 
             letterSpacing: '0.05em' 
           }}>
-            We Reply Within One Business Day
+            We Reply As Soon As Possible
           </span>
         </div>
 
