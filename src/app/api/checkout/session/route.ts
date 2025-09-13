@@ -64,9 +64,9 @@ export async function POST(req: Request) {
     let line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
     // Try to get price ID from body or derive from kitSlug
-    let priceId = body?.priceId;
+    let priceId: string | undefined = body?.priceId;
     if (!priceId && body?.kitSlug) {
-      priceId = getStripePriceId(body.kitSlug);
+      priceId = getStripePriceId(body.kitSlug) || undefined;
     }
 
     if (priceId) {
