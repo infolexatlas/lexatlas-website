@@ -5,7 +5,6 @@ import { Analytics } from '@vercel/analytics/react'
 import Header from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { CookieBanner } from '@/components/cookie-banner'
-import { AnnouncementBar } from '@/components/AnnouncementBar'
 import { JsonLd } from '@/components/JsonLd'
 import { PageTransition } from '@/components/ui/page-transition'
 import { IS_DEV, RESEND_API_KEY } from '@/lib/env'
@@ -134,7 +133,6 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} min-h-screen bg-white text-slate-900 antialiased`}>
         <div className="min-h-screen flex flex-col">
-          <AnnouncementBar />
           <Header />
           <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <PageTransition>
