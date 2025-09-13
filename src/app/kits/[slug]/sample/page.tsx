@@ -1,14 +1,13 @@
 'use client'
 
 import { useEffect } from 'react'
-import { redirect } from 'next/navigation'
+import { useParams, redirect } from 'next/navigation'
 import { normalizeSlug } from '@/lib/kits-slug'
 import { kitsDetail } from '@/lib/kits-detail-data'
 
-interface PageParams { slug: string }
-
-export default function SamplePage({ params }: { params: PageParams }) {
-  const normalizedSlug = normalizeSlug(params.slug)
+export default function SamplePage() {
+  const params = useParams()
+  const normalizedSlug = normalizeSlug(params.slug as string)
   
   useEffect(() => {
     if (!normalizedSlug) {
