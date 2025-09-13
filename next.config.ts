@@ -29,6 +29,22 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'cdn.jsdelivr.net' },
     ],
   },
+  // Performance optimizations
+  experimental: {
+    optimizePackageImports: ['framer-motion', 'lucide-react'],
+  },
+  // Optimize bundle splitting (simplified)
+  webpack: (config, { dev }) => {
+    if (dev) {
+      // Reduce compilation overhead in development
+      config.watchOptions = {
+        poll: 1000,
+        aggregateTimeout: 300,
+      };
+    }
+    
+    return config;
+  },
   async headers() {
     const headerTuples = getSecurityHeaders();
     return [

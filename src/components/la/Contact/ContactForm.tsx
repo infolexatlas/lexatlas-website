@@ -385,7 +385,7 @@ export function ContactForm() {
             <Button 
               type="submit" 
               disabled={isSubmitting}
-              className="w-full h-16 text-lg font-semibold rounded-2xl"
+              className="w-full h-16 text-lg font-semibold rounded-2xl text-brand-gold"
             >
               {isSubmitting ? (
                 <>

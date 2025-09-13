@@ -7,24 +7,27 @@ import FAQExtract from '@/components/la/Landing/FAQExtract'
 import { KitSampleCTA } from '@/components/la/Kit/KitSampleCTA'
 import ClosingCTA from '@/components/la/Landing/ClosingCTA'
 import { devLog } from '@/lib/devLog'
+import { PageTransition } from '@/components/ui/page-transition'
 
 export default function HomePage() {
   devLog('home:render:start');
   
   return (
-    <div className="">
-      {/* Hero (untouched) */}
-      <Hero />
+    <PageTransition>
+      <div className="">
+        {/* Hero (untouched) */}
+        <Hero />
 
-      {/* Premium landing flow */}
-      <HowItWorksSection />
-      <Benefits />
-      <Preview />
-      <Trust />
-      <KitSampleCTA compact />
-      <FAQExtract />
-      <ClosingCTA />
-    </div>
+        {/* Premium landing flow */}
+        <HowItWorksSection />
+        <Benefits />
+        <Preview />
+        <Trust />
+        <KitSampleCTA compact />
+        <FAQExtract />
+        <ClosingCTA />
+      </div>
+    </PageTransition>
   )
   
   devLog('home:render:done');

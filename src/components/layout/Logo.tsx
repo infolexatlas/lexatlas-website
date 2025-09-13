@@ -9,8 +9,15 @@ export default function Logo() {
     <motion.div initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }}>
       <Link href="/" aria-label="LexAtlas home" className="focus:outline-none">
         <span className="logo-pill click-ink inline-flex items-center gap-2 px-3.5 py-2 md:px-4 md:py-2.5">
-          <span className="relative block h-6 w-6 md:h-7 md:w-7 overflow-hidden rounded-md" aria-hidden="true">
-            <Image src="/logo/lexatlas.svg" alt="LexAtlas logo" fill sizes="(max-width:768px) 28px, 36px" priority />
+          <span className="relative block h-6 w-6 md:h-7 md:w-7 overflow-hidden rounded-md bg-transparent" aria-hidden="true">
+            <Image 
+              src="/logo/lexatlas-transparent.svg?v=3" 
+              alt="LexAtlas logo" 
+              fill 
+              sizes="(max-width:768px) 28px, 36px" 
+              priority 
+              className="object-contain"
+            />
           </span>
           <span className="text-sm font-semibold tracking-tight md:text-base">LexAtlas</span>
         </span>

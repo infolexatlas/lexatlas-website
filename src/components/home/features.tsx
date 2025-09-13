@@ -1,5 +1,6 @@
 import { Shield, FileText, Globe } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { StaggerAnimation, HoverAnimation } from '@/components/ui/animations'
 
 const features = [
   {
@@ -33,9 +34,9 @@ export function Features() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <StaggerAnimation className="grid md:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <div key={feature.title}>
+            <HoverAnimation key={feature.title} className="h-full">
               <Card className="h-full border-0 shadow-lg hover:shadow-xl transition-shadow">
                 <CardHeader className="text-center">
                   <div className="mx-auto w-12 h-12 bg-brand-gold/10 rounded-lg flex items-center justify-center mb-4">
@@ -51,9 +52,9 @@ export function Features() {
                   </CardDescription>
                 </CardContent>
               </Card>
-            </div>
+            </HoverAnimation>
           ))}
-        </div>
+        </StaggerAnimation>
       </div>
     </section>
   )

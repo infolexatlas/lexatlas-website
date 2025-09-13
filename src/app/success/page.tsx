@@ -68,19 +68,19 @@ function SuccessInner() {
       />
 
       {/* Confirmation Hero */}
-      <section className="section">
-        <div className="container text-center">
+      <section className="py-16 lg:py-24 bg-brand-ivory">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={prefersReducedMotion ? undefined : { opacity: 0, scale: 0.7 }}
             animate={prefersReducedMotion ? undefined : { opacity: 1, scale: 1 }}
             transition={prefersReducedMotion ? undefined : { type: 'spring', stiffness: 220, damping: 18 }}
             aria-hidden
-            className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[--la-primary] text-[--la-accent] shadow"
+            className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-brand-deep text-brand-gold shadow-soft text-3xl"
           >
             ✓
           </motion.div>
           <motion.h1
-            className="text-3xl font-bold tracking-tight md:text-4xl"
+            className="text-3xl font-serif font-bold tracking-tight text-brand-deep md:text-4xl lg:text-5xl"
             variants={fadeInUp}
             initial="hidden"
             animate="show"
@@ -88,52 +88,52 @@ function SuccessInner() {
             Payment Successful
           </motion.h1>
           <motion.p
-            className="mt-2 text-muted-foreground"
+            className="mt-4 text-lg text-brand-textMuted"
             variants={fadeInUp}
             initial="hidden"
             animate="show"
           >
             Thank you for your purchase. Your kit is ready to download.
           </motion.p>
-          <div className="mt-1 text-xs text-muted-foreground">Instant download • Lifetime access • One‑time payment</div>
+          <div className="mt-2 text-sm text-brand-textMuted">Instant download • Lifetime access • One‑time payment</div>
         </div>
       </section>
 
       {/* Primary CTA Card */}
-      <section className="section pt-0 pb-8 md:pb-12">
-        <div className="container">
+      <section className="py-8 md:py-12 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            className="mx-auto max-w-xl rounded-2xl border bg-card p-5 text-center shadow-sm"
+            className="mx-auto max-w-xl rounded-2xl border-2 border-brand-gold/20 bg-brand-gold/5 p-6 text-center shadow-soft"
             variants={containerStagger}
             initial={prefersReducedMotion ? undefined : 'hidden'}
             animate={prefersReducedMotion ? undefined : 'show'}
           >
-            <motion.div className="text-sm text-[--la-accent]" variants={fadeInUp}>You purchased</motion.div>
-            <motion.div className="mt-1 text-lg font-semibold" variants={fadeInUp}>{title}</motion.div>
-            <motion.div className="mt-4 grid gap-3 sm:grid-cols-2" variants={fadeInUp}>
+            <motion.div className="text-sm text-brand-gold font-medium" variants={fadeInUp}>You purchased</motion.div>
+            <motion.div className="mt-1 text-lg font-serif font-semibold text-brand-deep" variants={fadeInUp}>{title}</motion.div>
+            <motion.div className="mt-6 grid gap-3 sm:grid-cols-2" variants={fadeInUp}>
               {downloadHref ? (
                 <motion.a
                   href={downloadHref}
                   download
                   aria-label="Download your purchased marriage kit"
-                  className="inline-flex items-center justify-center rounded-xl border px-4 py-2 font-medium ring-offset-background transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--la-accent] active:translate-y-[1px]"
+                  className="inline-flex items-center justify-center rounded-xl bg-brand-deep text-white px-6 py-3 font-medium transition hover:bg-brand-deep/90 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold active:translate-y-[1px]"
                   onClick={() => track('kit_download_click', { kit: kit || undefined })}
                 >
                   Download Your Kit
                 </motion.a>
               ) : (
                 <motion.div
-                  className="inline-flex items-center justify-center rounded-xl px-4 py-2 font-medium ring-offset-background transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--la-accent] active:translate-y-[1px]"
+                  className="inline-flex items-center justify-center rounded-xl bg-brand-deep text-white px-6 py-3 font-medium transition hover:bg-brand-deep/90 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold active:translate-y-[1px]"
                 >
                   <Link href="/kit">Browse Kits</Link>
                 </motion.div>
               )}
               <motion.div
-                className="inline-flex items-center justify-center rounded-xl border px-4 py-2 font-medium transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--la-accent] active:translate-y-[1px]"
-                onClick={() => track('browse_more_click', { from: 'success', kit: kit || undefined })}
+                className="inline-flex items-center justify-center rounded-xl border-2 border-brand-deep text-brand-deep px-6 py-3 font-medium transition hover:bg-brand-deep hover:text-white hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold active:translate-y-[1px]"
+                onClick={() => track('contact_support_click', { from: 'success', kit: kit || undefined })}
                 variants={fadeInUp}
               >
-                <Link href="/kit">Browse More Kits</Link>
+                <Link href="/contact">Contact Support</Link>
               </motion.div>
             </motion.div>
           </motion.div>
@@ -142,28 +142,6 @@ function SuccessInner() {
 
       
 
-      {/* Support */}
-      <section className="section pt-2 md:pt-3">
-        <div className="container text-center">
-          <motion.div
-            variants={containerStagger}
-            initial={prefersReducedMotion ? undefined : 'hidden'}
-            animate={prefersReducedMotion ? undefined : 'show'}
-          >
-            <motion.div className="text-sm font-medium text-[--la-accent]" variants={fadeInUp}>Need help?</motion.div>
-            <motion.div variants={fadeInUp} className="mt-2 inline-flex items-center justify-center">
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center rounded-xl border px-4 py-2 font-medium transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--la-accent] active:translate-y-[1px]"
-              >
-                Contact Support
-              </Link>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      
     </main>
   )
 }

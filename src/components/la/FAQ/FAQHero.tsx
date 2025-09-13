@@ -51,12 +51,24 @@ export const FAQHero = () => {
           {/* CTA Buttons */}
           <FadeIn delay={0.4}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-              <Button size="lg" variant="premium" className="text-base px-8 py-3" asChild>
-                <a href="/contact">Contact Support</a>
-              </Button>
-              <Button size="lg" variant="outline" className="text-base px-8 py-3" asChild>
-                <a href="/kits">Browse Marriage Kits</a>
-              </Button>
+              <a 
+                href="/contact"
+                className="inline-flex items-center justify-center rounded-xl2 text-base px-8 py-3 bg-brand-navy text-white font-semibold shadow-soft hover:shadow-premium hover:scale-105 transition-premium"
+              >
+                Contact Support
+                <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </a>
+              <a 
+                href="/kits"
+                className="inline-flex items-center justify-center rounded-xl2 text-base px-8 py-3 border-2 border-brand-gold bg-brand-gold text-brand-navy font-semibold shadow-soft hover:shadow-premium hover:scale-105 transition-premium"
+              >
+                Browse Marriage Kits
+                <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
             </div>
           </FadeIn>
 
@@ -66,7 +78,7 @@ export const FAQHero = () => {
               <StaggerItem key={stat.label} className="text-center">
                 <div className="group">
                   <div className="w-16 h-16 bg-gradient-to-br from-brand-navy/10 to-brand-gold/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-250">
-                    <stat.icon className="w-8 h-8 text-brand-navy" strokeWidth={1.5} />
+                    <stat.icon className="w-8 h-8 text-brand-gold" strokeWidth={1.5} />
                   </div>
                   <div className="text-3xl font-bold text-brand-navy mb-2">
                     {stat.value}

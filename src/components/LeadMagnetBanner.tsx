@@ -1,12 +1,14 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { FileText, Download, CheckCircle, AlertCircle, Info, ExternalLink } from 'lucide-react'
 import { fetchWithTimeout } from '@/lib/fetchWithTimeout'
 import { disableExternal } from '@/lib/devFlags'
+import { ScrollAnimation, HoverAnimation } from '@/components/ui/animations'
 
 interface LeadMagnetBannerProps {
   className?: string
@@ -64,17 +66,18 @@ export function LeadMagnetBanner({ className = '', source = 'lead_magnet_banner'
   const isDev = process.env.NODE_ENV !== 'production' || process.env.NEXT_PUBLIC_ENV === 'development'
 
   return (
-    <section className="py-20 lg:py-28 bg-brand-gray">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Card className="bg-gradient-to-br from-[#1A2E4F] to-[#1A2E4F]/90 border-0 rounded-2xl ring-1 ring-black/5 shadow-lg overflow-hidden animate-reveal">
-          <CardHeader className="text-center text-white pb-8">
+    <section className="py-20 lg:py-28 bg-brand-ivory relative overflow-hidden">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <ScrollAnimation>
+          <Card className="bg-white border-0 rounded-2xl ring-1 ring-black/5 shadow-lg overflow-hidden">
+          <CardHeader className="text-center text-brand-navy pb-8">
             <div className="mx-auto w-16 h-16 bg-gradient-to-br from-brand-gold/20 to-brand-gold/10 rounded-2xl flex items-center justify-center mb-6">
               <FileText className="h-8 w-8 text-brand-gold" />
             </div>
-            <CardTitle className="text-2xl lg:text-3xl font-serif text-white mb-4">
+            <CardTitle className="text-2xl lg:text-3xl font-serif text-brand-navy mb-4">
               Not ready to buy? Get a free sample from one of our kits.
             </CardTitle>
-            <CardDescription className="text-lg text-white/90 max-w-2xl mx-auto">
+            <CardDescription className="text-lg text-brand-navy/80 max-w-2xl mx-auto">
               Download our comprehensive marriage kit sample and see what's included in our guides
             </CardDescription>
           </CardHeader>
@@ -91,11 +94,12 @@ export function LeadMagnetBanner({ className = '', source = 'lead_magnet_banner'
                   disabled={loading}
                 />
               </div>
-              <Button 
-                type="submit" 
-                className="w-full rounded-2xl bg-brand-gold text-[#1A2E4F] hover:bg-brand-gold/90 hover:scale-105 shadow-sm hover:shadow-lg transition-all duration-250 font-semibold text-lg py-4 focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2" 
-                disabled={loading}
-              >
+              <HoverAnimation>
+                <Button 
+                  type="submit" 
+                  className="w-full rounded-2xl bg-brand-gold text-[#1A2E4F] hover:bg-brand-gold/90 shadow-sm hover:shadow-lg transition-all duration-250 font-semibold text-lg py-4 focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2" 
+                  disabled={loading}
+                >
                 {loading ? (
                   <div className="flex items-center gap-3">
                     <div className="w-5 h-5 border-2 border-[#1A2E4F] border-t-transparent rounded-full animate-spin" />
@@ -107,8 +111,9 @@ export function LeadMagnetBanner({ className = '', source = 'lead_magnet_banner'
                     Get Free Sample
                   </div>
                 )}
-              </Button>
-              <p className="text-sm text-white/80 text-center leading-relaxed">
+                </Button>
+              </HoverAnimation>
+              <p className="text-sm text-brand-navy/70 text-center leading-relaxed">
                 We'll send you a free sample and occasional updates about new country kits.
                 Unsubscribe anytime.
               </p>
@@ -126,7 +131,7 @@ export function LeadMagnetBanner({ className = '', source = 'lead_magnet_banner'
               
               {/* Dev diagnostic links */}
               {isDev && (
-                <div className="text-xs text-white/60 space-y-2 border-t border-white/20 pt-4">
+                <div className="text-xs text-brand-navy/60 space-y-2 border-t border-brand-navy/20 pt-4">
                   <p className="font-medium">Dev Tools:</p>
                   <div className="flex flex-wrap gap-2 justify-center">
                     <a 
@@ -152,7 +157,8 @@ export function LeadMagnetBanner({ className = '', source = 'lead_magnet_banner'
               )}
             </form>
           </CardContent>
-        </Card>
+          </Card>
+        </ScrollAnimation>
       </div>
     </section>
   )

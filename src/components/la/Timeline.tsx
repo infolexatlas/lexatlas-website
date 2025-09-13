@@ -59,7 +59,7 @@ export const Timeline = () => {
           
           <StaggerContainer className="space-y-12">
             {milestones.map((milestone, index) => (
-              <StaggerItem key={milestone.year}>
+              <StaggerItem key={`${milestone.year}-${index}`}>
                 <div className={`flex items-start gap-8 ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
                   {/* Content */}
                   <div className={`flex-1 ${index % 2 === 1 ? 'lg:text-right' : ''}`}>

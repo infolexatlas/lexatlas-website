@@ -1,58 +1,116 @@
 'use client'
 
 import { Clock, ArrowRight } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
 
 export function ContactCTA() {
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-br from-brand-deep to-brand-navyEdge">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="text-center max-w-3xl mx-auto">
-          {/* Icon */}
-          <div className="mx-auto w-16 h-16 bg-brand-gold/20 rounded-full flex items-center justify-center mb-6">
-            <Clock className="h-8 w-8 text-brand-gold" />
-          </div>
-
-          {/* Title */}
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-6">
+    <section style={{ 
+      padding: '80px 0', 
+      backgroundColor: 'white',
+      fontFamily: 'system-ui, sans-serif'
+    }}>
+      <div style={{ 
+        maxWidth: '1200px', 
+        margin: '0 auto', 
+        padding: '0 20px',
+        textAlign: 'center'
+      }}>
+        
+        {/* Subtitle */}
+        <div style={{ marginBottom: '24px' }}>
+          <span style={{ 
+            fontSize: '14px', 
+            fontWeight: '500', 
+            color: '#D4AF37', 
+            textTransform: 'uppercase', 
+            letterSpacing: '0.05em' 
+          }}>
             We Reply Within One Business Day
-          </h2>
+          </span>
+        </div>
 
-          {/* Description */}
-          <p className="text-xl text-brand-ivory/90 mb-8 leading-relaxed">
-            Your message is important to us. We're committed to providing timely, 
-            helpful responses to all inquiries during business hours.
-          </p>
+        {/* Main Title */}
+        <h2 style={{ 
+          fontSize: '48px', 
+          fontFamily: 'serif', 
+          fontWeight: 'bold', 
+          color: '#1A2E4F', 
+          marginBottom: '24px',
+          lineHeight: '1.1'
+        }}>
+          Your Message is Important to Us
+        </h2>
 
-          {/* Action Buttons - Fixed visibility like CTASticky */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/faq">
-              <Button 
-                size="lg" 
-                variant="premium" 
-                className="text-base px-8 py-3 bg-white text-white border-2 border-white hover:bg-gray-100 hover:scale-105 shadow-lg"
-              >
-                Browse FAQ
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-            <Link href="/kits">
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="text-base px-8 py-3 border-2 border-brand-gold bg-brand-gold text-brand-navy hover:bg-brand-gold/90 hover:scale-105 shadow-lg"
-              >
-                Explore Marriage Kits
-              </Button>
-            </Link>
-          </div>
+        {/* Description */}
+        <p style={{ 
+          fontSize: '20px', 
+          color: '#6B7280', 
+          marginBottom: '48px',
+          lineHeight: '1.6'
+        }}>
+          We're committed to providing timely, helpful responses to all inquiries during business hours. 
+          Get the support you need and take the next step in your legal journey.
+        </p>
 
-          {/* Additional Info */}
-          <div className="mt-8 pt-8 border-t border-brand-gold/20">
-            <p className="text-sm text-brand-ivory/70">
-              Business hours: Monday to Friday, 9:00 AM - 6:00 PM (CET)
-            </p>
+        {/* CTA Buttons */}
+        <div style={{ 
+          display: 'flex', 
+          gap: '16px', 
+          justifyContent: 'center', 
+          alignItems: 'center',
+          marginBottom: '48px',
+          flexWrap: 'wrap'
+        }}>
+          
+          {/* Browse FAQ Button */}
+          <a 
+            href="/faq"
+            className="inline-flex items-center justify-center rounded-xl2 text-base px-8 py-3 bg-brand-navy text-white font-semibold shadow-soft hover:shadow-premium hover:scale-105 transition-premium"
+          >
+            Browse FAQ
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </a>
+
+          {/* Explore Marriage Kits Button */}
+          <a 
+            href="/kits"
+            className="inline-flex items-center justify-center rounded-xl2 text-base px-8 py-3 border-2 border-brand-gold bg-brand-gold text-brand-navy font-semibold shadow-soft hover:shadow-premium hover:scale-105 transition-premium"
+          >
+            Explore Marriage Kits
+            <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+
+        {/* Stats Section */}
+        <div className="bg-gray-50 rounded-2xl p-8 border border-gray-200">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+            <div>
+              <div className="w-16 h-16 bg-gradient-to-br from-brand-gold/10 to-brand-gold/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Clock className="w-8 h-8 text-brand-gold" />
+              </div>
+              <div className="text-3xl font-bold text-brand-gold mb-2">24/7</div>
+              <div className="text-sm text-brand-textMuted">Support Available</div>
+            </div>
+            <div>
+              <div className="w-16 h-16 bg-gradient-to-br from-brand-gold/10 to-brand-gold/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <div className="text-3xl font-bold text-brand-gold mb-2">247</div>
+              <div className="text-sm text-brand-textMuted">Couples Helped</div>
+            </div>
+            <div>
+              <div className="w-16 h-16 bg-gradient-to-br from-brand-gold/10 to-brand-gold/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div className="text-3xl font-bold text-brand-gold mb-2">10</div>
+              <div className="text-sm text-brand-textMuted">Countries Covered</div>
+            </div>
           </div>
         </div>
       </div>

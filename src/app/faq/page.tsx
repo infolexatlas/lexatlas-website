@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { FAQHero, FAQSearch, FAQAccordion, FAQCTA, FAQSchema } from '@/components/la'
 import { faqs } from '@/lib/faq-data'
+import { PageTransition } from '@/components/ui/page-transition'
 
 export default function FAQPage() {
   const [searchQuery, setSearchQuery] = useState('')
@@ -33,7 +34,7 @@ export default function FAQPage() {
   }, [searchQuery])
 
   return (
-    <>
+    <PageTransition>
       {/* JSON-LD Schema */}
       <FAQSchema faqs={faqs} />
       
@@ -64,6 +65,6 @@ export default function FAQPage() {
         {/* CTA Section */}
         <FAQCTA />
       </div>
-    </>
+    </PageTransition>
   )
 }

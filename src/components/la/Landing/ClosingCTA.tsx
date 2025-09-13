@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { motion } from "framer-motion"
 import { fadeInUp, stagger } from "@/components/la/Motion"
 import { Section } from "@/components/ui/section"
@@ -8,9 +9,16 @@ import { ArrowRight, Mail } from 'lucide-react'
 
 export default function ClosingCTA() {
   return (
-    <section className="py-20 lg:py-28 bg-gradient-to-br from-brand-navy to-brand-navyEdge relative overflow-hidden">
-      <div className="absolute inset-0 opacity-5" aria-hidden>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(212,175,55,0.3)_1px,transparent_0)] bg-[length:20px_20px]" />
+    <section className="py-20 lg:py-28 bg-brand-navy relative overflow-hidden">
+      {/* Logo watermark background */}
+      <div className="absolute inset-0 opacity-[0.08] flex items-center justify-center" aria-hidden>
+        <Image 
+          src="/logo/lexatlas-transparent.svg" 
+          alt="" 
+          width={400} 
+          height={400} 
+          className="object-contain"
+        />
       </div>
       <div className="container relative">
         <div className="max-w-4xl mx-auto text-center">
@@ -33,20 +41,18 @@ export default function ClosingCTA() {
               <Mail className="ml-2 h-4 w-4" />
             </Link>
           </div>
-          <div className="bg-white/10 backdrop-blur rounded-2xl p-6 lg:p-8 border border-white/20">
-            <div className="grid md:grid-cols-3 gap-6 text-center">
-              <div>
-                <div className="text-2xl font-bold text-brand-gold mb-2">10</div>
-                <div className="text-white/80 text-sm">Countries covered</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-brand-gold mb-2">247</div>
-                <div className="text-white/80 text-sm">Couples helped</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-brand-gold mb-2">24/7</div>
-                <div className="text-white/80 text-sm">Support available</div>
-              </div>
+          <div className="grid md:grid-cols-3 gap-6 text-center">
+            <div className="border border-white/20 rounded-lg p-4 bg-white/5 backdrop-blur-sm">
+              <div className="text-2xl font-bold text-brand-gold mb-2">10</div>
+              <div className="text-white/80 text-sm">Countries covered</div>
+            </div>
+            <div className="border border-white/20 rounded-lg p-4 bg-white/5 backdrop-blur-sm">
+              <div className="text-2xl font-bold text-brand-gold mb-2">247</div>
+              <div className="text-white/80 text-sm">Couples helped</div>
+            </div>
+            <div className="border border-white/20 rounded-lg p-4 bg-white/5 backdrop-blur-sm">
+              <div className="text-2xl font-bold text-brand-gold mb-2">24/7</div>
+              <div className="text-white/80 text-sm">Support available</div>
             </div>
           </div>
         </div>

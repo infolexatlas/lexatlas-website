@@ -103,6 +103,25 @@ export default function RootLayout({
           href="/logo/lexatlas.svg" 
           type="image/svg+xml"
         />
+        {/* Preload flag images for faster kit page loads */}
+        <link 
+          rel="preload" 
+          as="image" 
+          href="/flags/fr.svg" 
+          type="image/svg+xml"
+        />
+        <link 
+          rel="preload" 
+          as="image" 
+          href="/flags/it.svg" 
+          type="image/svg+xml"
+        />
+        <link 
+          rel="preload" 
+          as="image" 
+          href="/flags/ch.svg" 
+          type="image/svg+xml"
+        />
         
         {/* Plausible Analytics */}
         {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (
@@ -117,7 +136,7 @@ export default function RootLayout({
         <div className="min-h-screen flex flex-col">
           <AnnouncementBar />
           <Header />
-          <main className="flex-1 container mx-auto px-4 md:px-6">
+          <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <PageTransition>
               {children}
             </PageTransition>

@@ -52,12 +52,24 @@ export const HeroAbout = () => {
           {/* CTA Buttons */}
           <FadeIn delay={0.4}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-              <Button size="lg" variant="premium" className="text-base px-8 py-3" asChild>
-                <a href="/kits">Explore Legal Kits</a>
-              </Button>
-              <Button size="lg" variant="outline" className="text-base px-8 py-3" asChild>
-                <a href="/faq">FAQ</a>
-              </Button>
+              <a 
+                href="/kits"
+                className="inline-flex items-center justify-center rounded-xl2 text-base px-8 py-3 bg-brand-navy text-white font-semibold shadow-soft hover:shadow-premium hover:scale-105 transition-premium"
+              >
+                Browse kits
+                <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+              <a 
+                href="/faq"
+                className="inline-flex items-center justify-center rounded-xl2 text-base px-8 py-3 border-2 border-brand-gold bg-brand-gold text-brand-navy font-semibold shadow-soft hover:shadow-premium hover:scale-105 transition-premium"
+              >
+                FAQ
+                <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </a>
             </div>
           </FadeIn>
 
@@ -66,8 +78,8 @@ export const HeroAbout = () => {
             {stats.map((stat, index) => (
               <StaggerItem key={stat.label} className="text-center">
                 <div className="group">
-                  <div className="w-16 h-16 bg-gradient-to-br from-brand-navy/10 to-brand-gold/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-250">
-                    <stat.icon className="w-8 h-8 text-brand-navy" strokeWidth={1.5} />
+                  <div className="w-16 h-16 bg-gradient-to-br from-brand-gold/10 to-brand-gold/20 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-250">
+                    <stat.icon className="w-8 h-8 text-brand-gold" strokeWidth={1.5} />
                   </div>
                   <div className="text-3xl font-bold text-brand-navy mb-2">
                     {stat.value}

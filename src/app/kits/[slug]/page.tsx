@@ -25,13 +25,15 @@ export function generateStaticParams() {
   return params
 }
 
-export default function Page({ params, searchParams }: { params: PageParams, searchParams?: Record<string, string | string[]> } | any) {
-  const norm = normalizeSlug(params.slug)
+export default async function Page({ params, searchParams }: { params: Promise<PageParams>, searchParams?: Promise<Record<string, string | string[]>> } | any) {
+  const resolvedParams = await params
+  const resolvedSearchParams = await searchParams
+  const norm = normalizeSlug(resolvedParams.slug)
   if (!norm) return notFound()
-  if (norm !== params.slug) {
+  if (norm !== resolvedParams.slug) {
     const sp = new URLSearchParams()
-    for (const key in (searchParams || {})) {
-      const val = (searchParams as any)[key]
+    for (const key in (resolvedSearchParams || {})) {
+      const val = (resolvedSearchParams as any)[key]
       if (Array.isArray(val)) {
         val.forEach(v => sp.append(key, String(v)))
       } else if (val != null) {

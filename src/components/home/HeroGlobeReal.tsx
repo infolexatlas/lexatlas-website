@@ -2,8 +2,13 @@
 
 import dynamic from "next/dynamic";
 
-// no 'use client' here
-const HeroGlobeCanvasClient = dynamic(() => import("./HeroGlobeCanvasClient"), { ssr: false });
+// Optimized dynamic import with loading fallback
+const HeroGlobeCanvasClient = dynamic(() => import("./HeroGlobeCanvasClient"), { 
+  ssr: false,
+  loading: () => (
+    <div className="absolute inset-0 rounded-full animate-pulse" style={{ background: 'radial-gradient(28% #1A2E4F, #223A63)' }} />
+  )
+});
 
 export default function HeroGlobeReal() {
   return (
