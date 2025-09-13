@@ -25,7 +25,7 @@ export const fadeInUp = {
     y: 0,
     transition: { 
       duration: 0.6, 
-      ease: [0.2, 0.8, 0.2, 1] as const as const,
+      ease: [0.2, 0.8, 0.2, 1] as const,
       staggerChildren: 0.1
     }
   }
@@ -122,7 +122,7 @@ export const hoverLift = {
     scale: 1.02,
     transition: { 
       duration: 0.2, 
-      ease: [0.2, 0.8, 0.2, 1] as const as const
+      ease: [0.2, 0.8, 0.2, 1] as const
     }
   }
 }
@@ -132,7 +132,7 @@ export const hoverScale = {
     scale: 1.05,
     transition: { 
       duration: 0.2, 
-      ease: [0.2, 0.8, 0.2, 1] as const as const
+      ease: [0.2, 0.8, 0.2, 1] as const
     }
   }
 }
@@ -347,7 +347,7 @@ export const TextReveal = ({ children, className, delay = 0 }: TextRevealProps) 
       transition={{ 
         duration: 0.6, 
         delay,
-        ease: [0.2, 0.8, 0.2, 1] as const as const
+        ease: [0.2, 0.8, 0.2, 1] as const
       }}
       className={className}
     >
