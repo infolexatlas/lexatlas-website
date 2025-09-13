@@ -1,7 +1,6 @@
 // src/app/api/checkout/session/route.ts
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { getStripePriceId } from '@/lib/stripe-prices';
 
 export const runtime = 'nodejs'; // important: Stripe SDK needs Node
 
@@ -17,6 +16,20 @@ const stripe = STRIPE_SECRET_KEY
   ? new Stripe(STRIPE_SECRET_KEY, { apiVersion: '2025-08-27.basil' })
   : null;
 
+// Mapping exact slug → Price ID from environment variables
+const PRICE_BY_SLUG: Record<string, string | undefined> = {
+  "fra-usa": process.env.STRIPE_PRICE_FRA_USA,
+  "fra-can": process.env.STRIPE_PRICE_FRA_CAN,
+  "fra-gbr": process.env.STRIPE_PRICE_FRA_GBR,
+  "fra-deu": process.env.STRIPE_PRICE_FRA_DEU,
+  "fra-esp": process.env.STRIPE_PRICE_FRA_ESP,
+  "fra-ita": process.env.STRIPE_PRICE_FRA_ITA,
+  "fra-prt": process.env.STRIPE_PRICE_FRA_PRT,
+  "fra-che": process.env.STRIPE_PRICE_FRA_CHE,
+  "fra-bel": process.env.STRIPE_PRICE_FRA_BEL,
+  "fra-aus": process.env.STRIPE_PRICE_FRA_AUS,
+};
+
 // Helper: safe base URL
 function getBaseUrl() {
   // Prefer explicit env; fallback to production domain if you want, else throw in handler
@@ -24,13 +37,10 @@ function getBaseUrl() {
 }
 
 type CreateSessionBody = {
-  mode?: 'payment' | 'subscription';
-  priceId?: string;              // A Stripe Price ID (optional, can be derived from kitSlug)
-  kitSlug?: string;              // e.g., 'fra-usa' (for metadata and price lookup)
+  kitSlug: string;               // Required: e.g., 'fra-usa' (for price lookup)
   quantity?: number;             // default 1
-  successPath?: string;          // optional override, default '/checkout/success'
-  cancelPath?: string;           // optional override, default '/checkout/cancel'
-  lineItems?: Array<{ name?: string; price: number; currency: string; quantity?: number }>;
+  successPath?: string;          // optional override, default `/kits/${slug}?checkout=success`
+  cancelPath?: string;           // optional override, default `/kits/${slug}?checkout=cancelled`
 };
 
 export async function POST(req: Request) {
@@ -51,55 +61,44 @@ export async function POST(req: Request) {
     }
 
     // Parse JSON body
-    const body = (await req.json().catch(() => ({}))) as Partial<CreateSessionBody>;
+    const body = (await req.json().catch(() => ({}))) as CreateSessionBody;
 
-    // Defaults
-    const mode = body.mode || 'payment';
-    const successPath = body.successPath || '/checkout/success';
-    const cancelPath = body.cancelPath || '/checkout/cancel';
-    const success_url = `${baseUrl}${successPath}?session_id={CHECKOUT_SESSION_ID}`;
+    // Get kit slug from body
+    const slug = body?.kitSlug;
+    if (!slug) {
+      return NextResponse.json(
+        { error: 'Missing kitSlug in request body' },
+        { status: 400 }
+      );
+    }
+
+    // Get price ID from environment mapping
+    const priceIdFromEnv = PRICE_BY_SLUG[slug];
+    if (!priceIdFromEnv) {
+      return NextResponse.json(
+        { error: "Price configuration error. Please contact support." },
+        { status: 500 }
+      );
+    }
+
+    // Build URLs
+    const successPath = body.successPath || `/kits/${slug}?checkout=success`;
+    const cancelPath = body.cancelPath || `/kits/${slug}?checkout=cancelled`;
+    const success_url = `${baseUrl}${successPath}&session_id={CHECKOUT_SESSION_ID}`;
     const cancel_url = `${baseUrl}${cancelPath}`;
 
-    // Build line_items either from a single Price ID or custom ad-hoc items
-    let line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
+    // Build line items with the price ID from environment
+    const quantity = Math.max(1, Number(body?.quantity ?? 1));
+    const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [
+      {
+        price: priceIdFromEnv,
+        quantity: quantity,
+      }
+    ];
 
-    // Try to get price ID from body or derive from kitSlug
-    let priceId: string | undefined = body?.priceId;
-    if (!priceId && body?.kitSlug) {
-      priceId = getStripePriceId(body.kitSlug) || undefined;
-    }
-
-    // Validate price ID is present
-    if (!priceId) {
-      return NextResponse.json(
-        { error: `Missing price for slug: ${body?.kitSlug || 'unknown'}. Please provide either { priceId }, { kitSlug }, or { lineItems: [...] }` },
-        { status: 400 }
-      );
-    }
-
-    if (priceId) {
-      const qty = Math.max(1, Number(body?.quantity ?? 1));
-      line_items = [{ price: priceId, quantity: qty }];
-    } else if (Array.isArray(body?.lineItems) && body.lineItems.length) {
-      // Ad-hoc price (not recommended for prod unless you have a clear policy)
-      line_items = body.lineItems.map((li) => ({
-        quantity: Math.max(1, Number(li.quantity ?? 1)),
-        price_data: {
-          currency: li.currency,
-          product_data: { name: li.name || 'LexAtlas Kit' },
-          unit_amount: Math.round(Number(li.price) * 100), // cents
-        },
-      }));
-    } else {
-      return NextResponse.json(
-        { error: `Price not configured for kit: ${body?.kitSlug || 'unknown'}. Please provide either { priceId }, { kitSlug }, or { lineItems: [...] }` },
-        { status: 400 }
-      );
-    }
-
-    // Create Session
+    // Create Session - IMPORTANT: one-time payment only
     const session = await stripe.checkout.sessions.create({
-      mode,
+      mode: "payment", // <— IMPORTANT: one-time payment, not subscription
       line_items,
       allow_promotion_codes: true,
       billing_address_collection: 'auto',
@@ -107,9 +106,12 @@ export async function POST(req: Request) {
       cancel_url,
       metadata: {
         source: 'lexatlas',
-        kitSlug: (body as any)?.kitSlug || '',
+        kitSlug: slug,
       },
-      // If you need invoice creation / tax / shipping — wire them here later.
+      // Optional: add description for better tracking
+      payment_intent_data: { 
+        description: `LexAtlas Kit ${slug.toUpperCase()}` 
+      },
     });
 
     // Return minimal info to client
