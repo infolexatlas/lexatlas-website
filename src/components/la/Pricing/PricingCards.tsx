@@ -7,7 +7,6 @@ import { PRIORITY_SLUGS } from '@/lib/kits.client'
 import { getDisplayPairFromSlug } from '@/lib/kits.display'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 
@@ -71,31 +70,40 @@ export default function PricingCards({ onSingleCheckout, onBundle3Checkout, onBu
                 </button>
               }
             />
-            <DialogContent className="z-[70] bg-white text-slate-900 ring-1 ring-slate-200 rounded-xl2 shadow-xl w-full max-w-lg mx-auto p-4 md:p-6">
+            <DialogContent className="z-[70] bg-white text-slate-900 ring-1 ring-slate-200 rounded-xl2 shadow-xl w-full max-w-md mx-auto p-4 md:p-6">
               <DialogHeader>
                 <DialogTitle className="heading-3 text-brand-navy">Select Country Pair</DialogTitle>
                 <DialogDescription className="text-brand-textMuted">
-                  Choose the country pair for your marriage kit
+                  Choose one country pair for your marriage kit
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-6">
-                <div>
-                  <Label htmlFor="country-pair" className="text-base font-medium text-brand-navy">Country Pair</Label>
-                  <Select value={single} onValueChange={setSingle}>
-                    <SelectTrigger className="mt-2 bg-white rounded-xl2">
-                      <SelectValue placeholder="Select a country pair" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[70] bg-white rounded-xl2 shadow-xl overflow-hidden">
-                      {PRIORITY_SLUGS.map((slug) => {
-                        const displayPair = getDisplayPairFromSlug(slug)
-                        return (
-                          <SelectItem key={slug} value={slug}>
-                            {displayPair ? `${displayPair.left} – ${displayPair.right}` : slug}
-                          </SelectItem>
-                        )
-                      })}
-                    </SelectContent>
-                  </Select>
+                <div className="space-y-3 max-h-[60vh] overflow-y-auto overscroll-contain">
+                  {PRIORITY_SLUGS.map((slug) => {
+                    const displayPair = getDisplayPairFromSlug(slug)
+                    return (
+                      <div key={slug} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-slate-50 transition-colors">
+                        <Checkbox
+                          id={slug}
+                          checked={single === slug}
+                          onCheckedChange={(checked) => {
+                            if (checked) {
+                              setSingle(slug)
+                            } else {
+                              setSingle('')
+                            }
+                          }}
+                          className="text-brand-gold"
+                        />
+                        <Label htmlFor={slug} className="text-base text-brand-navy cursor-pointer flex-1">
+                          {displayPair ? `${displayPair.left} – ${displayPair.right}` : slug}
+                        </Label>
+                      </div>
+                    )
+                  })}
+                </div>
+                <div className="text-sm text-brand-textMuted text-center">
+                  {single ? '1 selected' : 'Select a country pair'}
                 </div>
                 <Button
                   onClick={async () => { if (!single) return; setLoading('single'); try { await onSingleCheckout(single) } finally { setLoading(null) } }}
