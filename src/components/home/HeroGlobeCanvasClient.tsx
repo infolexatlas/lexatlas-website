@@ -210,7 +210,7 @@ let landGeo: any = null;
 // Load world topojson
 (async () => {
   try {
-    const res = await fetch('/vendor/world-110m.json', { cache: 'force-cache' });
+    const res = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json', { cache: 'force-cache' });
     if (!res.ok) throw new Error(`Failed to load world topo: ${res.status}`);
     const topo = await res.json();
     const land = (topo.objects && (topo.objects.land || topo.objects.countries)) || null;

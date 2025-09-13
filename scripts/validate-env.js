@@ -8,6 +8,12 @@
 
 const REQUIRED = ['NEXT_PUBLIC_BASE_URL', 'NEXT_PUBLIC_PLAUSIBLE_DOMAIN'];
 const OPTIONAL = ['STRIPE_SECRET_KEY', 'SENTRY_DSN', 'SENTRY_AUTH_TOKEN'];
+const STRIPE_PRICE_IDS = [
+  'STRIPE_PRICE_FRA_USA', 'STRIPE_PRICE_FRA_CAN', 'STRIPE_PRICE_FRA_GBR',
+  'STRIPE_PRICE_FRA_DEU', 'STRIPE_PRICE_FRA_ESP', 'STRIPE_PRICE_FRA_ITA',
+  'STRIPE_PRICE_FRA_PRT', 'STRIPE_PRICE_FRA_CHE', 'STRIPE_PRICE_FRA_BEL',
+  'STRIPE_PRICE_FRA_AUS'
+];
 
 function truthy(v) {
   return v !== undefined && v !== null && String(v).trim() !== '';
@@ -74,7 +80,21 @@ function printTable(rows) {
     rows.push([`OPT  ${key}`, ok ? '✅ present' : '⚠️  missing (optional)', '']);
   }
 
+  // Check Stripe price IDs
+  const missingPriceIds = [];
+  for (const key of STRIPE_PRICE_IDS) {
+    const ok = truthy(process.env[key]);
+    rows.push([`PRICE ${key}`, ok ? '✅ present' : '⚠️  missing (optional)', '']);
+    if (!ok) missingPriceIds.push(key);
+  }
+
   printTable(rows);
+
+  // Log missing price IDs for visibility
+  if (missingPriceIds.length > 0) {
+    console.log(`\n⚠️  Missing Stripe price IDs (${missingPriceIds.length}/${STRIPE_PRICE_IDS.length}): ${missingPriceIds.join(', ')}`);
+    console.log('   These are optional but needed for checkout functionality.');
+  }
 
   if (missing.length) {
     console.error(`\n❌ Missing REQUIRED env vars: ${missing.join(', ')}`);

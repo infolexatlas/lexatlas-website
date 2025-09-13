@@ -6,10 +6,11 @@ import {
   ContactCTA, 
   ContactSchema 
 } from '@/components/la'
+import { PageTransition } from '@/components/ui/page-transition'
 
 export const metadata: Metadata = {
   title: 'Contact Support - LexAtlas',
-  description: 'Get in touch with LexAtlas support team. We\'re here to help with product questions, orders, and partnership inquiries. Response within 24 hours.',
+  description: 'Get in touch with LexAtlas support team. We\'re here to help with product questions, orders, and partnership inquiries. Response as soon as possible.',
   keywords: ['contact', 'support', 'help', 'customer service', 'lexatlas'],
   openGraph: {
     title: 'Contact Support - LexAtlas',
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <>
+    <PageTransition>
       {/* JSON-LD Schema */}
       <ContactSchema />
       
@@ -41,6 +42,6 @@ export default function ContactPage() {
         {/* CTA Section */}
         <ContactCTA />
       </div>
-    </>
+    </PageTransition>
   )
 }

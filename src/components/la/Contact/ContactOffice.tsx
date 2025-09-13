@@ -73,7 +73,7 @@ export function ContactOffice() {
                 </div>
                 <div>
                   <h4 className="font-medium text-brand-deep mb-1">Response Time</h4>
-                  <p className="text-brand-textMuted">Within 24 hours (business days)</p>
+                  <p className="text-brand-textMuted">As soon as possible</p>
                 </div>
               </CardContent>
             </Card>

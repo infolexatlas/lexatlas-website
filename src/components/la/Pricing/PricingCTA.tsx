@@ -1,11 +1,22 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowRight, Mail } from 'lucide-react'
 
 export default function PricingCTA() {
   return (
-    <section aria-labelledby="closing-cta-title" className="py-20 lg:py-28 bg-gradient-to-br from-brand-navy to-brand-navyEdge relative overflow-hidden">
+    <section aria-labelledby="closing-cta-title" className="py-20 lg:py-28 bg-brand-navy relative overflow-hidden">
+      {/* Logo watermark background */}
+      <div className="absolute inset-0 opacity-[0.08] flex items-center justify-center" aria-hidden>
+        <Image 
+          src="/logo/lexatlas-transparent.svg" 
+          alt="" 
+          width={400} 
+          height={400} 
+          className="object-contain"
+        />
+      </div>
       <div className="container">
         <div className="max-w-4xl mx-auto text-center relative">
           <div className="mb-6">

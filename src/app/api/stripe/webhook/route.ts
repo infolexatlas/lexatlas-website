@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { isFakeCheckout, assertStripe, stripe } from '@/lib/stripe'
-import { headers } from 'next/headers'
+import Stripe from 'stripe'
 
-export async function POST(request: NextRequest) {
-  // Skip webhook processing in fake checkout mode
-  if (isFakeCheckout) {
-    return NextResponse.json({ received: true })
-  }
+export const runtime = 'nodejs'
 
-  const body = await request.text()
-  const hdrs = await headers()
-  const signature = hdrs.get('stripe-signature')
+// Initialize Stripe
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2024-06-20',
+})
+
+export async function POST(req: NextRequest) {
+  const body = await req.text()
+  const signature = req.headers.get('stripe-signature')
 
   if (!signature) {
     return NextResponse.json(
@@ -19,20 +19,19 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  let event
-
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
-  
   if (!webhookSecret) {
-    console.error('STRIPE_WEBHOOK_SECRET is not set')
+    console.error('STRIPE_WEBHOOK_SECRET is not configured')
     return NextResponse.json(
       { error: 'Webhook secret not configured' },
       { status: 500 }
     )
   }
 
+  let event: Stripe.Event
+
   try {
-    event = stripe!.webhooks.constructEvent(body, signature, webhookSecret)
+    event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
   } catch (err) {
     console.error('Webhook signature verification failed:', err)
     return NextResponse.json(
@@ -44,24 +43,27 @@ export async function POST(request: NextRequest) {
   try {
     switch (event.type) {
       case 'checkout.session.completed':
-        const session = event.data.object
-        console.log('Payment successful for session:', session.id)
+        const session = event.data.object as Stripe.Checkout.Session
         
-        // Here you would typically:
-        // 1. Update your database
-        // 2. Send confirmation email
-        // 3. Generate download links
-        // 4. Update inventory
+        console.log('Payment successful for session:', session.id)
+        console.log('Customer email:', session.customer_email)
+        console.log('Kit slug:', session.metadata?.kitSlug)
+        
+        // TODO: Implement the following:
+        // 1. Send confirmation email with download link
+        // 2. Grant access to the purchased kit
+        // 3. Update user's purchase history
+        // 4. Generate secure download links
         
         break
 
       case 'payment_intent.succeeded':
-        const paymentIntent = event.data.object
+        const paymentIntent = event.data.object as Stripe.PaymentIntent
         console.log('Payment intent succeeded:', paymentIntent.id)
         break
 
       case 'payment_intent.payment_failed':
-        const failedPayment = event.data.object
+        const failedPayment = event.data.object as Stripe.PaymentIntent
         console.log('Payment failed:', failedPayment.id)
         break
 

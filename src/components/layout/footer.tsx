@@ -42,8 +42,8 @@ export function Footer() {
           <motion.div variants={fadeInUp} className="md:col-span-4 lg:col-span-5">
             <div className="flex items-center">
               <Image
-                src={BRAND.logo.src}
-                alt={BRAND.logo.alt}
+                src="/logo/lexatlas-transparent.svg"
+                alt="LexAtlas logo"
                 width={56}
                 height={56}
                 loading="lazy"

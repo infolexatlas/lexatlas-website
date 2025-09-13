@@ -3,7 +3,7 @@ export function ContactSchema() {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "LexAtlas",
-    "url": process.env.NEXT_PUBLIC_BASE_URL || "https://lexatlas.com",
+    "url": process.env.NEXT_PUBLIC_BASE_URL || "https://lex-atlas.com",
     "contactPoint": [
       {
         "@type": "ContactPoint",

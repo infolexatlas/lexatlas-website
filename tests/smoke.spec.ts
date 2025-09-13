@@ -24,6 +24,32 @@ test.describe('@smoke basic', () => {
     expect(xml).toContain(`${host}/`)
     expect(xml).toContain(`${host}/kits`)
   })
+
+  test('kit detail page has Buy Now button', async ({ page }) => {
+    // Mock fetch to prevent actual Stripe calls during testing
+    await page.route('**/api/checkout/session', async route => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({ 
+          id: 'test_session_id',
+          url: 'https://checkout.stripe.com/test'
+        })
+      })
+    })
+
+    await page.goto('/kits/fra-usa')
+    
+    // Check that the Buy Now button exists
+    const buyButton = page.getByRole('button', { name: /buy now/i })
+    await expect(buyButton).toBeVisible()
+    
+    // Check that the button is not disabled initially
+    await expect(buyButton).not.toBeDisabled()
+    
+    // Verify the page has the expected structure
+    await expect(page.locator('[data-testid="kit-detail-app-router"]')).toBeVisible()
+  })
 })
 
 

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
 
-export type PlanKey = 'single' | 'bundle3' | 'full'
+export type PlanKey = 'single' | 'bundle3'
 
 export type FeatureRow = {
   id: string
@@ -37,16 +37,15 @@ export const comparisonConfig: ComparisonConfig = {
   plans: [
     { key: 'single', name: 'Single Kit', price: '29 €', ctaLabel: 'Choose Country Pair', ctaHref: '/pricing#pricing-cards-title' },
     { key: 'bundle3', name: 'Bundle of 3', price: '75 €', badge: 'Most Popular', ctaLabel: 'Choose 3 Pairs', ctaHref: '/pricing#pricing-cards-title', highlight: true },
-    { key: 'full', name: 'Full Pack', price: '200 €', badge: 'Save 31%', ctaLabel: 'Get Full Pack – 200 €', ctaHref: '/pricing#pricing-cards-title' },
   ],
   features: [
-    { id: 'pairs', label: 'Country pairs included', values: { single: 1, bundle3: 3, full: 10 }, emphasize: true },
-    { id: 'savings', label: 'Savings versus Single', values: { single: '—', bundle3: 'Save 14%', full: 'Save 31%' } },
-    { id: 'mix', label: 'Mix & match country pairs', values: { single: false, bundle3: true, full: true } },
-    { id: 'updates', label: 'Lifetime updates to selected kits', hint: 'We refresh guides as rules evolve', values: { single: 'For 1 pair', bundle3: 'For 3 pairs', full: 'All 10 pairs' } },
-    { id: 'priority', label: 'Priority support (email)', values: { single: false, bundle3: true, full: true } },
-    { id: 'delivery', label: 'Instant download (PDF)', values: { single: true, bundle3: true, full: true } },
-    { id: 'verified', label: 'Verified with official sources', values: { single: true, bundle3: true, full: true } },
+    { id: 'pairs', label: 'Country pairs included', values: { single: 1, bundle3: 3 }, emphasize: true },
+    { id: 'savings', label: 'Savings versus Single', values: { single: '—', bundle3: 'Save 14%' } },
+    { id: 'mix', label: 'Mix & match country pairs', values: { single: false, bundle3: true } },
+    { id: 'updates', label: 'Lifetime updates to selected kits', hint: 'We refresh guides as rules evolve', values: { single: 'For 1 pair', bundle3: 'For 3 pairs' } },
+    { id: 'priority', label: 'Priority support (email)', values: { single: false, bundle3: true } },
+    { id: 'delivery', label: 'Instant download (PDF)', values: { single: true, bundle3: true } },
+    { id: 'verified', label: 'Verified with official sources', values: { single: true, bundle3: true } },
   ],
 }
 
@@ -75,7 +74,7 @@ export default function PricingComparison({ config = comparisonConfig }: { confi
 
         <div className="overflow-x-auto rounded-2xl bg-white">
           <table className="w-full border-collapse text-sm md:text-base">
-            <caption className="sr-only">Feature comparison across Single, Bundle of 3, and Full Pack</caption>
+            <caption className="sr-only">Feature comparison across Single Kit and Bundle of 3</caption>
             <thead>
               <tr className="border-b border-brand-gray">
                 <th className="sticky left-0 z-10 bg-white px-3 py-3 text-left">
@@ -147,11 +146,6 @@ export default function PricingComparison({ config = comparisonConfig }: { confi
                     )}
                     {p.key === 'bundle3' && (
                       <Button className={`w-full rounded-2xl ${p.highlight ? 'hover:shadow-gold-glow' : ''}`} onClick={() => { track('checkout_click', { type: p.key }); (window as any).LA_pricing?.openBundle3?.() }}>
-                        {p.ctaLabel}
-                      </Button>
-                    )}
-                    {p.key === 'full' && (
-                      <Button className={`w-full rounded-2xl ${p.highlight ? 'hover:shadow-gold-glow' : ''}`} onClick={() => { track('checkout_click', { type: p.key }); (window as any).LA_pricing?.buyFull?.() }}>
                         {p.ctaLabel}
                       </Button>
                     )}

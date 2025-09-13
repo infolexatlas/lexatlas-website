@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion"
 import { fadeInUp, stagger } from "@/components/la/Motion"
+import { ScrollAnimation, StaggerAnimation, HoverAnimation } from "@/components/ui/animations"
 import { ShieldCheck, Clock, PiggyBank, RefreshCcw } from "lucide-react"
 
 const features = [

@@ -3,9 +3,11 @@ import { KitCatalogueClient } from '@/components/la/Kit/KitCatalogueClient'
 import { KitTrustStrip } from '@/components/la/Kit/KitTrustStrip'
 import { KitSampleCTA } from '@/components/la/Kit/KitSampleCTA'
 import { KitFAQExtract } from '@/components/la/Kit/KitFAQExtract'
+import PricingCTAComponent from '@/components/la/Pricing/PricingCTA'
 import { countryPairs } from '@/lib/kits-country-data'
 import { JsonLd } from '@/components/JsonLd'
 import { ROUTES } from '@/lib/kit-routes'
+import { PageTransition } from '@/components/ui/page-transition'
 
 export const metadata: Metadata = {
   title: 'LexAtlas Kits – Cross-Border Marriage Kits by Country Pair',
@@ -24,7 +26,8 @@ export const metadata: Metadata = {
 
 export default function KitsPage() {
   return (
-    <div className="min-h-screen bg-brand-ivory">
+    <PageTransition>
+      <div className="min-h-screen bg-brand-ivory">
       {/* 1. Page Masthead */}
       <section className="relative overflow-hidden bg-gradient-to-br from-brand-ivory via-white to-brand-gray/30 py-16 lg:py-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -57,7 +60,7 @@ export default function KitsPage() {
             <div className="hidden lg:block relative">
               <div className="relative w-80 h-80 mx-auto animate-reveal group" style={{ animationDelay: '0.3s' }}>
                 {/* Navy circular base with radial gradient */}
-                <div className="absolute inset-0 rounded-full bg-gradient-radial from-brand-navy to-brand-navyEdge shadow-2xl animate-scaleIn group-hover:shadow-premium transition-all duration-500 group-hover:scale-105">
+                <div className="absolute inset-0 rounded-full bg-brand-navy shadow-2xl animate-scaleIn group-hover:shadow-premium transition-all duration-500 group-hover:scale-105">
                   {/* Gold ring highlight on hover */}
                   <div className="absolute inset-0 rounded-full ring-2 ring-transparent group-hover:ring-brand-gold/30 transition-all duration-500"></div>
                 </div>
@@ -124,6 +127,9 @@ export default function KitsPage() {
         'how-receive-kit',
       ]} />
 
+      {/* 6. Closing CTA */}
+      <PricingCTAComponent />
+
       {/* JSON-LD products for cards */}
       <JsonLd data={{
         '@context': 'https://schema.org',
@@ -136,6 +142,7 @@ export default function KitsPage() {
           offers: { '@type': 'Offer', priceCurrency: 'EUR', price: p.price.toFixed(2), availability: 'https://schema.org/InStock', url: ROUTES.getKit(p.id) }
         }))
       }} />
-    </div>
+      </div>
+    </PageTransition>
   )
 }

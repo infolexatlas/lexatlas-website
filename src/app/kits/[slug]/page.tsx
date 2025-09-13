@@ -25,21 +25,13 @@ export function generateStaticParams() {
   return params
 }
 
-export default function Page({ params, searchParams }: { params: PageParams, searchParams?: Record<string, string | string[]> } | any) {
+export default function Page({ params }: { params: { slug: string } }) {
   const norm = normalizeSlug(params.slug)
   if (!norm) return notFound()
+  
+  // Only redirect if the slug actually needs normalization
   if (norm !== params.slug) {
-    const sp = new URLSearchParams()
-    for (const key in (searchParams || {})) {
-      const val = (searchParams as any)[key]
-      if (Array.isArray(val)) {
-        val.forEach(v => sp.append(key, String(v)))
-      } else if (val != null) {
-        sp.set(key, String(val))
-      }
-    }
-    const qs = sp.toString()
-    redirect(`/kits/${norm}${qs ? `?${qs}` : ''}`)
+    redirect(`/kits/${norm}`)
   }
 
   const kit = kitsDetail[norm]

@@ -271,7 +271,7 @@ export default function HeroGlobeClient() {
     (async () => {
       try {
         // Load vendored topojson from /public/vendor
-        const res = await fetch('/vendor/world-110m.json', { cache: 'force-cache' });
+        const res = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json', { cache: 'force-cache' });
         if (!res.ok) throw new Error(`Failed to load world topo: ${res.status}`);
         const topo = await res.json();
         // land object is usually at topo.objects.land for 110m

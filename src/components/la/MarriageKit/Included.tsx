@@ -66,10 +66,10 @@ export default function Included() {
   const item = useReducedMotionVariants(fadeInUp)
   const reduce = useReducedMotion()
   return (
-    <section className="pt-20 lg:pt-28 pb-20 lg:pb-28 bg-brand-muted">
+    <section id="whats-included" className="pt-20 lg:pt-28 pb-20 lg:pb-28 bg-brand-muted">
       <div className="container">
         <div className="text-center mb-3">
-          <h2 className="heading-1 text-brand-navy">What’s Included in Each Kit</h2>
+          <h2 className="heading-1 text-brand-navy">What's Included in <span className="text-brand-gold">Each Kit</span></h2>
           <p className="mt-3 text-brand-textMuted max-w-3xl mx-auto">Premium, expert-built content designed to save you time and eliminate uncertainty.</p>
         </div>
         <motion.div

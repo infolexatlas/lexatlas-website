@@ -153,7 +153,7 @@ export function ContactForm() {
               Message Sent Successfully!
             </h3>
             <p className="text-lg text-brand-textMuted mb-8 leading-relaxed">
-              Thanks for reaching out! We'll get back to you within one business day.
+              Thanks for reaching out! We'll get back to you as soon as possible.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button variant="outline" asChild className="h-12 px-8 rounded-xl2 border-brand-navy/20 text-brand-deep hover:bg-brand-muted">
@@ -189,7 +189,7 @@ export function ContactForm() {
             </h2>
             <div className="w-10 h-1 bg-brand-gold/60 rounded-full mx-auto mb-6" />
             <p className="text-lg text-brand-textMuted mb-8 max-w-2xl mx-auto">
-              We typically respond within 24 hours during business days. 
+              We typically respond as soon as possible during business days. 
               Our support team is here to help with any questions.
             </p>
             
@@ -200,7 +200,7 @@ export function ContactForm() {
                   <Clock className="w-4 h-4 text-brand-gold" />
                 </div>
                 <span className="text-sm font-semibold text-brand-deep">
-                  Avg. reply: &lt;24h
+                  Avg. reply: ASAP
                 </span>
               </div>
               <div className="flex items-center gap-3 px-6 py-3 bg-white rounded-full shadow-soft border border-brand-navy/10">
@@ -356,7 +356,7 @@ export function ContactForm() {
               )}
               <p className="text-sm text-brand-textMuted flex items-center gap-2">
                 <span className="w-1.5 h-1.5 bg-brand-gold/50 rounded-full"></span>
-                Minimum 10 characters. We'll get back to you within one business day.
+                Minimum 10 characters. We'll get back to you as soon as possible.
               </p>
             </div>
 
@@ -385,7 +385,7 @@ export function ContactForm() {
             <Button 
               type="submit" 
               disabled={isSubmitting}
-              className="w-full h-16 text-lg font-semibold rounded-2xl"
+              className="w-full h-16 text-lg font-semibold rounded-2xl text-brand-gold"
             >
               {isSubmitting ? (
                 <>

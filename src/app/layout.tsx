@@ -5,7 +5,6 @@ import { Analytics } from '@vercel/analytics/react'
 import Header from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { CookieBanner } from '@/components/cookie-banner'
-import { AnnouncementBar } from '@/components/AnnouncementBar'
 import { JsonLd } from '@/components/JsonLd'
 import { PageTransition } from '@/components/ui/page-transition'
 import { IS_DEV, RESEND_API_KEY } from '@/lib/env'
@@ -37,20 +36,15 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://lexatlas.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://lex-atlas.com'),
   alternates: {
     canonical: '/',
   },
   icons: {
     icon: [
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" }
+      { url: "/favicon.ico", type: "image/x-icon" },
     ],
     shortcut: ["/favicon.ico"],
-    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
-    other: [
-      { rel: "mask-icon", url: "/maskable-192.png" }
-    ]
   },
   other: {
     'theme-color': '#1A2E4F',
@@ -62,12 +56,6 @@ export const metadata: Metadata = {
     url: '/',
     siteName: 'LexAtlas',
     images: [
-      {
-        url: '/og/home.svg',
-        width: 1200,
-        height: 630,
-        alt: 'LexAtlas - Your Global Legal Compass',
-      },
       {
         url: '/og/home.png',
         width: 1200,
@@ -82,7 +70,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'LexAtlas - Your Global Legal Compass',
     description: 'Expert-built, country-specific PDF guides to handle international legal procedures with clarity and confidence.',
-    images: ['/og/home.svg', '/og/home.png'],
+    images: ['/og/home.png'],
   },
   robots: {
     index: true,
@@ -114,6 +102,25 @@ export default function RootLayout({
           href="/logo/lexatlas.svg" 
           type="image/svg+xml"
         />
+        {/* Preload flag images for faster kit page loads */}
+        <link 
+          rel="preload" 
+          as="image" 
+          href="/flags/fr.svg" 
+          type="image/svg+xml"
+        />
+        <link 
+          rel="preload" 
+          as="image" 
+          href="/flags/it.svg" 
+          type="image/svg+xml"
+        />
+        <link 
+          rel="preload" 
+          as="image" 
+          href="/flags/ch.svg" 
+          type="image/svg+xml"
+        />
         
         {/* Plausible Analytics */}
         {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (
@@ -126,9 +133,8 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} min-h-screen bg-white text-slate-900 antialiased`}>
         <div className="min-h-screen flex flex-col">
-          <AnnouncementBar />
           <Header />
-          <main className="flex-1 container mx-auto px-4 md:px-6">
+          <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <PageTransition>
               {children}
             </PageTransition>

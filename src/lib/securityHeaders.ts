@@ -9,12 +9,13 @@ function getCspHeaderKey(): 'Content-Security-Policy' | 'Content-Security-Policy
 export function getSecurityHeaders(): HeaderTuple[] {
   const cspDirectives = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://plausible.io",
     // Allow styles from self and inline; also permit blob: for Next/font runtime styles if needed
     "style-src 'self' 'unsafe-inline' blob:",
     "img-src 'self' data: https:",
     "font-src 'self' data:",
     "connect-src 'self' https:",
+    `report-uri ${process.env.NEXT_PUBLIC_BASE_URL || 'https://lex-atlas.com'}/api/csp-report`,
     "frame-ancestors 'none'",
   ].join('; ');
 

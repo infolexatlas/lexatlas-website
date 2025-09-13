@@ -15,7 +15,7 @@ export const faqs: FAQ[] = [
   {
     id: 'replace-lawyer',
     question: 'Does the kit replace a lawyer?',
-    answer: 'No. It is not a substitute for personalized legal advice. It provides reliable, practical, and clear information so most couples can complete the process themselves without expensive legal fees. For complex cases or specific legal questions, we recommend consulting a qualified attorney.',
+    answer: 'No. It is not a substitute for personalized legal advice. It provides reliable, practical, and clear information so most couples can complete the process themselves without expensive legal fees. For complex cases or specific legal questions, you can [contact us](/contact) directly.',
     tags: ['legal-advice', 'lawyer']
   },
   {
@@ -63,7 +63,7 @@ export const faqs: FAQ[] = [
   {
     id: 'buy-multiple-kits',
     question: 'Can we buy multiple kits?',
-    answer: 'Yes. We offer flexible packages: Single Kit (€29), Bundle of 3 (€75, save 14%), and Full Pack with all 10 priority country pairs (€200, save 31%). Perfect for comparing different country pairs or if you\'re considering multiple options. Contact support for custom pricing on larger orders.',
+    answer: 'Yes. We offer flexible packages: Single Kit (€29) and Bundle of 3 (€75, save 14%). Perfect for comparing different country pairs or if you\'re considering multiple options. Contact support for custom pricing on larger orders.',
     tags: ['pricing', 'bundles', 'multiple']
   },
   {

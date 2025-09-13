@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useTransition } from 'react'
+import Image from 'next/image'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { motion, useReducedMotion } from 'framer-motion'
@@ -23,8 +24,8 @@ export function KitSampleCTA({ compact = false }: Props) {
   const prefersReducedMotion = useReducedMotion()
 
   return (
-    <section aria-labelledby="sample-cta-heading" className={compact ? 'py-10 md:py-12 bg-brand-muted' : 'py-16 bg-brand-muted'}>
-      <div className="container">
+    <section aria-labelledby="sample-cta-heading" className={`${compact ? 'py-10 md:py-12 bg-brand-ivory' : 'py-16 bg-brand-ivory'} relative overflow-hidden`}>
+      <div className="container relative">
         <motion.div
           initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
           animate={prefersReducedMotion ? false : { opacity: 1, y: 0, transition: { duration: 0.4 } }}
@@ -87,7 +88,7 @@ export function KitSampleCTA({ compact = false }: Props) {
                 aria-describedby="sample-help"
               />
               <input type="text" name="company" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
-              <Button type="submit" size="xl" disabled={isPending} className="sm:ml-2">Send me the sample</Button>
+              <Button type="submit" size="xl" disabled={isPending} className="sm:ml-2 text-brand-gold">Send me the sample</Button>
             </motion.form>
           )}
 

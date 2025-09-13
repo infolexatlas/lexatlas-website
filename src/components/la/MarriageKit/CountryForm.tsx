@@ -33,7 +33,7 @@ export default function CountryForm() {
   const canSubmit = !!countryA && !!countryB && countryA.code !== countryB.code
 
   return (
-    <section className="section-premium bg-white">
+    <section id="select-countries" className="section-premium bg-white">
       <div className="container">
         <motion.div
           initial="hidden"
@@ -94,8 +94,7 @@ export default function CountryForm() {
             <div className="md:col-span-2 mt-4">
               <Button
                 type="submit"
-                variant="premium"
-                className="w-full h-12 rounded-xl2 hover:-translate-y-[1px] active:translate-y-[1px] transition motion-reduce:transform-none"
+                className="w-full h-12 rounded-xl2 bg-brand-navy text-white hover:bg-brand-navy/90 hover:-translate-y-[1px] active:translate-y-[1px] transition motion-reduce:transform-none"
                 aria-disabled={!canSubmit}
                 disabled={!canSubmit}
               >
