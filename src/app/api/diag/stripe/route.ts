@@ -70,7 +70,7 @@ export async function POST(req: Request) {
         const price = await stripe.prices.retrieve(priceId);
         diagnostic.exists = true;
         diagnostic.currency = price.currency;
-        diagnostic.unit_amount = price.unit_amount;
+        diagnostic.unit_amount = price.unit_amount || undefined;
       } catch (stripeError: any) {
         diagnostic.exists = false;
         if (stripeError.code === 'resource_missing') {
