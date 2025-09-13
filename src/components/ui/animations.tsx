@@ -25,7 +25,7 @@ export const fadeInUp = {
     y: 0,
     transition: { 
       duration: 0.6, 
-      ease: [0.2, 0.8, 0.2, 1],
+      ease: [0.2, 0.8, 0.2, 1] as const as const,
       staggerChildren: 0.1
     }
   }
@@ -39,7 +39,7 @@ export const fadeInLeft = {
     x: 0,
     transition: { 
       duration: 0.6, 
-      ease: [0.2, 0.8, 0.2, 1]
+      ease: [0.2, 0.8, 0.2, 1] as const
     }
   }
 }
@@ -52,7 +52,7 @@ export const fadeInRight = {
     x: 0,
     transition: { 
       duration: 0.6, 
-      ease: [0.2, 0.8, 0.2, 1]
+      ease: [0.2, 0.8, 0.2, 1] as const
     }
   }
 }
@@ -65,7 +65,7 @@ export const scaleIn = {
     scale: 1,
     transition: { 
       duration: 0.5, 
-      ease: [0.2, 0.8, 0.2, 1]
+      ease: [0.2, 0.8, 0.2, 1] as const
     }
   }
 }
@@ -89,7 +89,7 @@ export const staggerItem = {
     y: 0,
     transition: { 
       duration: 0.5, 
-      ease: [0.2, 0.8, 0.2, 1]
+      ease: [0.2, 0.8, 0.2, 1] as const
     }
   }
 }
@@ -102,7 +102,7 @@ export const pageVariants = {
     y: 0,
     transition: { 
       duration: 0.4, 
-      ease: [0.2, 0.8, 0.2, 1]
+      ease: [0.2, 0.8, 0.2, 1] as const
     }
   },
   out: { 
@@ -110,7 +110,7 @@ export const pageVariants = {
     y: -20,
     transition: { 
       duration: 0.3, 
-      ease: [0.2, 0.8, 0.2, 1]
+      ease: [0.2, 0.8, 0.2, 1] as const
     }
   }
 }
@@ -122,7 +122,7 @@ export const hoverLift = {
     scale: 1.02,
     transition: { 
       duration: 0.2, 
-      ease: [0.2, 0.8, 0.2, 1]
+      ease: [0.2, 0.8, 0.2, 1] as const as const
     }
   }
 }
@@ -132,7 +132,7 @@ export const hoverScale = {
     scale: 1.05,
     transition: { 
       duration: 0.2, 
-      ease: [0.2, 0.8, 0.2, 1]
+      ease: [0.2, 0.8, 0.2, 1] as const as const
     }
   }
 }
@@ -347,7 +347,7 @@ export const TextReveal = ({ children, className, delay = 0 }: TextRevealProps) 
       transition={{ 
         duration: 0.6, 
         delay,
-        ease: [0.2, 0.8, 0.2, 1]
+        ease: [0.2, 0.8, 0.2, 1] as const as const
       }}
       className={className}
     >
