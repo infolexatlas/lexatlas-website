@@ -22,7 +22,7 @@ export function AnnouncementBar() {
   return (
     <HydrationGate>
       {isVisible && (
-        <div className="bg-gradient-to-r from-brand-navy to-brand-navyEdge text-white shadow-soft">
+        <div className="bg-brand-navy text-white shadow-soft">
           <div className="max-w-6xl mx-auto px-4 py-4">
             <div className="flex items-center justify-center space-x-3">
               <div className="w-6 h-6 bg-gradient-to-br from-brand-gold/20 to-brand-softGold/20 rounded-full flex items-center justify-center">
