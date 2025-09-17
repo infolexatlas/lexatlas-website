@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
+import { fulfillOrder, FulfillmentData } from '@/lib/stripe/fulfill'
 
 export const runtime = 'nodejs'
 
@@ -46,14 +47,44 @@ export async function POST(req: NextRequest) {
         const session = event.data.object as Stripe.Checkout.Session
         
         console.log('Payment successful for session:', session.id)
-        console.log('Customer email:', session.customer_email)
-        console.log('Kit slug:', session.metadata?.kitSlug)
         
-        // TODO: Implement the following:
-        // 1. Send confirmation email with download link
-        // 2. Grant access to the purchased kit
-        // 3. Update user's purchase history
-        // 4. Generate secure download links
+        // Fetch the complete session with line items and customer data
+        const fullSession = await stripe.checkout.sessions.retrieve(session.id, {
+          expand: ['line_items', 'customer']
+        })
+        
+        // Extract fulfillment data
+        const fulfillmentData: FulfillmentData = {
+          sessionId: fullSession.id,
+          customerEmail: fullSession.customer_email || fullSession.customer_details?.email || '',
+          amountTotal: fullSession.amount_total || 0,
+          currency: fullSession.currency || 'eur',
+          kitPair: fullSession.metadata?.kitSlug || fullSession.metadata?.pair,
+          lineItems: fullSession.line_items?.data.map(item => ({
+            description: item.description,
+            quantity: item.quantity,
+            amount_total: item.amount_total
+          }))
+        }
+        
+        // Validate required data
+        if (!fulfillmentData.customerEmail) {
+          console.error('No customer email found for session:', session.id)
+          return NextResponse.json(
+            { error: 'Missing customer email' },
+            { status: 400 }
+          )
+        }
+        
+        // Fulfill the order (send email + log)
+        const fulfillmentResult = await fulfillOrder(fulfillmentData)
+        
+        if (!fulfillmentResult.sent) {
+          console.warn('Order fulfillment failed:', {
+            sessionId: session.id,
+            reason: fulfillmentResult.reason
+          })
+        }
         
         break
 

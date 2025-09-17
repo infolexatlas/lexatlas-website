@@ -20,6 +20,70 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Local Testing with Stripe
+
+To test the payment flow locally, you'll need to set up Stripe test environment variables:
+
+### Environment Setup
+
+```bash
+# Stripe Test Keys
+export STRIPE_SECRET_KEY=sk_test_...
+export NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+export STRIPE_WEBHOOK_SECRET=whsec_test_...
+
+# Price IDs for different country pairs
+export STRIPE_PRICE_FRA_GBR=price_test_fra_gbr
+export STRIPE_PRICE_FRA_USA=price_test_fra_usa
+export STRIPE_PRICE_FRA_CAN=price_test_fra_can
+# ... add other country pairs as needed
+
+# Optional: Email configuration
+export RESEND_API_KEY=re_...  # For sending confirmation emails
+```
+
+### Testing the Webhook
+
+1. **Install Stripe CLI**: Download from [stripe.com/docs/stripe-cli](https://stripe.com/docs/stripe-cli)
+
+2. **Login to Stripe**: 
+   ```bash
+   stripe login
+   ```
+
+3. **Forward webhooks to local development**:
+   ```bash
+   stripe listen --forward-to localhost:3000/api/stripe/webhook
+   ```
+   This will give you a webhook signing secret starting with `whsec_` - use this as your `STRIPE_WEBHOOK_SECRET`.
+
+4. **Trigger test events**:
+   ```bash
+   # Test successful payment
+   stripe trigger checkout.session.completed
+   
+   # Test payment failure
+   stripe trigger payment_intent.payment_failed
+   ```
+
+5. **Test the complete flow**:
+   - Navigate to `/kits/fra-gbr` (or any kit page)
+   - Click "Buy Now" 
+   - Complete the Stripe test checkout
+   - You should be redirected to `/checkout/success` with order details
+   - Check your email for the confirmation (if RESEND_API_KEY is configured)
+
+### Testing Without Stripe CLI
+
+If you don't want to use the Stripe CLI, you can test with fake checkout:
+
+```bash
+export NEXT_PUBLIC_FAKE_CHECKOUT=1
+npm run dev
+```
+
+This will bypass Stripe and redirect to a fake success page for testing the UI flow.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

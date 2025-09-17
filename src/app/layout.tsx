@@ -1,7 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/react'
+import { Analytics } from '@vercel/analytics/next'
 import Header from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { CookieBanner } from '@/components/cookie-banner'
@@ -55,11 +55,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'LexAtlas - Your Global Legal Compass',
     description: 'Expert-built, country-specific PDF guides to handle international legal procedures with clarity and confidence.',
-    url: '/',
+    url: process.env.NEXT_PUBLIC_BASE_URL || 'https://lex-atlas.com',
     siteName: 'LexAtlas',
     images: [
       {
-        url: '/og/home.png',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://lex-atlas.com'}/og/home.png`,
         width: 1200,
         height: 630,
         alt: 'LexAtlas - Your Global Legal Compass',
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'LexAtlas - Your Global Legal Compass',
     description: 'Expert-built, country-specific PDF guides to handle international legal procedures with clarity and confidence.',
-    images: ['/og/home.png'],
+    images: [`${process.env.NEXT_PUBLIC_BASE_URL || 'https://lex-atlas.com'}/og/home.png`],
   },
   robots: {
     index: true,
@@ -124,6 +124,13 @@ export default function RootLayout({
           type="image/svg+xml"
         />
         
+        {/* Additional Open Graph meta tags */}
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:type" content="image/png" />
+        <meta name="twitter:site" content="@lexatlas" />
+        <meta name="twitter:creator" content="@lexatlas" />
+        
         {/* Plausible Analytics */}
         {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (
           <script
@@ -133,10 +140,10 @@ export default function RootLayout({
           />
         )}
       </head>
-      <body className={`${inter.className} min-h-screen bg-white text-slate-900 antialiased`}>
-        <div className="min-h-screen flex flex-col">
+      <body className={`${inter.className} min-h-screen bg-white text-slate-900 antialiased overflow-x-hidden`}>
+        <div className="min-h-screen flex flex-col w-full overflow-x-hidden">
           <Header />
-          <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-hidden">
             <PageTransition>
               {children}
             </PageTransition>

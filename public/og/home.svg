@@ -1,0 +1,49 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#D4AF37;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFD700;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background - Full Navy Blue -->
+  <rect width="1200" height="630" fill="#1A2E4F"/>
+  
+  <!-- Gold Border Frame - Fine line only -->
+  <rect x="30" y="30" width="1140" height="570" fill="none" stroke="#D4AF37" stroke-width="2" rx="15"/>
+  
+  <!-- Main Content Area -->
+  <g transform="translate(100, 150)">
+    
+    <!-- Logo - LexAtlas Globe -->
+    <g transform="translate(0, 0) scale(0.24)">
+      <circle cx="187.5" cy="219.8" r="117.7" fill="#ffbd59"/>
+      <circle cx="187.5" cy="219.8" r="100" fill="#1A2E4F"/>
+      <ellipse cx="187.5" cy="219.8" rx="100" ry="50" fill="none" stroke="#ffbd59" stroke-width="2" opacity="0.6"/>
+      <ellipse cx="187.5" cy="219.8" rx="50" ry="100" fill="none" stroke="#ffbd59" stroke-width="2" opacity="0.6"/>
+      <line x1="87.5" y1="199.8" x2="287.5" y2="239.8" stroke="#ffbd59" stroke-width="2" opacity="0.8"/>
+      <line x1="137.5" y1="249.8" x2="237.5" y2="189.8" stroke="#ffbd59" stroke-width="2" opacity="0.6"/>
+    </g>
+    
+    <!-- Site Name and Slogan -->
+    <g transform="translate(150, 0)">
+      <!-- Site Name -->
+      <text x="0" y="50" fill="white" font-family="serif" font-size="72" font-weight="bold">Lex Atlas</text>
+      
+      <!-- Slogan -->
+      <text x="0" y="100" fill="#D4AF37" font-family="serif" font-size="36" font-weight="400">Your Global Legal Compass</text>
+      
+      <!-- Description -->
+      <text x="0" y="150" fill="#F5F7FB" font-family="sans-serif" font-size="24" font-weight="300">Expert-built, country-specific PDF guides</text>
+      <text x="0" y="180" fill="#F5F7FB" font-family="sans-serif" font-size="24" font-weight="300">for international procedures</text>
+    </g>
+  </g>
+  
+  <!-- Decorative Elements -->
+  <circle cx="1000" cy="150" r="40" fill="#D4AF37" opacity="0.15"/>
+  <circle cx="1100" cy="480" r="60" fill="#D4AF37" opacity="0.1"/>
+  <circle cx="200" cy="500" r="30" fill="#D4AF37" opacity="0.12"/>
+  
+  <!-- Bottom Accent Line -->
+  <rect x="100" y="550" width="1000" height="4" fill="url(#accent)" opacity="0.8"/>
+</svg>

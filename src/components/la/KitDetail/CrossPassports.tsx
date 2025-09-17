@@ -137,7 +137,7 @@ export function CrossPassports({ partner }: { partner: Iso3 }) {
   const fra = FLAG.fra
   const oth = FLAG[partner] ?? FLAG.usa
   return (
-    <motion.div className="relative h-40 w-40 md:h-56 md:w-56 lg:h-72 lg:w-72 group animate-float transition-transform duration-300 will-change-transform hover:-translate-y-1" aria-hidden
+    <motion.div className="relative h-32 w-32 sm:h-40 sm:w-40 md:h-56 md:w-56 lg:h-72 lg:w-72 group animate-float transition-transform duration-300 will-change-transform hover:-translate-y-1" aria-hidden
       initial={mounted ? { opacity: 0, scale: 0.98, y: 8 } : false}
       whileInView={{ opacity: 1, scale: 1, y: 0 }}
       viewport={{ once: true, margin: '-10% 0%' }}
@@ -186,86 +186,63 @@ export function CrossPassports({ partner }: { partner: Iso3 }) {
                   {renderGBRFlag()}
                 </g>
               ) : partner === 'can' ? (
-                <svg width="16" height="10" viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <clipPath id="flagCAClip">
-                      <rect x="0" y="0" width="16" height="10" rx="1" ry="1" />
-                    </clipPath>
-                  </defs>
-                  <image href="/flags/ca.svg" width="16" height="10" clipPath="url(#flagCAClip)"/>
-                </svg>
+                <g>
+                  {renderCANFlag()}
+                </g>
               ) : partner === 'mar' ? (
-                <svg width="16" height="10" viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <clipPath id="flagMAClip">
-                      <rect x="0" y="0" width="16" height="10" rx="1" ry="1" />
-                    </clipPath>
-                  </defs>
-                  <image href="/flags/ma.svg" width="16" height="10" clipPath="url(#flagMAClip)"/>
-                </svg>
+                <g>
+                  <rect x="0" y="0" width="16" height="10" rx="1" fill="#C1272D" />
+                  <g transform="translate(8,5)">
+                    <path d="M 0 -3.5 L 0.5 -2.5 L 1.2 -3.0 L 0.8 -1.5 L 1.8 -1.8 L 1.0 -0.8 L 2.0 -0.5 L 0.8 0 L 1.2 1.2 L 0.6 0.8 L 0.3 2.0 L 0 1.2 L -0.3 2.0 L -0.6 0.8 L -1.2 1.2 L -0.8 0 L -2.0 -0.5 L -1.0 -0.8 L -1.8 -1.8 L -0.8 -1.5 L -1.2 -3.0 L -0.5 -2.5 Z" fill="#006233" />
+                    <rect x="-0.2" y="1.2" width="0.4" height="1.5" fill="#006233" />
+                  </g>
+                </g>
               ) : partner === 'fra' ? (
-                <svg width="16" height="10" viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <clipPath id="flagFRClip">
-                      <rect x="0" y="0" width="16" height="10" rx="1" ry="1" />
-                    </clipPath>
-                  </defs>
-                  <image href="/flags/fr.svg" width="16" height="10" clipPath="url(#flagFRClip)"/>
-                </svg>
+                <g>
+                  <rect x="0" y="0" width="5.33" height="10" rx="1" fill="#002395" />
+                  <rect x="5.33" y="0" width="5.33" height="10" rx="1" fill="#FFFFFF" />
+                  <rect x="10.66" y="0" width="5.34" height="10" rx="1" fill="#ED2939" />
+                </g>
               ) : partner === 'deu' ? (
-                <svg width="16" height="10" viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <clipPath id="flagDEClip">
-                      <rect x="0" y="0" width="16" height="10" rx="1" ry="1" />
-                    </clipPath>
-                  </defs>
-                  <image href="/flags/de.svg" width="16" height="10" clipPath="url(#flagDEClip)"/>
-                </svg>
+                <g>
+                  <rect x="0" y="0" width="16" height="3.33" rx="1" fill="#000000" />
+                  <rect x="0" y="3.33" width="16" height="3.33" rx="1" fill="#DD0000" />
+                  <rect x="0" y="6.66" width="16" height="3.34" rx="1" fill="#FFCE00" />
+                </g>
               ) : partner === 'che' ? (
-                <svg width="16" height="10" viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <clipPath id="flagCHClip">
-                      <rect x="0" y="0" width="16" height="10" rx="1" ry="1" />
-                    </clipPath>
-                  </defs>
-                  <image href="/flags/ch.svg" width="16" height="10" clipPath="url(#flagCHClip)"/>
-                </svg>
+                <g>
+                  <rect x="0" y="0" width="16" height="10" rx="1" fill="#FF0000" />
+                  <rect x="0" y="4" width="16" height="2" fill="#FFFFFF" />
+                  <rect x="7" y="0" width="2" height="10" fill="#FFFFFF" />
+                </g>
               ) : partner === 'bel' ? (
-                <svg width="16" height="10" viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <clipPath id="flagBEClip">
-                      <rect x="0" y="0" width="16" height="10" rx="1" ry="1" />
-                    </clipPath>
-                  </defs>
-                  <image href="/flags/be.svg" width="16" height="10" clipPath="url(#flagBEClip)"/>
-                </svg>
+                <g>
+                  <rect x="0" y="0" width="5.33" height="10" rx="1" fill="#000000" />
+                  <rect x="5.33" y="0" width="5.33" height="10" rx="1" fill="#FDDA24" />
+                  <rect x="10.66" y="0" width="5.34" height="10" rx="1" fill="#EF3340" />
+                </g>
               ) : partner === 'esp' ? (
-                <svg width="16" height="10" viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <clipPath id="flagESClip">
-                      <rect x="0" y="0" width="16" height="10" rx="1" ry="1" />
-                    </clipPath>
-                  </defs>
-                  <image href="/flags/es.svg" width="16" height="10" clipPath="url(#flagESClip)"/>
-                </svg>
+                <g>
+                  <rect x="0" y="0" width="16" height="2.5" rx="1" fill="#AA151B" />
+                  <rect x="0" y="2.5" width="16" height="5" rx="1" fill="#F1BF00" />
+                  <rect x="0" y="7.5" width="16" height="2.5" rx="1" fill="#AA151B" />
+                </g>
               ) : partner === 'ita' ? (
-                <svg width="16" height="10" viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <clipPath id="flagITClip">
-                      <rect x="0" y="0" width="16" height="10" rx="1" ry="1" />
-                    </clipPath>
-                  </defs>
-                  <image href="/flags/it.svg" width="16" height="10" clipPath="url(#flagITClip)"/>
-                </svg>
+                <g>
+                  <rect x="0" y="0" width="5.33" height="10" rx="1" fill="#009246" />
+                  <rect x="5.33" y="0" width="5.33" height="10" rx="1" fill="#FFFFFF" />
+                  <rect x="10.66" y="0" width="5.34" height="10" rx="1" fill="#CE2B37" />
+                </g>
               ) : partner === 'prt' ? (
-                <svg width="16" height="10" viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <clipPath id="flagPTClip">
-                      <rect x="0" y="0" width="16" height="10" rx="1" ry="1" />
-                    </clipPath>
-                  </defs>
-                  <image href="/flags/pt.svg" width="16" height="10" clipPath="url(#flagPTClip)"/>
-                </svg>
+                <g>
+                  <rect x="0" y="0" width="8" height="10" rx="1" fill="#006600" />
+                  <rect x="8" y="0" width="8" height="10" rx="1" fill="#FF0000" />
+                  <g transform="translate(4,5)">
+                    <circle cx="0" cy="0" r="2" fill="#FFCC00" />
+                    <circle cx="0" cy="0" r="1.2" fill="#006600" />
+                    <circle cx="0" cy="0" r="0.6" fill="#FFCC00" />
+                  </g>
+                </g>
               ) : (
                 <>
                   <rect x="0" y="0" width="5.33" height="10" rx="1" fill={oth[0]} />

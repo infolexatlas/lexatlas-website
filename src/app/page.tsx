@@ -14,7 +14,7 @@ export default function HomePage() {
   
   return (
     <PageTransition>
-      <div className="">
+      <div className="no-horizontal-scroll">
         {/* Hero (untouched) */}
         <Hero />
 

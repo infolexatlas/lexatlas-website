@@ -18,7 +18,7 @@ export function HeaderBlock({ title, lede, right, compact = false }: { title: Re
             </div>
           </div>
           {right && (
-            <div className="hidden md:block shrink-0" aria-hidden>
+            <div className="block shrink-0" aria-hidden>
               {right}
             </div>
           )}
