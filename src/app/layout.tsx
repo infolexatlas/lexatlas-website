@@ -6,6 +6,7 @@ import Header from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { CookieBanner } from '@/components/cookie-banner'
 import { JsonLd } from '@/components/JsonLd'
+import { VitalsReporter } from '@/components/VitalsReporter'
 import { PageTransition } from '@/components/ui/page-transition'
 import { IS_DEV, RESEND_API_KEY } from '@/lib/env'
 import { devLog } from '@/lib/devLog'
@@ -124,6 +125,15 @@ export default function RootLayout({
           type="image/svg+xml"
         />
         
+        {/* Preload critical fonts */}
+        <link 
+          rel="preload" 
+          href="/_next/static/media/inter-var.woff2" 
+          as="font" 
+          type="font/woff2" 
+          crossOrigin="anonymous"
+        />
+        
         {/* Additional Open Graph meta tags */}
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -152,6 +162,7 @@ export default function RootLayout({
         </div>
         <CookieBanner />
         <Analytics />
+        <VitalsReporter />
         
         {/* Global JSON-LD Structured Data */}
         <JsonLd data={getOrganizationSchema()} />

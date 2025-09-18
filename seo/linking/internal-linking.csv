@@ -1,0 +1,78 @@
+Source URL,Target URL,Anchor Text,Context,Link Type
+/,/kits/fra-usa,France → USA Marriage Kit,Popular Kits section,Contextual
+/,/kits/fra-gbr,France → UK Marriage Kit,Popular Kits section,Contextual
+/,/kits/fra-can,France → Canada Marriage Kit,Popular Kits section,Contextual
+/,/kits,Browse All Kits,Hero section CTA,CTA
+/,/pricing,View Pricing,Hero section CTA,CTA
+/kits,/kits/fra-usa,France → USA Marriage Kit,Kit grid,Contextual
+/kits,/kits/fra-gbr,France → UK Marriage Kit,Kit grid,Contextual
+/kits,/kits/fra-can,France → Canada Marriage Kit,Kit grid,Contextual
+/kits,/kits/fra-mar,France → Morocco Marriage Kit,Kit grid,Contextual
+/kits,/kits/fra-deu,France → Germany Marriage Kit,Kit grid,Contextual
+/kits,/kits/fra-ita,France → Italy Marriage Kit,Kit grid,Contextual
+/kits,/kits/fra-esp,France → Spain Marriage Kit,Kit grid,Contextual
+/kits,/pricing,View Pricing,CTA section,CTA
+/kits/fra-usa,/kits/fra-gbr,France → UK Marriage Kit,Related kits section,Contextual
+/kits/fra-usa,/kits/fra-can,France → Canada Marriage Kit,Related kits section,Contextual
+/kits/fra-usa,/kits/fra-deu,France → Germany Marriage Kit,Related kits section,Contextual
+/kits/fra-usa,/kits,All Marriage Kits,Breadcrumb,Contextual
+/kits/fra-usa,/,Home,Breadcrumb,Contextual
+/kits/fra-gbr,/kits/fra-usa,France → USA Marriage Kit,Related kits section,Contextual
+/kits/fra-gbr,/kits/fra-ita,France → Italy Marriage Kit,Related kits section,Contextual
+/kits/fra-gbr,/kits/fra-esp,France → Spain Marriage Kit,Related kits section,Contextual
+/kits/fra-gbr,/kits,All Marriage Kits,Breadcrumb,Contextual
+/kits/fra-gbr,/,Home,Breadcrumb,Contextual
+/kits/fra-can,/kits/fra-usa,France → USA Marriage Kit,Related kits section,Contextual
+/kits/fra-can,/kits/fra-gbr,France → UK Marriage Kit,Related kits section,Contextual
+/kits/fra-can,/kits/fra-che,France → Switzerland Marriage Kit,Related kits section,Contextual
+/kits/fra-can,/kits,All Marriage Kits,Breadcrumb,Contextual
+/kits/fra-can,/,Home,Breadcrumb,Contextual
+/kits/fra-mar,/kits/fra-esp,France → Spain Marriage Kit,Related kits section,Contextual
+/kits/fra-mar,/kits/fra-prt,France → Portugal Marriage Kit,Related kits section,Contextual
+/kits/fra-mar,/kits/fra-ita,France → Italy Marriage Kit,Related kits section,Contextual
+/kits/fra-mar,/kits,All Marriage Kits,Breadcrumb,Contextual
+/kits/fra-mar,/,Home,Breadcrumb,Contextual
+/kits/fra-deu,/kits/fra-che,France → Switzerland Marriage Kit,Related kits section,Contextual
+/kits/fra-deu,/kits/fra-bel,France → Belgium Marriage Kit,Related kits section,Contextual
+/kits/fra-deu,/kits/fra-ita,France → Italy Marriage Kit,Related kits section,Contextual
+/kits/fra-deu,/kits,All Marriage Kits,Breadcrumb,Contextual
+/kits/fra-deu,/,Home,Breadcrumb,Contextual
+/kits/fra-che,/kits/fra-deu,France → Germany Marriage Kit,Related kits section,Contextual
+/kits/fra-che,/kits/fra-ita,France → Italy Marriage Kit,Related kits section,Contextual
+/kits/fra-che,/kits/fra-bel,France → Belgium Marriage Kit,Related kits section,Contextual
+/kits/fra-che,/kits,All Marriage Kits,Breadcrumb,Contextual
+/kits/fra-che,/,Home,Breadcrumb,Contextual
+/kits/fra-bel,/kits/fra-deu,France → Germany Marriage Kit,Related kits section,Contextual
+/kits/fra-bel,/kits/fra-che,France → Switzerland Marriage Kit,Related kits section,Contextual
+/kits/fra-bel,/kits,All Marriage Kits,Breadcrumb,Contextual
+/kits/fra-bel,/,Home,Breadcrumb,Contextual
+/kits/fra-esp,/kits/fra-prt,France → Portugal Marriage Kit,Related kits section,Contextual
+/kits/fra-esp,/kits/fra-ita,France → Italy Marriage Kit,Related kits section,Contextual
+/kits/fra-esp,/kits/fra-mar,France → Morocco Marriage Kit,Related kits section,Contextual
+/kits/fra-esp,/kits,All Marriage Kits,Breadcrumb,Contextual
+/kits/fra-esp,/,Home,Breadcrumb,Contextual
+/kits/fra-ita,/kits/fra-che,France → Switzerland Marriage Kit,Related kits section,Contextual
+/kits/fra-ita,/kits/fra-deu,France → Germany Marriage Kit,Related kits section,Contextual
+/kits/fra-ita,/kits/fra-esp,France → Spain Marriage Kit,Related kits section,Contextual
+/kits/fra-ita,/kits,All Marriage Kits,Breadcrumb,Contextual
+/kits/fra-ita,/,Home,Breadcrumb,Contextual
+/kits/fra-prt,/kits/fra-esp,France → Spain Marriage Kit,Related kits section,Contextual
+/kits/fra-prt,/kits/fra-mar,France → Morocco Marriage Kit,Related kits section,Contextual
+/kits/fra-prt,/kits/fra-ita,France → Italy Marriage Kit,Related kits section,Contextual
+/kits/fra-prt,/kits,All Marriage Kits,Breadcrumb,Contextual
+/kits/fra-prt,/,Home,Breadcrumb,Contextual
+/pricing,/kits/fra-usa,France → USA Marriage Kit,Individual kits section,Contextual
+/pricing,/kits/fra-gbr,France → UK Marriage Kit,Individual kits section,Contextual
+/pricing,/kits/fra-can,France → Canada Marriage Kit,Individual kits section,Contextual
+/pricing,/kits,All Marriage Kits,CTA section,CTA
+/pricing,/,Home,Breadcrumb,Contextual
+/about,/kits,Our Marriage Kits,Mission section,Contextual
+/about,/pricing,View Pricing,CTA section,CTA
+/about,/,Home,Breadcrumb,Contextual
+/faq,/kits,Marriage Kits,FAQ answers,Contextual
+/faq,/kits/fra-usa,France → USA Marriage Kit,FAQ answers,Contextual
+/faq,/contact,Contact Support,FAQ answers,CTA
+/faq,/,Home,Breadcrumb,Contextual
+/contact,/kits,Our Marriage Kits,Contact form context,Contextual
+/contact,/faq,FAQ,Help section,Contextual
+/contact,/,Home,Breadcrumb,Contextual

@@ -28,6 +28,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: 'https', hostname: 'cdn.jsdelivr.net' },
     ],
+    formats: ['image/avif', 'image/webp'],
   },
   // Performance optimizations
   experimental: {

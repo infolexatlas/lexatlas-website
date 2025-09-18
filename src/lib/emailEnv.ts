@@ -13,12 +13,23 @@ export function getResolvedFromStrict() {
   const isDev = process.env.NODE_ENV !== 'production';
   const sandbox = 'LexAtlas <onboarding@resend.dev>';
 
-  // If forced, or dev: always sandbox sender
-  if (forceSandbox || isDev) {
+  // If forced: always sandbox sender
+  if (forceSandbox) {
     return { from: sandbox, reason: 'sandbox_sender' as const };
   }
 
+  // Check if we have a custom RESEND_FROM configured
   const from = process.env.RESEND_FROM?.trim();
+  if (from && !/@(gmail|yahoo|outlook|hotmail)\./i.test(from)) {
+    return { from, reason: 'custom_sender' as const };
+  }
+
+  // If dev and no custom sender: use sandbox
+  if (isDev) {
+    return { from: sandbox, reason: 'sandbox_sender' as const };
+  }
+
+  // Production mode - require RESEND_FROM
   if (!from) {
     throw new Error('RESEND_FROM must be set to a verified domain sender (e.g. LexAtlas <hello@lexatlas.com>)');
   }

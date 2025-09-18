@@ -1,133 +1,191 @@
-export const PRIORITY_SLUGS = [
-  'fra-usa','fra-gbr','fra-can','fra-mar','fra-deu',
-  'fra-che','fra-bel','fra-esp','fra-ita','fra-prt'
-] as const;
+// Import functions from kits.client for use in this file
+import {
+  PRIORITY_SLUGS,
+  ISO3_TO_2,
+  ISO2_NAMES,
+  slugToIso3Pair,
+  iso3PairToIso2Pair,
+  toCanonicalPairKey,
+  expandPairTitle,
+  generateFRAXXXTitle,
+  slugToPairKey,
+  isValidPrioritySlug
+} from './kits.client'
 
-export const ISO3_TO_2: Record<string,string> = {
-  FRA:'FR', USA:'US', GBR:'GB', CAN:'CA', MAR:'MA', DEU:'DE', CHE:'CH',
-  BEL:'BE', ESP:'ES', ITA:'IT', PRT:'PT'
-};
+export type Kit = {
+  title: string
+  description: string
+  ogImage: string
+  sku: string
+  price: string
+  currency: 'EUR'
+  url: string
+  validFrom: string
+}
 
-export const ISO2_NAMES: Record<string,string> = {
-  FR:'France', US:'United States', GB:'United Kingdom', CA:'Canada', MA:'Morocco',
-  DE:'Germany', CH:'Switzerland', BE:'Belgium', ES:'Spain', IT:'Italy', PT:'Portugal'
-};
-
-// Supported FRA-X slugs (our current catalog)
-export const SUPPORTED_FRA_SLUGS = [
-  'fra-usa','fra-gbr','fra-can','fra-mar','fra-deu','fra-che','fra-bel','fra-esp','fra-ita','fra-prt'
-] as const;
-
-// Priority kits for sitemap generation
-export const priorityKits = PRIORITY_SLUGS.map(slug => ({ slug }));
-
-/**
- * Convert a slug like 'fra-usa' to ISO3 pair {a3: 'FRA', b3: 'USA'}
- */
-export function slugToIso3Pair(slug: string): {a3: string, b3: string} | null {
-  const parts = slug.toLowerCase().split('-');
-  if (parts.length !== 2) return null;
-  
-  const [a3, b3] = parts.map(part => part.toUpperCase());
-  
-  // Validate that both parts are valid ISO3 codes
-  if (!Object.keys(ISO3_TO_2).includes(a3) || !Object.keys(ISO3_TO_2).includes(b3)) {
-    return null;
+export const KITS: Record<string, Kit> = {
+  'france-usa-marriage-guide': {
+    title: 'France ⇄ United States Marriage Guide (2025) | LexAtlas',
+    description: "Documents, CCAM/recognition, étapes légales pour un mariage France–USA. Kit PDF prêt à l'emploi, téléchargement instantané.",
+    ogImage: '/images/kits/fra-usa-cover.jpg',
+    sku: 'KIT-FRA-USA-2025',
+    price: '29.00',
+    currency: 'EUR',
+    url: 'https://lex-atlas.com/kits/france-usa-marriage-guide',
+    validFrom: '2025-09-17'
+  },
+  'france-uk-marriage-guide': {
+    title: 'France ⇄ United Kingdom Marriage Guide (2025) | LexAtlas',
+    description: "Documents, CNI/recognition, étapes légales pour un mariage France–UK. Kit PDF prêt à l'emploi, téléchargement instantané.",
+    ogImage: '/images/kits/fra-gbr-cover.jpg',
+    sku: 'KIT-FRA-GBR-2025',
+    price: '29.00',
+    currency: 'EUR',
+    url: 'https://lex-atlas.com/kits/france-uk-marriage-guide',
+    validFrom: '2025-09-17'
+  },
+  'france-canada-marriage-guide': {
+    title: 'France ⇄ Canada Marriage Guide (2025) | LexAtlas',
+    description: "Étapes officielles, traductions et reconnaissance d'un mariage France–Canada. Kit PDF complet + mises à jour incluses.",
+    ogImage: '/images/kits/fra-can-cover.jpg',
+    sku: 'KIT-FRA-CAN-2025',
+    price: '29.00',
+    currency: 'EUR',
+    url: 'https://lex-atlas.com/kits/france-canada-marriage-guide',
+    validFrom: '2025-09-17'
+  },
+  'france-morocco-marriage-guide': {
+    title: 'France ⇄ Morocco Marriage Guide (2025) | LexAtlas',
+    description: "Publication des bans, CCAM, transcription Maroc → France. Guide PDF étape par étape, téléchargement instantané.",
+    ogImage: '/images/kits/fra-mar-cover.jpg',
+    sku: 'KIT-FRA-MAR-2025',
+    price: '29.00',
+    currency: 'EUR',
+    url: 'https://lex-atlas.com/kits/france-morocco-marriage-guide',
+    validFrom: '2025-09-17'
+  },
+  'france-germany-marriage-guide': {
+    title: 'France ⇄ Germany Marriage Guide (2025) | LexAtlas',
+    description: "Documents requis, délais, reconnaissance France–Allemagne. Kit PDF prêt à l'emploi.",
+    ogImage: '/images/kits/fra-deu-cover.jpg',
+    sku: 'KIT-FRA-DEU-2025',
+    price: '29.00',
+    currency: 'EUR',
+    url: 'https://lex-atlas.com/kits/france-germany-marriage-guide',
+    validFrom: '2025-09-17'
+  },
+  'france-switzerland-marriage-guide': {
+    title: 'France ⇄ Switzerland Marriage Guide (2025) | LexAtlas',
+    description: "Processus de mariage France–Suisse: démarches, documents, reconnaissance. PDF clair et prêt à utiliser.",
+    ogImage: '/images/kits/fra-che-cover.jpg',
+    sku: 'KIT-FRA-CHE-2025',
+    price: '29.00',
+    currency: 'EUR',
+    url: 'https://lex-atlas.com/kits/france-switzerland-marriage-guide',
+    validFrom: '2025-09-17'
+  },
+  'france-belgium-marriage-guide': {
+    title: 'France ⇄ Belgium Marriage Guide (2025) | LexAtlas',
+    description: "CCAM, publication des bans, reconnaissance France–Belgique. Téléchargement instantané.",
+    ogImage: '/images/kits/fra-bel-cover.jpg',
+    sku: 'KIT-FRA-BEL-2025',
+    price: '29.00',
+    currency: 'EUR',
+    url: 'https://lex-atlas.com/kits/france-belgium-marriage-guide',
+    validFrom: '2025-09-17'
+  },
+  'france-spain-marriage-guide': {
+    title: 'France ⇄ Spain Marriage Guide (2025) | LexAtlas',
+    description: "Mariage France–Espagne : actes, traductions, transcription. Kit expert + accès immédiat.",
+    ogImage: '/images/kits/fra-esp-cover.jpg',
+    sku: 'KIT-FRA-ESP-2025',
+    price: '29.00',
+    currency: 'EUR',
+    url: 'https://lex-atlas.com/kits/france-spain-marriage-guide',
+    validFrom: '2025-09-17'
+  },
+  'france-italy-marriage-guide': {
+    title: 'France ⇄ Italy Marriage Guide (2025) | LexAtlas',
+    description: "Se marier en Italie (Comune), traductions, reconnaissance en France. Kit complet PDF.",
+    ogImage: '/images/kits/fra-ita-cover.jpg',
+    sku: 'KIT-FRA-ITA-2025',
+    price: '29.00',
+    currency: 'EUR',
+    url: 'https://lex-atlas.com/kits/france-italy-marriage-guide',
+    validFrom: '2025-09-17'
+  },
+  'france-portugal-marriage-guide': {
+    title: 'France ⇄ Portugal Marriage Guide (2025) | LexAtlas',
+    description: "Mariage transfrontalier France–Portugal : démarches, documents, reconnaissance. PDF facile & sécurisé.",
+    ogImage: '/images/kits/fra-prt-cover.jpg',
+    sku: 'KIT-FRA-PRT-2025',
+    price: '29.00',
+    currency: 'EUR',
+    url: 'https://lex-atlas.com/kits/france-portugal-marriage-guide',
+    validFrom: '2025-09-17'
   }
-  
-  return { a3, b3 };
 }
 
-/**
- * Convert ISO3 pair to ISO2 pair
- */
-export function iso3PairToIso2Pair({a3, b3}: {a3: string, b3: string}): {a2: string, b2: string} | null {
-  const a2 = ISO3_TO_2[a3];
-  const b2 = ISO3_TO_2[b3];
-  
-  if (!a2 || !b2) return null;
-  
-  return { a2, b2 };
+// Mapping from new descriptive slugs to old short slugs for backward compatibility
+export const SLUG_MAPPING: Record<string, string> = {
+  'france-usa-marriage-guide': 'fra-usa',
+  'france-uk-marriage-guide': 'fra-gbr',
+  'france-canada-marriage-guide': 'fra-can',
+  'france-morocco-marriage-guide': 'fra-mar',
+  'france-germany-marriage-guide': 'fra-deu',
+  'france-switzerland-marriage-guide': 'fra-che',
+  'france-belgium-marriage-guide': 'fra-bel',
+  'france-spain-marriage-guide': 'fra-esp',
+  'france-italy-marriage-guide': 'fra-ita',
+  'france-portugal-marriage-guide': 'fra-prt'
 }
 
-/**
- * Convert ISO2 pair to canonical pair key (sorted ascending)
- */
-export function toCanonicalPairKey({a2, b2}: {a2: string, b2: string}): string {
-  const [first, second] = [a2, b2].sort();
-  return `${first}-${second}`;
+// Helper function to get the old slug from new descriptive slug
+export function getLegacySlug(descriptiveSlug: string): string | null {
+  return SLUG_MAPPING[descriptiveSlug] || null
 }
 
-/**
- * Expand pair key to full title
- */
-export function expandPairTitle(pairKey: string): string {
-  const [a2, b2] = pairKey.split('-');
-  const nameA = ISO2_NAMES[a2] || a2;
-  const nameB = ISO2_NAMES[b2] || b2;
-  return `${nameA} – ${nameB}`;
+// Helper function to get kit data by descriptive slug
+export function getKitBySlug(slug: string): Kit | null {
+  return KITS[slug] || null
 }
 
-/**
- * Generate FRA-XXX format title from slug
- * Always shows FRA first, then the other country's ISO3 code
- */
-export function generateFRAXXXTitle(slug: string): string {
-  const iso3Pair = slugToIso3Pair(slug);
-  if (!iso3Pair) return 'Invalid Kit';
-  
-  // For FRA-XXX kits, always show FRA first
-  if (iso3Pair.a3 === 'FRA') {
-    return `FRA – ${iso3Pair.b3}`;
-  } else if (iso3Pair.b3 === 'FRA') {
-    return `FRA – ${iso3Pair.a3}`;
-  }
-  
-  // Fallback for non-FRA kits
-  return `${iso3Pair.a3} – ${iso3Pair.b3}`;
-}
+// Re-export functions from kits.client for backward compatibility
+export {
+  PRIORITY_SLUGS,
+  ISO3_TO_2,
+  ISO2_NAMES,
+  slugToIso3Pair,
+  iso3PairToIso2Pair,
+  toCanonicalPairKey,
+  expandPairTitle,
+  generateFRAXXXTitle,
+  slugToPairKey,
+  isValidPrioritySlug
+} from './kits.client'
 
-/**
- * Convert slug to canonical pair key
- */
-export function slugToPairKey(slug: string): string | null {
-  const iso3Pair = slugToIso3Pair(slug);
-  if (!iso3Pair) return null;
-  
-  const iso2Pair = iso3PairToIso2Pair(iso3Pair);
-  if (!iso2Pair) return null;
-  
-  return toCanonicalPairKey(iso2Pair);
-}
+// Re-export functions from kits-slug for backward compatibility
+export {
+  normalizeSlug,
+  titleFromSlug
+} from './kits-slug'
 
-/**
- * Validate if a slug is in our priority list
- */
-export function isValidPrioritySlug(slug: string): boolean {
-  return PRIORITY_SLUGS.includes(slug as any);
-}
+// Add missing functions that are needed
+export const SUPPORTED_FRA_SLUGS = PRIORITY_SLUGS
+export const priorityKits = PRIORITY_SLUGS.map((slug: string) => ({ slug }))
 
-/**
- * Get the production PDF path for a given slug
- */
+// Helper functions for PDF paths
 export function getKitPdfPath(slug: string): string {
-  // slug like "fra-usa"
   const iso3 = slug.toUpperCase();
-  const file = `${iso3}.pdf`; // FRA-USA.pdf
+  const file = `${iso3}.pdf`;
   return `/kits/${file}`;
 }
 
-/**
- * Get the universal sample PDF path
- * Always returns the global sample for consistency
- */
 export function getSamplePdfPath(slug: string): string {
   return `/kits/samples/LEXATLAS-global-sample.pdf`;
 }
 
-/**
- * Convert country name or ISO2 code to ISO3 code
- */
+// Helper function to convert country name or ISO2 code to ISO3 code
 export function toISO3(codeOrName: string): string | null {
   const input = codeOrName.trim().toLowerCase();
   
@@ -159,9 +217,7 @@ export function toISO3(codeOrName: string): string | null {
   return null;
 }
 
-/**
- * Given two ISO3 codes, return canonical FRA-X slug if supported, else null
- */
+// Helper function to get canonical FRA slug
 export function canonicalFraSlug(aISO3: string, bISO3: string): string | null {
   const A = aISO3?.toUpperCase();
   const B = bISO3?.toUpperCase();
@@ -184,10 +240,7 @@ export function canonicalFraSlug(aISO3: string, bISO3: string): string | null {
   return SUPPORTED_FRA_SLUGS.includes(slug as any) ? slug : null;
 }
 
-/**
- * Get full pair name from slug with France-first ordering for FRA-X pairs
- * Returns France–United States format, France first where applicable
- */
+// Helper function to get full pair name from slug
 export function getFullPairNameFromSlug(slug: string): { fullName: string; isValid: boolean } {
   const iso3Pair = slugToIso3Pair(slug);
   if (!iso3Pair) {

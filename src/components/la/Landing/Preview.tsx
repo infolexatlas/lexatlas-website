@@ -35,12 +35,50 @@ export default function Preview() {
           whileInView="show"
           viewport={{ once: true, margin: "-15%" }}
           variants={fadeInUp}
-          className="text-center"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
         >
-          <div className="inline-block p-8 bg-white rounded-2xl shadow-soft">
-            <p className="text-brand-textMuted">
-              Preview content coming soon...
-            </p>
+          {/* Preview Image 1 */}
+          <div className="group">
+            <div className="relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <img
+                src="/product-previews/1.png"
+                alt="LexAtlas Kit Preview - Document 1"
+                className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+          </div>
+
+          {/* Preview Image 2 */}
+          <div className="group">
+            <div className="relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <img
+                src="/product-previews/2.png"
+                alt="LexAtlas Kit Preview - Document 2"
+                className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+          </div>
+
+          {/* Preview Image 3 */}
+          <div className="group">
+            <div className="relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <img
+                src="/product-previews/3.png"
+                alt="LexAtlas Kit Preview - Document 3"
+                className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+          </div>
+
+          {/* Preview Image 4 */}
+          <div className="group">
+            <div className="relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <img
+                src="/product-previews/4.png"
+                alt="LexAtlas Kit Preview - Document 4"
+                className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
           </div>
         </motion.div>
       </div>

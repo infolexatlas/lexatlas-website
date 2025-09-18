@@ -47,7 +47,9 @@ export function LeadMagnetBanner({ className = '', source = 'lead_magnet_banner'
         } else if (data.reason === 'sandbox_sender') {
           setStatus({ kind:'success', msg:'✅ Saved. (Dev mode: sent from sandbox)' });
         } else if (data.reason === 'provider_error') {
-          setStatus({ kind:'success', msg:'✅ Saved. (Email provider rejected sending.) Tip: In dev, set EMAIL_FORCE_SANDBOX=1 or set EMAIL_ECHO_TO=your@email. In production, set a verified RESEND_FROM and verify your domain in Resend.' });
+          setStatus({ kind:'success', msg:'✅ Email saved! We\'ll send you the sample soon. (Email service temporarily unavailable)' });
+        } else if (data.saved === true) {
+          setStatus({ kind:'success', msg:'✅ Email saved! We\'ll send you the sample soon.' });
         } else {
           setStatus({ kind:'success', msg:'✅ Saved.' });
         }

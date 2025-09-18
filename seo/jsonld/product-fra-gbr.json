@@ -1,0 +1,21 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "France ⇄ United Kingdom Marriage Guide (2025) | LexAtlas",
+  "description": "Documents, CNI/recognition, étapes légales pour un mariage France–UK. Kit PDF prêt à l'emploi, téléchargement instantané.",
+  "sku": "KIT-FRA-GBR-2025",
+  "brand": {
+    "@type": "Brand",
+    "name": "LexAtlas"
+  },
+  "image": "https://lex-atlas.com/images/kits/fra-gbr-cover.jpg",
+  "url": "https://lex-atlas.com/kits/fra-gbr",
+  "offers": {
+    "@type": "Offer",
+    "price": "29.00",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock",
+    "url": "https://lex-atlas.com/kits/fra-gbr",
+    "validFrom": "2025-09-17"
+  }
+}

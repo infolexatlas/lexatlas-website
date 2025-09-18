@@ -1,0 +1,128 @@
+URL,Check Type,Status,Issue,Priority,Notes
+/,Title Length,Pass,52 chars (within 60 limit),Low,Optimized
+/,Meta Description,Pass,155 chars (within limit),Low,Clear benefit + CTA
+/,H1 Present,Pass,Single H1 found,Low,Proper hierarchy
+/,Canonical Tag,Pass,Present and correct,Low,Self-referencing
+/,Open Graph,Pass,Complete OG tags,Low,Title desc image
+/,Twitter Cards,Pass,Complete Twitter tags,Low,Title desc image
+/,JSON-LD Organization,Pass,Valid schema,Low,Complete fields
+/,JSON-LD Website,Pass,Valid schema,Low,Search action included
+/,Robots Meta,Pass,Index follow,Low,Proper directives
+/kits,Title Length,Pass,52 chars (within limit),Low,Optimized
+/kits,Meta Description,Pass,155 chars (within limit),Low,Clear benefit + CTA
+/kits,H1 Present,Pass,Single H1 found,Low,Proper hierarchy
+/kits,Canonical Tag,Pass,Present and correct,Low,Self-referencing
+/kits,Open Graph,Pass,Complete OG tags,Low,Title desc image
+/kits,Twitter Cards,Pass,Complete Twitter tags,Low,Title desc image
+/kits,JSON-LD Organization,Pass,Valid schema,Low,Complete fields
+/kits,JSON-LD Website,Pass,Valid schema,Low,Search action included
+/pricing,Title Length,Pass,67 chars (within limit),Low,Optimized
+/pricing,Meta Description,Pass,155 chars (within limit),Low,Clear benefit + CTA
+/pricing,H1 Present,Pass,Single H1 found,Low,Proper hierarchy
+/pricing,Canonical Tag,Pass,Present and correct,Low,Self-referencing
+/pricing,Open Graph,Pass,Complete OG tags,Low,Title desc image
+/pricing,Twitter Cards,Pass,Complete Twitter tags,Low,Title desc image
+/pricing,JSON-LD Organization,Pass,Valid schema,Low,Complete fields
+/pricing,JSON-LD Website,Pass,Valid schema,Low,Search action included
+/kits/fra-usa,Title Length,Fail,Generic title (not optimized),Critical,Should be "France ⇄ United States Marriage Guide (2025) | LexAtlas"
+/kits/fra-usa,Meta Description,Fail,Generic description (not optimized),Critical,Should be kit-specific description
+/kits/fra-usa,H1 Present,Pass,Single H1 found,Low,Proper hierarchy
+/kits/fra-usa,Canonical Tag,Fail,Wrong canonical URL,Major,Points to /kits instead of /kits/fra-usa
+/kits/fra-usa,Open Graph,Fail,Generic OG data,Major,Should be kit-specific
+/kits/fra-usa,Twitter Cards,Fail,Generic Twitter data,Major,Should be kit-specific
+/kits/fra-usa,JSON-LD Product,Fail,Missing key fields,Critical,Missing description sku image url validFrom
+/kits/fra-usa,JSON-LD Breadcrumbs,Pass,Valid schema,Low,Complete fields
+/kits/fra-ita,Title Length,Fail,Generic title (not optimized),Critical,Should be "France ⇄ Italy Marriage Guide (2025) | LexAtlas"
+/kits/fra-ita,Meta Description,Fail,Generic description (not optimized),Critical,Should be kit-specific description
+/kits/fra-ita,H1 Present,Pass,Single H1 found,Low,Proper hierarchy
+/kits/fra-ita,Canonical Tag,Fail,Wrong canonical URL,Major,Points to /kits instead of /kits/fra-ita
+/kits/fra-ita,Open Graph,Fail,Generic OG data,Major,Should be kit-specific
+/kits/fra-ita,Twitter Cards,Fail,Generic Twitter data,Major,Should be kit-specific
+/kits/fra-ita,JSON-LD Product,Fail,Missing key fields,Critical,Missing description sku image url validFrom
+/kits/fra-ita,JSON-LD Breadcrumbs,Pass,Valid schema,Low,Complete fields
+/kits/fra-mar,Title Length,Fail,Generic title (not optimized),Critical,Should be "France ⇄ Morocco Marriage Guide (2025) | LexAtlas"
+/kits/fra-mar,Meta Description,Fail,Generic description (not optimized),Critical,Should be kit-specific description
+/kits/fra-mar,H1 Present,Pass,Single H1 found,Low,Proper hierarchy
+/kits/fra-mar,Canonical Tag,Fail,Wrong canonical URL,Major,Points to /kits instead of /kits/fra-mar
+/kits/fra-mar,Open Graph,Fail,Generic OG data,Major,Should be kit-specific
+/kits/fra-mar,Twitter Cards,Fail,Generic Twitter data,Major,Should be kit-specific
+/kits/fra-mar,JSON-LD Product,Fail,Missing key fields,Critical,Missing description sku image url validFrom
+/kits/fra-mar,JSON-LD Breadcrumbs,Pass,Valid schema,Low,Complete fields
+/kits/fra-can,Title Length,Fail,Generic title (not optimized),Critical,Should be "France ⇄ Canada Marriage Guide (2025) | LexAtlas"
+/kits/fra-can,Meta Description,Fail,Generic description (not optimized),Critical,Should be kit-specific description
+/kits/fra-can,H1 Present,Pass,Single H1 found,Low,Proper hierarchy
+/kits/fra-can,Canonical Tag,Fail,Wrong canonical URL,Major,Points to /kits instead of /kits/fra-can
+/kits/fra-can,Open Graph,Fail,Generic OG data,Major,Should be kit-specific
+/kits/fra-can,Twitter Cards,Fail,Generic Twitter data,Major,Should be kit-specific
+/kits/fra-can,JSON-LD Product,Fail,Missing key fields,Critical,Missing description sku image url validFrom
+/kits/fra-can,JSON-LD Breadcrumbs,Pass,Valid schema,Low,Complete fields
+/kits/fra-gbr,Title Length,Fail,Generic title (not optimized),Critical,Should be "France ⇄ United Kingdom Marriage Guide (2025) | LexAtlas"
+/kits/fra-gbr,Meta Description,Fail,Generic description (not optimized),Critical,Should be kit-specific description
+/kits/fra-gbr,H1 Present,Pass,Single H1 found,Low,Proper hierarchy
+/kits/fra-gbr,Canonical Tag,Fail,Wrong canonical URL,Major,Points to /kits instead of /kits/fra-gbr
+/kits/fra-gbr,Open Graph,Fail,Generic OG data,Major,Should be kit-specific
+/kits/fra-gbr,Twitter Cards,Fail,Generic Twitter data,Major,Should be kit-specific
+/kits/fra-gbr,JSON-LD Product,Fail,Missing key fields,Critical,Missing description sku image url validFrom
+/kits/fra-gbr,JSON-LD Breadcrumbs,Pass,Valid schema,Low,Complete fields
+/kits/fra-deu,Title Length,Fail,Generic title (not optimized),Critical,Should be "France ⇄ Germany Marriage Guide (2025) | LexAtlas"
+/kits/fra-deu,Meta Description,Fail,Generic description (not optimized),Critical,Should be kit-specific description
+/kits/fra-deu,H1 Present,Pass,Single H1 found,Low,Proper hierarchy
+/kits/fra-deu,Canonical Tag,Fail,Wrong canonical URL,Major,Points to /kits instead of /kits/fra-deu
+/kits/fra-deu,Open Graph,Fail,Generic OG data,Major,Should be kit-specific
+/kits/fra-deu,Twitter Cards,Fail,Generic Twitter data,Major,Should be kit-specific
+/kits/fra-deu,JSON-LD Product,Fail,Missing key fields,Critical,Missing description sku image url validFrom
+/kits/fra-deu,JSON-LD Breadcrumbs,Pass,Valid schema,Low,Complete fields
+/kits/fra-che,Title Length,Fail,Generic title (not optimized),Critical,Should be "France ⇄ Switzerland Marriage Guide (2025) | LexAtlas"
+/kits/fra-che,Meta Description,Fail,Generic description (not optimized),Critical,Should be kit-specific description
+/kits/fra-che,H1 Present,Pass,Single H1 found,Low,Proper hierarchy
+/kits/fra-che,Canonical Tag,Fail,Wrong canonical URL,Major,Points to /kits instead of /kits/fra-che
+/kits/fra-che,Open Graph,Fail,Generic OG data,Major,Should be kit-specific
+/kits/fra-che,Twitter Cards,Fail,Generic Twitter data,Major,Should be kit-specific
+/kits/fra-che,JSON-LD Product,Fail,Missing key fields,Critical,Missing description sku image url validFrom
+/kits/fra-che,JSON-LD Breadcrumbs,Pass,Valid schema,Low,Complete fields
+/kits/fra-bel,Title Length,Fail,Generic title (not optimized),Critical,Should be "France ⇄ Belgium Marriage Guide (2025) | LexAtlas"
+/kits/fra-bel,Meta Description,Fail,Generic description (not optimized),Critical,Should be kit-specific description
+/kits/fra-bel,H1 Present,Pass,Single H1 found,Low,Proper hierarchy
+/kits/fra-bel,Canonical Tag,Fail,Wrong canonical URL,Major,Points to /kits instead of /kits/fra-bel
+/kits/fra-bel,Open Graph,Fail,Generic OG data,Major,Should be kit-specific
+/kits/fra-bel,Twitter Cards,Fail,Generic Twitter data,Major,Should be kit-specific
+/kits/fra-bel,JSON-LD Product,Fail,Missing key fields,Critical,Missing description sku image url validFrom
+/kits/fra-bel,JSON-LD Breadcrumbs,Pass,Valid schema,Low,Complete fields
+/kits/fra-esp,Title Length,Fail,Generic title (not optimized),Critical,Should be "France ⇄ Spain Marriage Guide (2025) | LexAtlas"
+/kits/fra-esp,Meta Description,Fail,Generic description (not optimized),Critical,Should be kit-specific description
+/kits/fra-esp,H1 Present,Pass,Single H1 found,Low,Proper hierarchy
+/kits/fra-esp,Canonical Tag,Fail,Wrong canonical URL,Major,Points to /kits instead of /kits/fra-esp
+/kits/fra-esp,Open Graph,Fail,Generic OG data,Major,Should be kit-specific
+/kits/fra-esp,Twitter Cards,Fail,Generic Twitter data,Major,Should be kit-specific
+/kits/fra-esp,JSON-LD Product,Fail,Missing key fields,Critical,Missing description sku image url validFrom
+/kits/fra-esp,JSON-LD Breadcrumbs,Pass,Valid schema,Low,Complete fields
+/kits/fra-prt,Title Length,Fail,Generic title (not optimized),Critical,Should be "France ⇄ Portugal Marriage Guide (2025) | LexAtlas"
+/kits/fra-prt,Meta Description,Fail,Generic description (not optimized),Critical,Should be kit-specific description
+/kits/fra-prt,H1 Present,Pass,Single H1 found,Low,Proper hierarchy
+/kits/fra-prt,Canonical Tag,Fail,Wrong canonical URL,Major,Points to /kits instead of /kits/fra-prt
+/kits/fra-prt,Open Graph,Fail,Generic OG data,Major,Should be kit-specific
+/kits/fra-prt,Twitter Cards,Fail,Generic Twitter data,Major,Should be kit-specific
+/kits/fra-prt,JSON-LD Product,Fail,Missing key fields,Critical,Missing description sku image url validFrom
+/kits/fra-prt,JSON-LD Breadcrumbs,Pass,Valid schema,Low,Complete fields
+/robots.txt,Technical SEO,Pass,Properly configured,Low,Allows crawling sitemap referenced
+/sitemap.xml,Technical SEO,Pass,All pages included,Low,Kit pages and important pages included
+/og/home.png,Open Graph Image,Pass,Image exists,Low,1200x630 PNG format
+/og/kits.png,Open Graph Image,Pass,Image exists,Low,1200x630 PNG format
+/og/about.png,Open Graph Image,Pass,Image exists,Low,1200x630 PNG format
+/faq,FAQ Schema,Pass,Valid FAQ schema,Low,Properly structured
+/faq,Content Quality,Pass,No placeholder text,Low,Real content present
+/about,Content Quality,Pass,No placeholder text,Low,Real content present
+/contact,Content Quality,Pass,No placeholder text,Low,Real content present
+/pricing,Content Quality,Pass,No placeholder text,Low,Real content present
+/,Internal Linking,Pass,Links to kits,Low,Homepage links to best kits
+/kits,Internal Linking,Pass,Links to individual kits,Low,Kit index links to all kits
+/kits/fra-usa,Internal Linking,Pass,Links to related kits,Low,Related kits section present
+/kits/fra-ita,Internal Linking,Pass,Links to related kits,Low,Related kits section present
+/kits/fra-mar,Internal Linking,Pass,Links to related kits,Low,Related kits section present
+/,Analytics,Pass,Plausible installed,Low,Analytics script present
+/,Performance,Warning,LCP may be slow,Medium,Needs measurement
+/,Performance,Warning,INP may be slow,Medium,Needs measurement
+/,Performance,Pass,CLS likely good,Low,Layout stability appears good
+/,Compliance,Pass,GDPR compliant,Low,Cookie banner present
+/,Compliance,Pass,E-E-A-T elements,Low,Trust signals present
+/,Compliance,Pass,Google 2025 ready,Low,FAQ schema properly implemented

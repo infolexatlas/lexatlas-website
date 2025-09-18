@@ -1,0 +1,21 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "France ⇄ Belgium Marriage Guide (2025) | LexAtlas",
+  "description": "Documents, reconnaissance, étapes légales pour un mariage France–Belgique. Kit PDF prêt à l'emploi, téléchargement instantané.",
+  "sku": "KIT-FRA-BEL-2025",
+  "brand": {
+    "@type": "Brand",
+    "name": "LexAtlas"
+  },
+  "image": "https://lex-atlas.com/images/kits/fra-bel-cover.jpg",
+  "url": "https://lex-atlas.com/kits/fra-bel",
+  "offers": {
+    "@type": "Offer",
+    "price": "29.00",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock",
+    "url": "https://lex-atlas.com/kits/fra-bel",
+    "validFrom": "2025-09-17"
+  }
+}

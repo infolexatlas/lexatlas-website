@@ -1,0 +1,21 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "France ⇄ United States Marriage Guide (2025) | LexAtlas",
+  "description": "Documents, CCAM/recognition, étapes légales pour un mariage France–USA. Kit PDF prêt à l'emploi, téléchargement instantané.",
+  "sku": "KIT-FRA-USA-2025",
+  "brand": {
+    "@type": "Brand",
+    "name": "LexAtlas"
+  },
+  "image": "https://lex-atlas.com/images/kits/fra-usa-cover.jpg",
+  "url": "https://lex-atlas.com/kits/fra-usa",
+  "offers": {
+    "@type": "Offer",
+    "price": "29.00",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock",
+    "url": "https://lex-atlas.com/kits/fra-usa",
+    "validFrom": "2025-09-17"
+  }
+}

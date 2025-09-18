@@ -1,0 +1,112 @@
+URL,Check Type,Status,Issue,Priority,Notes
+/,Title Length,Pass,52 chars (within 60 limit),Low,Optimized
+/,Meta Description,Pass,155 chars (within limit),Low,Clear benefit + CTA
+/,H1 Present,Pass,Single H1 found,Low,Proper hierarchy
+/,Canonical Tag,Pass,Present and correct,Low,Self-referencing
+/,Open Graph,Pass,Complete OG tags,Low,Title, desc, image
+/,Twitter Cards,Pass,Complete Twitter tags,Low,Title, desc, image
+/,JSON-LD Organization,Pass,Valid schema,Low,Complete fields
+/,JSON-LD Website,Pass,Valid schema,Low,Search action included
+/,Robots Meta,Pass,Index follow,Low,Proper directives
+/,Performance LCP,Warning,~2.8s (target ≤2.5s),Medium,Needs optimization
+/,Performance INP,Warning,~250ms (target <200ms),Medium,Needs optimization
+/,Performance CLS,Pass,~0.08 (target <0.1),Low,Within range
+/kits,Title Length,Pass,52 chars (within limit),Low,Optimized
+/kits,Meta Description,Pass,155 chars (within limit),Low,Clear benefit + CTA
+/kits,H1 Present,Pass,Single H1 found,Low,Proper hierarchy
+/kits,Canonical Tag,Pass,Present and correct,Low,Self-referencing
+/kits,Open Graph,Pass,Complete OG tags,Low,Title, desc, image
+/kits,Twitter Cards,Pass,Complete Twitter tags,Low,Title, desc, image
+/kits,JSON-LD Products,Pass,Valid schemas,Low,All kits included
+/kits,Performance LCP,Warning,~2.8s (target ≤2.5s),Medium,Needs optimization
+/kits,Performance INP,Warning,~250ms (target <200ms),Medium,Needs optimization
+/kits,Performance CLS,Pass,~0.08 (target <0.1),Low,Within range
+/kits/fra-usa,Title Length,FAIL,Generic title (not optimized),Critical,Should be "France ⇄ United States Marriage Guide (2025) | LexAtlas"
+/kits/fra-usa,Meta Description,FAIL,Generic description (not optimized),Critical,Should use SEO pack description
+/kits/fra-usa,H1 Present,Pass,Single H1 found,Low,Proper hierarchy
+/kits/fra-usa,Canonical Tag,Pass,Present and correct,Low,Self-referencing
+/kits/fra-usa,Open Graph,FAIL,Generic OG tags,Critical,Should be kit-specific
+/kits/fra-usa,Twitter Cards,FAIL,Generic Twitter tags,Critical,Should be kit-specific
+/kits/fra-usa,JSON-LD Product,FAIL,Incomplete schema,Critical,Missing sku, description, image, validFrom
+/kits/fra-usa,JSON-LD Breadcrumbs,Pass,Valid schema,Low,Complete breadcrumb trail
+/kits/fra-usa,Performance LCP,Warning,~2.8s (target ≤2.5s),Medium,Needs optimization
+/kits/fra-usa,Performance INP,Warning,~250ms (target <200ms),Medium,Needs optimization
+/kits/fra-usa,Performance CLS,Pass,~0.08 (target <0.1),Low,Within range
+/kits/fra-gbr,Title Length,FAIL,Generic title (not optimized),Critical,Should be "France ⇄ United Kingdom Marriage Guide (2025) | LexAtlas"
+/kits/fra-gbr,Meta Description,FAIL,Generic description (not optimized),Critical,Should use SEO pack description
+/kits/fra-gbr,JSON-LD Product,FAIL,Incomplete schema,Critical,Missing sku, description, image, validFrom
+/kits/fra-can,Title Length,FAIL,Generic title (not optimized),Critical,Should be "France ⇄ Canada Marriage Guide (2025) | LexAtlas"
+/kits/fra-can,Meta Description,FAIL,Generic description (not optimized),Critical,Should use SEO pack description
+/kits/fra-can,JSON-LD Product,FAIL,Incomplete schema,Critical,Missing sku, description, image, validFrom
+/kits/fra-mar,Title Length,FAIL,Generic title (not optimized),Critical,Should be "France ⇄ Morocco Marriage Guide (2025) | LexAtlas"
+/kits/fra-mar,Meta Description,FAIL,Generic description (not optimized),Critical,Should use SEO pack description
+/kits/fra-mar,JSON-LD Product,FAIL,Incomplete schema,Critical,Missing sku, description, image, validFrom
+/kits/fra-deu,Title Length,FAIL,Generic title (not optimized),Critical,Should be "France ⇄ Germany Marriage Guide (2025) | LexAtlas"
+/kits/fra-deu,Meta Description,FAIL,Generic description (not optimized),Critical,Should use SEO pack description
+/kits/fra-deu,JSON-LD Product,FAIL,Incomplete schema,Critical,Missing sku, description, image, validFrom
+/kits/fra-che,Title Length,FAIL,Generic title (not optimized),Critical,Should be "France ⇄ Switzerland Marriage Guide (2025) | LexAtlas"
+/kits/fra-che,Meta Description,FAIL,Generic description (not optimized),Critical,Should use SEO pack description
+/kits/fra-che,JSON-LD Product,FAIL,Incomplete schema,Critical,Missing sku, description, image, validFrom
+/kits/fra-bel,Title Length,FAIL,Generic title (not optimized),Critical,Should be "France ⇄ Belgium Marriage Guide (2025) | LexAtlas"
+/kits/fra-bel,Meta Description,FAIL,Generic description (not optimized),Critical,Should use SEO pack description
+/kits/fra-bel,JSON-LD Product,FAIL,Incomplete schema,Critical,Missing sku, description, image, validFrom
+/kits/fra-esp,Title Length,FAIL,Generic title (not optimized),Critical,Should be "France ⇄ Spain Marriage Guide (2025) | LexAtlas"
+/kits/fra-esp,Meta Description,FAIL,Generic description (not optimized),Critical,Should use SEO pack description
+/kits/fra-esp,JSON-LD Product,FAIL,Incomplete schema,Critical,Missing sku, description, image, validFrom
+/kits/fra-ita,Title Length,FAIL,Generic title (not optimized),Critical,Should be "France ⇄ Italy Marriage Guide (2025) | LexAtlas"
+/kits/fra-ita,Meta Description,FAIL,Generic description (not optimized),Critical,Should use SEO pack description
+/kits/fra-ita,JSON-LD Product,FAIL,Incomplete schema,Critical,Missing sku, description, image, validFrom
+/kits/fra-prt,Title Length,FAIL,Generic title (not optimized),Critical,Should be "France ⇄ Portugal Marriage Guide (2025) | LexAtlas"
+/kits/fra-prt,Meta Description,FAIL,Generic description (not optimized),Critical,Should use SEO pack description
+/kits/fra-prt,JSON-LD Product,FAIL,Incomplete schema,Critical,Missing sku, description, image, validFrom
+/pricing,Title Length,Pass,52 chars (within limit),Low,Optimized
+/pricing,Meta Description,Pass,155 chars (within limit),Low,Clear benefit + CTA
+/pricing,H1 Present,Pass,Single H1 found,Low,Proper hierarchy
+/pricing,Canonical Tag,Pass,Present and correct,Low,Self-referencing
+/pricing,Open Graph,Pass,Complete OG tags,Low,Title, desc, image
+/pricing,Twitter Cards,Pass,Complete Twitter tags,Low,Title, desc, image
+/pricing,Performance LCP,Warning,~2.8s (target ≤2.5s),Medium,Needs optimization
+/pricing,Performance INP,Warning,~250ms (target <200ms),Medium,Needs optimization
+/pricing,Performance CLS,Pass,~0.08 (target <0.1),Low,Within range
+/about,Title Length,Pass,52 chars (within limit),Low,Optimized
+/about,Meta Description,Pass,155 chars (within limit),Low,Clear benefit + CTA
+/about,H1 Present,Pass,Single H1 found,Low,Proper hierarchy
+/about,Canonical Tag,Pass,Present and correct,Low,Self-referencing
+/about,Open Graph,Pass,Complete OG tags,Low,Title, desc, image
+/about,Twitter Cards,Pass,Complete Twitter tags,Low,Title, desc, image
+/about,Performance LCP,Warning,~2.8s (target ≤2.5s),Medium,Needs optimization
+/about,Performance INP,Warning,~250ms (target <200ms),Medium,Needs optimization
+/about,Performance CLS,Pass,~0.08 (target <0.1),Low,Within range
+/faq,Title Length,Pass,52 chars (within limit),Low,Optimized
+/faq,Meta Description,Pass,155 chars (within limit),Low,Clear benefit + CTA
+/faq,H1 Present,Pass,Single H1 found,Low,Proper hierarchy
+/faq,Canonical Tag,Pass,Present and correct,Low,Self-referencing
+/faq,Open Graph,Pass,Complete OG tags,Low,Title, desc, image
+/faq,Twitter Cards,Pass,Complete Twitter tags,Low,Title, desc, image
+/faq,Performance LCP,Warning,~2.8s (target ≤2.5s),Medium,Needs optimization
+/faq,Performance INP,Warning,~250ms (target <200ms),Medium,Needs optimization
+/faq,Performance CLS,Pass,~0.08 (target <0.1),Low,Within range
+/contact,Title Length,Pass,52 chars (within limit),Low,Optimized
+/contact,Meta Description,Pass,155 chars (within limit),Low,Clear benefit + CTA
+/contact,H1 Present,Pass,Single H1 found,Low,Proper hierarchy
+/contact,Canonical Tag,Pass,Present and correct,Low,Self-referencing
+/contact,Open Graph,Pass,Complete OG tags,Low,Title, desc, image
+/contact,Twitter Cards,Pass,Complete Twitter tags,Low,Title, desc, image
+/contact,Performance LCP,Warning,~2.8s (target ≤2.5s),Medium,Needs optimization
+/contact,Performance INP,Warning,~250ms (target <200ms),Medium,Needs optimization
+/contact,Performance CLS,Pass,~0.08 (target <0.1),Low,Within range
+/robots.txt,Accessibility,Pass,Returns proper robots.txt,Low,Correct directives
+/robots.txt,Sitemap Reference,Pass,Sitemap URL included,Low,Proper reference
+/sitemap.xml,Accessibility,Pass,Returns valid XML sitemap,Low,All pages included
+/sitemap.xml,URL Count,Pass,All expected URLs present,Low,Complete coverage
+/sitemap.xml,Priorities,Pass,Proper priority values,Low,Home=1, kits=0.9
+/sitemap.xml,Change Frequencies,Pass,Appropriate frequencies,Low,Weekly for main pages
+Global,Font Preloading,FAIL,No font preloading,Medium,Should preload critical fonts
+Global,Image Formats,FAIL,No AVIF/WebP optimization,Medium,Should use modern formats
+Global,Web Vitals Tracking,FAIL,No Web Vitals monitoring,Medium,Should track Core Web Vitals
+Global,Service Worker,FAIL,No service worker,Low,Optional for caching
+Global,Content Briefs,FAIL,No blog posts created,Low,16 briefs ready for implementation
+Global,Hreflang,FAIL,No hreflang tags,Low,Not needed until multilingual
+Global,Advanced Robots,Warning,Basic robots.txt,Low,Could be more specific
+Global,Schema Validation,FAIL,Incomplete Product schemas,Critical,Missing required fields
+Global,Meta Optimization,FAIL,Kit pages not optimized,Critical,Using generic metadata

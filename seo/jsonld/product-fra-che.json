@@ -1,0 +1,21 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "France ⇄ Switzerland Marriage Guide (2025) | LexAtlas",
+  "description": "Documents, reconnaissance, étapes légales pour un mariage France–Suisse. Kit PDF prêt à l'emploi, téléchargement instantané.",
+  "sku": "KIT-FRA-CHE-2025",
+  "brand": {
+    "@type": "Brand",
+    "name": "LexAtlas"
+  },
+  "image": "https://lex-atlas.com/images/kits/fra-che-cover.jpg",
+  "url": "https://lex-atlas.com/kits/fra-che",
+  "offers": {
+    "@type": "Offer",
+    "price": "29.00",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock",
+    "url": "https://lex-atlas.com/kits/fra-che",
+    "validFrom": "2025-09-17"
+  }
+}

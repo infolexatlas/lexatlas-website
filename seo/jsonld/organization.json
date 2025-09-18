@@ -1,0 +1,82 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "LexAtlas",
+  "url": "https://lex-atlas.com",
+  "logo": "https://lex-atlas.com/logo/lexatlas.svg",
+  "description": "Expert-built, country-specific PDF guides for cross-border marriages and international legal procedures.",
+  "foundingDate": "2024",
+  "founder": {
+    "@type": "Person",
+    "name": "LexAtlas Team"
+  },
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "email": "contact.lexatlas@gmail.com",
+      "availableLanguage": ["English", "French"]
+    }
+  ],
+  "sameAs": [
+    "https://www.linkedin.com/company/lexatlas",
+    "https://twitter.com/lexatlas"
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "FR"
+  },
+  "areaServed": [
+    {
+      "@type": "Country",
+      "name": "France"
+    },
+    {
+      "@type": "Country", 
+      "name": "United States"
+    },
+    {
+      "@type": "Country",
+      "name": "United Kingdom"
+    },
+    {
+      "@type": "Country",
+      "name": "Canada"
+    },
+    {
+      "@type": "Country",
+      "name": "Germany"
+    },
+    {
+      "@type": "Country",
+      "name": "Italy"
+    },
+    {
+      "@type": "Country",
+      "name": "Spain"
+    },
+    {
+      "@type": "Country",
+      "name": "Switzerland"
+    },
+    {
+      "@type": "Country",
+      "name": "Belgium"
+    },
+    {
+      "@type": "Country",
+      "name": "Portugal"
+    },
+    {
+      "@type": "Country",
+      "name": "Morocco"
+    }
+  ],
+  "knowsAbout": [
+    "International marriage procedures",
+    "Cross-border legal requirements",
+    "Document translation and apostille",
+    "Marriage recognition between countries",
+    "Immigration and visa procedures"
+  ]
+}
