@@ -33,16 +33,16 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-new.ico", sizes: "any" },
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
     ],
-    shortcut: ["/favicon.ico"],
+    shortcut: ["/favicon-new.ico"],
     apple: [
       { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
     ],
     other: [
-      { rel: "icon", url: "/favicon.ico", sizes: "32x32" },
+      { rel: "icon", url: "/favicon-new.ico", sizes: "32x32" },
       { rel: "icon", url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
       { rel: "icon", url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
     ],
@@ -102,7 +102,7 @@ export default function RootLayout({
         />
         
         {/* Explicit favicon links for better browser support */}
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="/favicon-new.ico" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />

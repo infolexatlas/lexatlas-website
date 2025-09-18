@@ -1,7 +1,6 @@
 "use client";
 
-import * as React from "react";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   geoOrthographic,
   geoPath,
@@ -316,7 +315,7 @@ function interpolateGreatCircle(a:{lon:number,lat:number}, b:{lon:number,lat:num
 
 export default function HeroGlobeCanvasClient() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [isDataLoaded, setIsDataLoaded] = React.useState(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   // animation/state refs (NO hooks anywhere else)
   const rafRef = useRef<number | null>(null);
