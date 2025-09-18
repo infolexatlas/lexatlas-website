@@ -316,6 +316,7 @@ function interpolateGreatCircle(a:{lon:number,lat:number}, b:{lon:number,lat:num
 
 export default function HeroGlobeCanvasClient() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [isDataLoaded, setIsDataLoaded] = React.useState(false);
 
   // animation/state refs (NO hooks anywhere else)
   const rafRef = useRef<number | null>(null);
@@ -334,20 +335,28 @@ export default function HeroGlobeCanvasClient() {
   const lastSpawnRef = useRef(0);
   let   nextArcId = 1; // file-local counter is fine inside the component
 
+  // Load world data on component mount
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        console.log('[Globe] Starting to load world data...');
+        const geo = await loadWorldData();
+        landGeo = geo;
+        setIsDataLoaded(true);
+        console.log('[Globe] World data loaded successfully');
+      } catch (e) {
+        console.error('[Globe] Failed to load world data:', e);
+        landGeo = null;
+        setIsDataLoaded(true); // Still set to true to show fallback
+      }
+    };
+
+    loadData();
+  }, []);
+
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    // Load world data if not already loaded
-    if (!landGeo) {
-      loadWorldData().then(geo => {
-        landGeo = geo;
-        console.log('[Globe] World data loaded in component');
-      }).catch(e => {
-        console.error('[Globe] Failed to load world data in component:', e);
-        landGeo = null;
-      });
-    }
+    if (!canvas || !isDataLoaded) return;
 
     // 1) Sizing & DPR (ResizeObserver)
     const ro = new ResizeObserver(entries => {
@@ -513,6 +522,16 @@ export default function HeroGlobeCanvasClient() {
       ro.disconnect();
     };
   }, []);
+
+  if (!isDataLoaded) {
+    return (
+      <div className="relative mx-auto aspect-square w-[280px] sm:w-[320px] md:w-[400px] lg:w-[480px] xl:w-[560px] max-w-[85vw] overflow-hidden globe-container">
+        <div className="absolute inset-0 rounded-full flex items-center justify-center" style={{background:'radial-gradient(28% #1A2E4F, #223A63)'}}>
+          <div className="text-white/60 text-sm">Loading globe...</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <canvas
