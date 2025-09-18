@@ -26,20 +26,10 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'LexAtlas - Your Global Legal Compass',
-  description: 'Expert-built, country-specific PDF guides to handle international legal procedures with clarity and confidence.',
-  keywords: ['legal', 'international', 'marriage', 'cross-border', 'pdf', 'kits'],
-  authors: [{ name: 'LexAtlas Team' }],
-  creator: 'LexAtlas',
-  publisher: 'LexAtlas',
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://lex-atlas.com'),
-  alternates: {
-    canonical: '/',
+  title: { 
+    default: 'LexAtlas — Cross-Border Marriage Kits', 
+    template: '%s' 
   },
   icons: {
     icon: [
@@ -53,28 +43,6 @@ export const metadata: Metadata = {
     'theme-color': '#1A2E4F',
   },
   manifest: "/manifest.webmanifest",
-  openGraph: {
-    title: 'LexAtlas - Your Global Legal Compass',
-    description: 'Expert-built, country-specific PDF guides to handle international legal procedures with clarity and confidence.',
-    url: process.env.NEXT_PUBLIC_BASE_URL || 'https://lex-atlas.com',
-    siteName: 'LexAtlas',
-    images: [
-      {
-        url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://lex-atlas.com'}/og/home.png`,
-        width: 1200,
-        height: 630,
-        alt: 'LexAtlas - Your Global Legal Compass',
-      },
-    ],
-    locale: 'en_US',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'LexAtlas - Your Global Legal Compass',
-    description: 'Expert-built, country-specific PDF guides to handle international legal procedures with clarity and confidence.',
-    images: [`${process.env.NEXT_PUBLIC_BASE_URL || 'https://lex-atlas.com'}/og/home.png`],
-  },
   robots: {
     index: true,
     follow: true,

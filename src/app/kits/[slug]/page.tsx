@@ -1,7 +1,7 @@
-import { redirect, notFound } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { KITS, KIT_SLUGS, getKitBySlug } from '@/lib/kits.config'
+import { KITS, KIT_SLUGS } from '@/lib/kits.config'
 import { kitsDetail } from '@/lib/kits-detail-data'
 import { HeaderBlock } from '@/components/la/KitDetail/HeaderBlock'
 import { BuyBox } from '@/components/la/KitDetail/BuyBox'
@@ -12,65 +12,43 @@ import { RelatedKits } from '@/components/la/KitDetail/RelatedKits'
 import { BreadcrumbsJsonLd } from '@/components/la/KitDetail/JsonLd'
 import { CrossPassports } from '@/components/la/KitDetail/CrossPassports'
 
-// Relax types to align with Next.js generated PageProps in .next/types
-// which may type params as a Promise-like in some setups.
-interface PageParams { slug: string }
+type Props = { params: Promise<{ slug: string }> }
 
+export const dynamicParams = false
+export const revalidate = false // fully static
 
-// Generate dynamic metadata for kit pages
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+export async function generateStaticParams() {
+  return KIT_SLUGS.map(slug => ({ slug }))
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const kit = getKitBySlug(slug)
-  
-  if (!kit) {
-    return { title: 'LexAtlas — Cross-Border Marriage Kits' }
-  }
+  const kit = KITS[slug]
+  if (!kit) return { title: 'LexAtlas — Kit not found' }
 
   return {
-    title: kit.title,
-    description: kit.description,
+    title: kit.title, // ≤ 60 chars already curated
+    description: kit.description, // ≤ 155 chars
     alternates: { canonical: kit.url },
     openGraph: {
       title: kit.title,
       description: kit.description,
       url: kit.url,
       type: 'website',
-      siteName: 'LexAtlas',
-      images: [
-        {
-          url: `https://lex-atlas.com${kit.ogImage}`,
-          width: 1200,
-          height: 630,
-          alt: kit.title,
-        },
-      ],
-      locale: 'en_US',
+      images: [{ url: `https://lex-atlas.com${kit.ogImage}` }]
     },
     twitter: {
       card: 'summary_large_image',
       title: kit.title,
       description: kit.description,
-      images: [`https://lex-atlas.com${kit.ogImage}`],
-      site: '@lexatlas',
-      creator: '@lexatlas',
-    },
+      images: [`https://lex-atlas.com${kit.ogImage}`]
+    }
   }
 }
 
-// Opt into static generation for better performance
-export const dynamic = 'auto'
-export const revalidate = 60
-export const dynamicParams = false
-
-export function generateStaticParams() {
-  // Prebuild all short kit slugs we have data for
-  return KIT_SLUGS.map(slug => ({ slug }))
-}
-
-export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+export default async function KitPage({ params }: Props) {
   const { slug } = await params
-  const kit = getKitBySlug(slug)
-  
+  const kit = KITS[slug]
   if (!kit) return notFound()
 
   // Use the short slug directly for kit detail lookup

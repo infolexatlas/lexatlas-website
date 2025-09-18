@@ -1,25 +1,16 @@
-import { NextRequest, NextResponse } from 'next/server'
+export const runtime = 'nodejs' // avoid edge body streaming pitfalls
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
   try {
-    const body = await req.json()
-    
-    // Log Web Vitals data
-    console.log('[WEB-VITAL]', {
-      name: body.name,
-      value: body.value,
-      delta: body.delta,
-      id: body.id,
-      navigationType: body.navigationType,
-      timestamp: new Date().toISOString(),
-    })
-    
-    // TODO: Send to analytics service (GA4, Vercel Analytics, etc.)
-    // For now, just log to console
-    
-    return NextResponse.json({ ok: true })
-  } catch (error) {
-    console.error('Error processing Web Vitals:', error)
-    return NextResponse.json({ error: 'Failed to process vitals' }, { status: 500 })
+    // Best-effort consume body; ignore content
+    await req.json().catch(() => null)
+    return new Response(null, { status: 204 })
+  } catch {
+    return new Response(null, { status: 204 })
   }
+}
+
+// Optional: simple GET for health checks
+export async function GET() {
+  return new Response('OK', { status: 200 })
 }

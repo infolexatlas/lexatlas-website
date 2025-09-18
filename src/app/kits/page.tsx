@@ -10,16 +10,16 @@ import { ROUTES } from '@/lib/kit-routes'
 import { PageTransition } from '@/components/ui/page-transition'
 
 export const metadata: Metadata = {
-  title: 'LexAtlas Kits – Cross-Border Marriage Kits by Country Pair',
-  description: 'Explore ready-to-use legal kits for international marriages. Official sources, step-by-step guidance, instant download.',
+  title: 'Marriage Kits — France ⇄ Country | LexAtlas',
+  description: 'Find your France ⇄ country kit. Instant PDF.',
   openGraph: {
-    title: 'LexAtlas Kits – Cross-Border Marriage Kits by Country Pair',
-    description: 'Explore ready-to-use legal kits for international marriages. Official sources, step-by-step guidance, instant download.',
+    title: 'Marriage Kits — France ⇄ Country | LexAtlas',
+    description: 'Find your France ⇄ country kit. Instant PDF.',
     images: ['/og/kits.png'],
   },
   twitter: {
-    title: 'LexAtlas Kits – Cross-Border Marriage Kits by Country Pair',
-    description: 'Explore ready-to-use legal kits for international marriages. Official sources, step-by-step guidance, instant download.',
+    title: 'Marriage Kits — France ⇄ Country | LexAtlas',
+    description: 'Find your France ⇄ country kit. Instant PDF.',
     images: ['/og/kits.png'],
   },
 }
