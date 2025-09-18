@@ -16,16 +16,6 @@
   },
   "redirects": [
     {
-      "source": "https://www.lex-atlas.com/(.*)",
-      "destination": "https://lex-atlas.com/$1",
-      "permanent": true
-    },
-    {
-      "source": "https://www.lex-atlas.com",
-      "destination": "https://lex-atlas.com",
-      "permanent": true
-    },
-    {
       "source": "/kits/france-usa-marriage-guide",
       "destination": "/kits/fra-usa",
       "permanent": true
