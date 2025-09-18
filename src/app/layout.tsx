@@ -112,6 +112,11 @@ export default function RootLayout({
         <meta name="twitter:site" content="@lexatlas" />
         <meta name="twitter:creator" content="@lexatlas" />
         
+        {/* Logo meta tags for better Google visibility */}
+        <meta property="og:logo" content="https://lex-atlas.com/logo-180x180.png" />
+        <meta name="logo" content="https://lex-atlas.com/logo-180x180.png" />
+        <link rel="logo" href="https://lex-atlas.com/logo-180x180.png" />
+        
         {/* Plausible Analytics */}
         {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (
           <script

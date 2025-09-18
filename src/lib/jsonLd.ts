@@ -25,7 +25,23 @@ export function getOrganizationSchema() {
     "@type": "Organization",
     "name": "LexAtlas",
     "url": getBaseUrl(),
-    "logo": `${getBaseUrl()}/logo/lexatlas.svg`,
+    "logo": [
+      {
+        "@type": "ImageObject",
+        "url": `${getBaseUrl()}/logo-180x180.png`,
+        "width": 180,
+        "height": 180
+      },
+      {
+        "@type": "ImageObject", 
+        "url": `${getBaseUrl()}/logo-512x512.png`,
+        "width": 512,
+        "height": 512
+      }
+    ],
+    "image": `${getBaseUrl()}/logo-180x180.png`,
+    "description": "Expert-built, country-specific PDF guides to handle international legal procedures with clarity and confidence.",
+    "foundingDate": "2024",
     "sameAs": [],
     "contactPoint": [{
       "@type": "ContactPoint",
