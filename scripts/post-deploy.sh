@@ -122,6 +122,16 @@ main() {
     test_url "$BASE_URL/api/vitals" "Vitals API" || failed_tests=$((failed_tests + 1))
     total_tests=$((total_tests + 1))
     
+    # Test vitals API returns 200/204
+    local vitals_response=$(curl -s -o /dev/null -w "%{http_code}" --max-time $TIMEOUT "$BASE_URL/api/vitals" 2>/dev/null)
+    if [[ "$vitals_response" == "200" || "$vitals_response" == "204" ]]; then
+        log_success "Vitals API returns correct status: $vitals_response"
+    else
+        log_error "Vitals API returns incorrect status: $vitals_response"
+        failed_tests=$((failed_tests + 1))
+    fi
+    total_tests=$((total_tests + 1))
+    
     # Test 3: Sitemap
     log_info "Testing sitemap..."
     test_url "$BASE_URL/sitemap.xml" "Sitemap" || failed_tests=$((failed_tests + 1))
@@ -150,16 +160,16 @@ main() {
     # Test 6: Kit pages (all 10 kits)
     log_info "Testing kit pages..."
     local kit_slugs=(
-        "france-usa-marriage-guide"
-        "france-uk-marriage-guide"
-        "france-canada-marriage-guide"
-        "france-morocco-marriage-guide"
-        "france-germany-marriage-guide"
-        "france-switzerland-marriage-guide"
-        "france-belgium-marriage-guide"
-        "france-spain-marriage-guide"
-        "france-italy-marriage-guide"
-        "france-portugal-marriage-guide"
+        "fra-usa"
+        "fra-gbr"
+        "fra-can"
+        "fra-mar"
+        "fra-deu"
+        "fra-che"
+        "fra-bel"
+        "fra-esp"
+        "fra-ita"
+        "fra-prt"
     )
     
     for slug in "${kit_slugs[@]}"; do

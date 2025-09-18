@@ -24,6 +24,56 @@
       "source": "https://www.lex-atlas.com",
       "destination": "https://lex-atlas.com",
       "permanent": true
+    },
+    {
+      "source": "/kits/france-usa-marriage-guide",
+      "destination": "/kits/fra-usa",
+      "permanent": true
+    },
+    {
+      "source": "/kits/france-uk-marriage-guide",
+      "destination": "/kits/fra-gbr",
+      "permanent": true
+    },
+    {
+      "source": "/kits/france-canada-marriage-guide",
+      "destination": "/kits/fra-can",
+      "permanent": true
+    },
+    {
+      "source": "/kits/france-morocco-marriage-guide",
+      "destination": "/kits/fra-mar",
+      "permanent": true
+    },
+    {
+      "source": "/kits/france-germany-marriage-guide",
+      "destination": "/kits/fra-deu",
+      "permanent": true
+    },
+    {
+      "source": "/kits/france-switzerland-marriage-guide",
+      "destination": "/kits/fra-che",
+      "permanent": true
+    },
+    {
+      "source": "/kits/france-belgium-marriage-guide",
+      "destination": "/kits/fra-bel",
+      "permanent": true
+    },
+    {
+      "source": "/kits/france-spain-marriage-guide",
+      "destination": "/kits/fra-esp",
+      "permanent": true
+    },
+    {
+      "source": "/kits/france-italy-marriage-guide",
+      "destination": "/kits/fra-ita",
+      "permanent": true
+    },
+    {
+      "source": "/kits/france-portugal-marriage-guide",
+      "destination": "/kits/fra-prt",
+      "permanent": true
     }
   ],
   "rewrites": [

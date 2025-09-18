@@ -1,7 +1,7 @@
 import { redirect, notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { KITS, getLegacySlug, getKitBySlug } from '@/lib/kits.config'
+import { KITS, KIT_SLUGS, getKitBySlug } from '@/lib/kits.config'
 import { kitsDetail } from '@/lib/kits-detail-data'
 import { HeaderBlock } from '@/components/la/KitDetail/HeaderBlock'
 import { BuyBox } from '@/components/la/KitDetail/BuyBox'
@@ -63,9 +63,8 @@ export const revalidate = 60
 export const dynamicParams = false
 
 export function generateStaticParams() {
-  // Prebuild all descriptive kit slugs we have data for
-  const params = Object.keys(KITS).map((slug) => ({ slug }))
-  return params
+  // Prebuild all short kit slugs we have data for
+  return KIT_SLUGS.map(slug => ({ slug }))
 }
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
@@ -74,15 +73,12 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   
   if (!kit) return notFound()
 
-  // Get the legacy slug for backward compatibility with existing components
-  const legacySlug = getLegacySlug(slug)
-  if (!legacySlug) return notFound()
-
-  const kitDetail = kitsDetail[legacySlug as keyof typeof kitsDetail]
+  // Use the short slug directly for kit detail lookup
+  const kitDetail = kitsDetail[slug as keyof typeof kitsDetail]
   if (!kitDetail) return notFound()
 
-  // Extract country code from legacy slug for CrossPassports component
-  const countryCode = legacySlug.split('-')[1] as any
+  // Extract country code from short slug for CrossPassports component
+  const countryCode = slug.split('-')[1] as any
 
   const styledTitle = (
     <>

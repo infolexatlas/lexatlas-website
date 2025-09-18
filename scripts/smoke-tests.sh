@@ -206,16 +206,16 @@ main() {
     # Test 4: Kit pages (all 10 kits)
     log_info "Testing kit pages..."
     local kit_slugs=(
-        "france-usa-marriage-guide"
-        "france-uk-marriage-guide"
-        "france-canada-marriage-guide"
-        "france-morocco-marriage-guide"
-        "france-germany-marriage-guide"
-        "france-switzerland-marriage-guide"
-        "france-belgium-marriage-guide"
-        "france-spain-marriage-guide"
-        "france-italy-marriage-guide"
-        "france-portugal-marriage-guide"
+        "fra-usa"
+        "fra-gbr"
+        "fra-can"
+        "fra-mar"
+        "fra-deu"
+        "fra-che"
+        "fra-bel"
+        "fra-esp"
+        "fra-ita"
+        "fra-prt"
     )
     
     for slug in "${kit_slugs[@]}"; do
