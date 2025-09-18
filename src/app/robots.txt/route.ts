@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server'
 
 export async function GET(request: NextRequest) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://lex-atlas.com'
+  const baseUrl = 'https://lex-atlas.com'
   
   const robotsTxt = `User-agent: *
 Allow: /
@@ -18,7 +18,7 @@ Disallow: /kits/*/success
 Disallow: /kits/*/cancel
 
 # Allow marriage kit pages
-Allow: /kits/marriage-kit/
+Allow: /kits/
 
 # Crawl delay
 Crawl-delay: 1

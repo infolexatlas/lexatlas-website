@@ -21,6 +21,7 @@ export type Kit = {
   currency: 'EUR'
   url: string
   validFrom: string
+  brand: string
 }
 
 export const KITS: Record<string, Kit> = {
@@ -32,7 +33,8 @@ export const KITS: Record<string, Kit> = {
     price: '29.00',
     currency: 'EUR',
     url: 'https://lex-atlas.com/kits/fra-usa',
-    validFrom: '2025-09-17'
+    validFrom: '2025-09-17',
+    brand: 'LexAtlas'
   },
   'fra-gbr': {
     title: 'France ⇄ United Kingdom Marriage Guide (2025) | LexAtlas',
@@ -42,7 +44,8 @@ export const KITS: Record<string, Kit> = {
     price: '29.00',
     currency: 'EUR',
     url: 'https://lex-atlas.com/kits/fra-gbr',
-    validFrom: '2025-09-17'
+    validFrom: '2025-09-17',
+    brand: 'LexAtlas'
   },
   'fra-can': {
     title: 'France ⇄ Canada Marriage Guide (2025) | LexAtlas',
@@ -52,7 +55,8 @@ export const KITS: Record<string, Kit> = {
     price: '29.00',
     currency: 'EUR',
     url: 'https://lex-atlas.com/kits/fra-can',
-    validFrom: '2025-09-17'
+    validFrom: '2025-09-17',
+    brand: 'LexAtlas'
   },
   'fra-mar': {
     title: 'France ⇄ Morocco Marriage Guide (2025) | LexAtlas',
@@ -62,7 +66,8 @@ export const KITS: Record<string, Kit> = {
     price: '29.00',
     currency: 'EUR',
     url: 'https://lex-atlas.com/kits/fra-mar',
-    validFrom: '2025-09-17'
+    validFrom: '2025-09-17',
+    brand: 'LexAtlas'
   },
   'fra-deu': {
     title: 'France ⇄ Germany Marriage Guide (2025) | LexAtlas',
@@ -72,7 +77,8 @@ export const KITS: Record<string, Kit> = {
     price: '29.00',
     currency: 'EUR',
     url: 'https://lex-atlas.com/kits/fra-deu',
-    validFrom: '2025-09-17'
+    validFrom: '2025-09-17',
+    brand: 'LexAtlas'
   },
   'fra-che': {
     title: 'France ⇄ Switzerland Marriage Guide (2025) | LexAtlas',
@@ -82,7 +88,8 @@ export const KITS: Record<string, Kit> = {
     price: '29.00',
     currency: 'EUR',
     url: 'https://lex-atlas.com/kits/fra-che',
-    validFrom: '2025-09-17'
+    validFrom: '2025-09-17',
+    brand: 'LexAtlas'
   },
   'fra-bel': {
     title: 'France ⇄ Belgium Marriage Guide (2025) | LexAtlas',
@@ -92,7 +99,8 @@ export const KITS: Record<string, Kit> = {
     price: '29.00',
     currency: 'EUR',
     url: 'https://lex-atlas.com/kits/fra-bel',
-    validFrom: '2025-09-17'
+    validFrom: '2025-09-17',
+    brand: 'LexAtlas'
   },
   'fra-esp': {
     title: 'France ⇄ Spain Marriage Guide (2025) | LexAtlas',
@@ -102,7 +110,8 @@ export const KITS: Record<string, Kit> = {
     price: '29.00',
     currency: 'EUR',
     url: 'https://lex-atlas.com/kits/fra-esp',
-    validFrom: '2025-09-17'
+    validFrom: '2025-09-17',
+    brand: 'LexAtlas'
   },
   'fra-ita': {
     title: 'France ⇄ Italy Marriage Guide (2025) | LexAtlas',
@@ -112,7 +121,8 @@ export const KITS: Record<string, Kit> = {
     price: '29.00',
     currency: 'EUR',
     url: 'https://lex-atlas.com/kits/fra-ita',
-    validFrom: '2025-09-17'
+    validFrom: '2025-09-17',
+    brand: 'LexAtlas'
   },
   'fra-prt': {
     title: 'France ⇄ Portugal Marriage Guide (2025) | LexAtlas',
@@ -122,7 +132,8 @@ export const KITS: Record<string, Kit> = {
     price: '29.00',
     currency: 'EUR',
     url: 'https://lex-atlas.com/kits/fra-prt',
-    validFrom: '2025-09-17'
+    validFrom: '2025-09-17',
+    brand: 'LexAtlas'
   }
 }
 

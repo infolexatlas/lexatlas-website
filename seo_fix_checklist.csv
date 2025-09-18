@@ -1,0 +1,32 @@
+Check,Status,Details
+Metadata inheritance stopped,✅ PASS,Removed generic metadata from parent layouts
+Kits config single source,✅ PASS,All 10 short slugs with complete data
+Dynamic route metadata,✅ PASS,generateMetadata implemented for kit pages
+Product JSON-LD present,✅ PASS,Valid Product structured data on all kits
+API vitals GET 200,✅ PASS,Returns 200 with OK response
+API vitals POST 204,✅ PASS,Returns 204 after consuming body
+Sitemap lists 10 kits,✅ PASS,All short slugs included in sitemap.xml
+Robots.txt references sitemap,✅ PASS,Correct sitemap URL in robots.txt
+Title ≤60 chars,✅ PASS,All kit titles under 60 characters
+Description ≤155 chars,✅ PASS,All descriptions under 155 characters
+Canonical URLs exact,✅ PASS,Each kit has correct canonical URL
+OG images absolute,✅ PASS,All Open Graph images use absolute URLs
+Twitter cards present,✅ PASS,Twitter metadata on all kit pages
+Brand field in JSON-LD,✅ PASS,LexAtlas brand in all Product JSON-LD
+Price 29.00 EUR,✅ PASS,Correct price and currency in offers
+Availability InStock,✅ PASS,All offers marked as InStock
+ValidFrom date,✅ PASS,ISO date format in all offers
+SKU unique,✅ PASS,Unique SKU for each kit
+Image absolute URL,✅ PASS,All product images use absolute URLs
+URL absolute,✅ PASS,All product URLs use absolute URLs
+TypeScript compilation,✅ PASS,No type errors
+Linting clean,✅ PASS,No linting errors
+Unit tests created,✅ PASS,kits-config.test.ts created
+E2E tests created,✅ PASS,seo-kit-head.test.ts created
+Smoke tests updated,✅ PASS,Scripts use short slugs
+Post-deploy QA updated,✅ PASS,Scripts use short slugs
+Short slugs used,✅ PASS,All 10 fra-xxx slugs implemented
+No long slug references,✅ PASS,Only short slugs in codebase
+MetadataBase hardcoded,✅ PASS,https://lex-atlas.com in layout
+Runtime nodejs,✅ PASS,API vitals uses nodejs runtime
+Script type correct,✅ PASS,JSON-LD uses application/ld+json

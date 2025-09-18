@@ -26,7 +26,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://lex-atlas.com'),
+  metadataBase: new URL('https://lex-atlas.com'),
   title: { 
     default: 'LexAtlas — Cross-Border Marriage Kits', 
     template: '%s' 
@@ -38,7 +38,9 @@ export const metadata: Metadata = {
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
     ],
     shortcut: ["/favicon.ico"],
-    apple: "/apple-touch-icon.png",
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
   other: {
     'theme-color': '#1A2E4F',

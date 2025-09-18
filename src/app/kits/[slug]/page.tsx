@@ -73,7 +73,7 @@ export default async function KitPage({ params }: Props) {
     name: kit.title,
     description: kit.description,
     sku: kit.sku,
-    brand: { '@type': 'Brand', name: 'LexAtlas' },
+    brand: { '@type': 'Brand', name: kit.brand },
     image: `https://lex-atlas.com${kit.ogImage}`,
     url: kit.url,
     offers: {

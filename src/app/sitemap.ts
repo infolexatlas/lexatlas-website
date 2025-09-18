@@ -1,9 +1,9 @@
 // src/app/sitemap.ts
 import { MetadataRoute } from 'next'
-import { priorityKits } from '@/lib/kits.config'
+import { KIT_SLUGS } from '@/lib/kits.config'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = process.env.NEXT_PUBLIC_BASE_URL || 'https://lex-atlas.com'
+  const base = 'https://lex-atlas.com'
   const now = new Date()
 
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -18,19 +18,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/cookie-policy`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
   ]
 
-  const kitRoutes: MetadataRoute.Sitemap = priorityKits.map(kit => ({
-    url: `${base}/kits/${kit.slug}`,
+  const kitRoutes: MetadataRoute.Sitemap = KIT_SLUGS.map(slug => ({
+    url: `${base}/kits/${slug}`,
     lastModified: now,
     changeFrequency: 'weekly',
     priority: 0.9,
   }))
 
-  const previewRoutes: MetadataRoute.Sitemap = priorityKits.map(kit => ({
-    url: `${base}/preview/${kit.slug}`,
-    lastModified: now,
-    changeFrequency: 'weekly',
-    priority: 0.5,
-  }))
-
-  return [...staticRoutes, ...kitRoutes, ...previewRoutes]
+  return [...staticRoutes, ...kitRoutes]
 }
