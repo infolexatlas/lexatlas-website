@@ -204,23 +204,80 @@ const CITIES: City[] = [
   { name: "Auckland", lon: 174.7633, lat: -36.8485 },
 ];
 
-// Land data (vendored from /public/vendor)
-let landGeo: any = null;
+// Simplified world map data - major continents as polygons
+const WORLD_MAP = {
+  "type": "FeatureCollection",
+  "features": [
+    // North America
+    {
+      "type": "Feature",
+      "properties": {"name": "North America"},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-170, 60], [-140, 70], [-100, 80], [-60, 70], [-50, 50], [-80, 30], [-100, 20], [-120, 30], [-140, 40], [-160, 50], [-170, 60]
+        ]]
+      }
+    },
+    // South America
+    {
+      "type": "Feature", 
+      "properties": {"name": "South America"},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-80, 10], [-70, -10], [-60, -30], [-50, -50], [-40, -60], [-30, -50], [-20, -30], [-10, -10], [0, 10], [-20, 20], [-40, 15], [-60, 12], [-80, 10]
+        ]]
+      }
+    },
+    // Europe
+    {
+      "type": "Feature",
+      "properties": {"name": "Europe"}, 
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-10, 35], [0, 40], [10, 45], [20, 50], [30, 55], [40, 60], [50, 65], [40, 70], [20, 75], [0, 70], [-10, 60], [-15, 50], [-10, 35]
+        ]]
+      }
+    },
+    // Africa
+    {
+      "type": "Feature",
+      "properties": {"name": "Africa"},
+      "geometry": {
+        "type": "Polygon", 
+        "coordinates": [[
+          [-20, 35], [0, 30], [20, 25], [40, 20], [50, 10], [40, 0], [30, -10], [20, -20], [10, -30], [0, -35], [-10, -30], [-20, -20], [-25, -10], [-20, 0], [-20, 35]
+        ]]
+      }
+    },
+    // Asia
+    {
+      "type": "Feature",
+      "properties": {"name": "Asia"},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [20, 70], [40, 75], [60, 80], [80, 75], [100, 70], [120, 65], [140, 60], [160, 55], [180, 50], [160, 40], [140, 30], [120, 20], [100, 10], [80, 0], [60, -10], [40, -5], [20, 0], [10, 20], [20, 40], [20, 70]
+        ]]
+      }
+    },
+    // Australia
+    {
+      "type": "Feature",
+      "properties": {"name": "Australia"},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [110, -10], [130, -15], [150, -20], [155, -35], [150, -40], [130, -35], [110, -30], [100, -20], [110, -10]
+        ]]
+      }
+    }
+  ]
+};
 
-// Load world topojson
-(async () => {
-  try {
-    const res = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json', { cache: 'force-cache' });
-    if (!res.ok) throw new Error(`Failed to load world topo: ${res.status}`);
-    const topo = await res.json();
-    const land = (topo.objects && (topo.objects.land || topo.objects.countries)) || null;
-    if (!land) throw new Error("TopoJSON missing `objects.land` or `objects.countries`");
-    landGeo = feature(topo as any, land);
-  } catch (e) {
-    console.error('[Globe] Failed to load world topojson:', e);
-    landGeo = null;
-  }
-})();
+let landGeo: any = WORLD_MAP;
 
 // --- PREMIUM ARC RENDERER (draw only visible segments) -----------------
 function drawArcPremiumFrame(ctx:CanvasRenderingContext2D, arc:Arc, now:number, projection: any){
