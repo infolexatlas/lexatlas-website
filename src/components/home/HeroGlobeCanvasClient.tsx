@@ -212,13 +212,31 @@ async function loadWorldData(retries = 3): Promise<any> {
   for (let i = 0; i < retries; i++) {
     try {
       console.log(`[Globe] Loading world data, attempt ${i + 1}/${retries}`);
-      const res = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json', { 
-        cache: 'force-cache',
-        headers: {
-          'Accept': 'application/json',
-        }
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+      // Use local data first, fallback to CDN
+      const localUrl = '/data/world-110m.json';
+      const cdnUrl = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json';
+      
+      let res;
+      try {
+        // Try local data first
+        res = await fetch(localUrl, { 
+          cache: 'force-cache',
+          headers: {
+            'Accept': 'application/json',
+          }
+        });
+        if (!res.ok) throw new Error(`Local data failed: ${res.status}`);
+      } catch (localError) {
+        console.warn('[Globe] Local data failed, trying CDN:', localError);
+        // Fallback to CDN
+        res = await fetch(cdnUrl, { 
+          cache: 'force-cache',
+          headers: {
+            'Accept': 'application/json',
+          }
+        });
+        if (!res.ok) throw new Error(`CDN failed: ${res.status}: ${res.statusText}`);
+      }
       
       const topo = await res.json();
       const land = (topo.objects && (topo.objects.land || topo.objects.countries)) || null;
