@@ -117,6 +117,20 @@ export default function RootLayout({
         <meta name="logo" content="https://lex-atlas.com/logo-180x180.png" />
         <link rel="logo" href="https://lex-atlas.com/logo-180x180.png" />
         
+        {/* Additional favicon and logo meta tags for Google Search */}
+        <link rel="icon" type="image/png" sizes="192x192" href="/logo-180x180.png" />
+        <link rel="icon" type="image/png" sizes="512x512" href="/logo-512x512.png" />
+        <meta name="msapplication-TileImage" content="/logo-180x180.png" />
+        <meta name="msapplication-TileColor" content="#1A2E4F" />
+        
+        {/* Apple specific meta tags */}
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="LexAtlas" />
+        
+        {/* Windows/IE browser config */}
+        <meta name="msapplication-config" content="/browserconfig.xml" />
+        
         {/* Plausible Analytics */}
         {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (
           <script

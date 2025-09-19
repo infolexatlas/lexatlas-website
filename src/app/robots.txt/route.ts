@@ -6,6 +6,13 @@ export async function GET(request: NextRequest) {
   const robotsTxt = `User-agent: *
 Allow: /
 
+# Allow favicons and logos for better search visibility
+Allow: /favicon.ico
+Allow: /favicon-*.png
+Allow: /apple-touch-icon.png
+Allow: /logo-*.png
+Allow: /manifest.webmanifest
+
 # Disallow internal API and preview routes
 Disallow: /api/
 Disallow: /preview/
