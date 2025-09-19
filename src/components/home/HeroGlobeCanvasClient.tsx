@@ -204,23 +204,7 @@ const CITIES: City[] = [
   { name: "Auckland", lon: 174.7633, lat: -36.8485 },
 ];
 
-// Land data (vendored from /public/vendor)
-let landGeo: any = null;
-
-// Load world topojson
-(async () => {
-  try {
-    const res = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json', { cache: 'force-cache' });
-    if (!res.ok) throw new Error(`Failed to load world topo: ${res.status}`);
-    const topo = await res.json();
-    const land = (topo.objects && (topo.objects.land || topo.objects.countries)) || null;
-    if (!land) throw new Error("TopoJSON missing `objects.land` or `objects.countries`");
-    landGeo = feature(topo as any, land);
-  } catch (e) {
-    console.error('[Globe] Failed to load world topojson:', e);
-    landGeo = null;
-  }
-})();
+// Land data will be loaded in component
 
 // --- PREMIUM ARC RENDERER (draw only visible segments) -----------------
 function drawArcPremiumFrame(ctx:CanvasRenderingContext2D, arc:Arc, now:number, projection: any){
@@ -302,6 +286,8 @@ function interpolateGreatCircle(a:{lon:number,lat:number}, b:{lon:number,lat:num
 
 export default function HeroGlobeCanvasClient() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [landGeo, setLandGeo] = React.useState<any>(null);
+  const [isDataLoaded, setIsDataLoaded] = React.useState(false);
 
   // animation/state refs (NO hooks anywhere else)
   const rafRef = useRef<number | null>(null);
@@ -319,6 +305,30 @@ export default function HeroGlobeCanvasClient() {
   const arcsRef = useRef<Arc[]>([]);
   const lastSpawnRef = useRef(0);
   let   nextArcId = 1; // file-local counter is fine inside the component
+
+  // Load world data
+  useEffect(() => {
+    const loadWorldData = async () => {
+      try {
+        console.log('[Globe] Loading world data...');
+        const res = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json', { cache: 'force-cache' });
+        if (!res.ok) throw new Error(`Failed to load world topo: ${res.status}`);
+        const topo = await res.json();
+        const land = (topo.objects && (topo.objects.land || topo.objects.countries)) || null;
+        if (!land) throw new Error("TopoJSON missing `objects.land` or `objects.countries`");
+        const geo = feature(topo as any, land);
+        setLandGeo(geo);
+        setIsDataLoaded(true);
+        console.log('[Globe] World data loaded successfully');
+      } catch (e) {
+        console.error('[Globe] Failed to load world topojson:', e);
+        setLandGeo(null);
+        setIsDataLoaded(true);
+      }
+    };
+
+    loadWorldData();
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -464,7 +474,7 @@ export default function HeroGlobeCanvasClient() {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       ro.disconnect();
     };
-  }, []);
+  }, [landGeo, isDataLoaded]);
 
   return (
     <canvas
