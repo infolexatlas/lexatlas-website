@@ -204,37 +204,23 @@ const CITIES: City[] = [
   { name: "Auckland", lon: 174.7633, lat: -36.8485 },
 ];
 
-// Land data will be loaded in the component
+// Land data (vendored from /public/vendor)
 let landGeo: any = null;
 
-// Function to load world data
-async function loadWorldData(retries = 3): Promise<any> {
-  for (let i = 0; i < retries; i++) {
-    try {
-      console.log(`[Globe] Loading world data, attempt ${i + 1}/${retries}`);
-      const res = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json', { 
-        cache: 'force-cache',
-        headers: {
-          'Accept': 'application/json',
-        }
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
-      
-      const topo = await res.json();
-      const land = (topo.objects && (topo.objects.land || topo.objects.countries)) || null;
-      if (!land) throw new Error("TopoJSON missing `objects.land` or `objects.countries`");
-      
-      const geo = feature(topo as any, land);
-      console.log('[Globe] Successfully loaded world data');
-      return geo;
-    } catch (e) {
-      console.warn(`[Globe] Attempt ${i + 1} failed:`, e);
-      if (i === retries - 1) throw e;
-      // Wait before retry
-      await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
-    }
+// Load world topojson
+(async () => {
+  try {
+    const res = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json', { cache: 'force-cache' });
+    if (!res.ok) throw new Error(`Failed to load world topo: ${res.status}`);
+    const topo = await res.json();
+    const land = (topo.objects && (topo.objects.land || topo.objects.countries)) || null;
+    if (!land) throw new Error("TopoJSON missing `objects.land` or `objects.countries`");
+    landGeo = feature(topo as any, land);
+  } catch (e) {
+    console.error('[Globe] Failed to load world topojson:', e);
+    landGeo = null;
   }
-}
+})();
 
 // --- PREMIUM ARC RENDERER (draw only visible segments) -----------------
 function drawArcPremiumFrame(ctx:CanvasRenderingContext2D, arc:Arc, now:number, projection: any){
@@ -338,17 +324,6 @@ export default function HeroGlobeCanvasClient() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // Load world data if not already loaded
-    if (!landGeo) {
-      loadWorldData().then(geo => {
-        landGeo = geo;
-        console.log('[Globe] World data loaded in component');
-      }).catch(e => {
-        console.error('[Globe] Failed to load world data in component:', e);
-        landGeo = null;
-      });
-    }
-
     // 1) Sizing & DPR (ResizeObserver)
     const ro = new ResizeObserver(entries => {
       const entry = entries[0];
@@ -415,39 +390,16 @@ export default function HeroGlobeCanvasClient() {
 
       // continents + graticule (use your existing landGeo & GRAT_10 FeatureCollection)
       if (landGeo) {
-        try {
-          // Solid but subtle continents - no washed-out effect
-          ctx.globalAlpha = 1;
-          ctx.fillStyle = "rgba(255,255,255,0.15)";
-          path(landGeo);
-          ctx.fill();
-          
-          ctx.globalAlpha = 1;
-          ctx.strokeStyle = "rgba(255,255,255,0.25)";
-          ctx.lineWidth = 1 * dpr;
-          path(landGeo);
-          ctx.stroke();
-        } catch (e) {
-          console.warn('[Globe] Error rendering continents:', e);
-          // Fallback on error
-          ctx.globalAlpha = 0.2;
-          ctx.fillStyle = "rgba(255,255,255,0.2)";
-          ctx.beginPath();
-          ctx.arc(cx, cy, r * 0.95, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      } else {
-        // Fallback: draw a more visible circle if no land data
-        ctx.globalAlpha = 0.2;
-        ctx.fillStyle = "rgba(255,255,255,0.2)";
-        ctx.beginPath();
-        ctx.arc(cx, cy, r * 0.95, 0, Math.PI * 2);
+        // Solid but subtle continents - no washed-out effect
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = "rgba(255,255,255,0.15)";
+        path(landGeo);
         ctx.fill();
         
-        // Add a subtle border
-        ctx.globalAlpha = 0.3;
-        ctx.strokeStyle = "rgba(255,255,255,0.3)";
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = "rgba(255,255,255,0.25)";
         ctx.lineWidth = 1 * dpr;
+        path(landGeo);
         ctx.stroke();
       }
       
