@@ -61,21 +61,25 @@ export default function GlobeCountries() {
   const polygons = countries?.features ?? []
 
   return (
-    <div className="relative w-full h-full">
-      <Globe
-        ref={globeRef}
-        {...globeProps}
-        // Render polygons when available
-        polygonsData={polygons}
-        polygonAltitude={0.01}
-        polygonCapColor={() => 'rgba(255,255,255,0.2)'}
-        polygonSideColor={() => 'rgba(255,255,255,0.1)'}
-        polygonStrokeColor={() => 'rgba(255,255,255,0.3)'}
-        polygonStrokeWidth={0.5}
-        // Keep existing points/arcs if any
-        pointsData={[]}
-        arcsData={[]}
-      />
+    <div className="relative w-full h-full flex items-center justify-center">
+      <div className="w-full h-full max-w-full max-h-full">
+        <Globe
+          ref={globeRef}
+          {...globeProps}
+          width="100%"
+          height="100%"
+          // Render polygons when available
+          polygonsData={polygons}
+          polygonAltitude={0.01}
+          polygonCapColor={() => 'rgba(255,255,255,0.2)'}
+          polygonSideColor={() => 'rgba(255,255,255,0.1)'}
+          polygonStrokeColor={() => 'rgba(255,255,255,0.3)'}
+          polygonStrokeWidth={0.5}
+          // Keep existing points/arcs if any
+          pointsData={[]}
+          arcsData={[]}
+        />
+      </div>
       
       {/* Loading indicator */}
       {isLoading && (
