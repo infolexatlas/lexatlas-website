@@ -15,7 +15,8 @@
     "analyze": "ANALYZE=true next build",
     "size": "size-limit",
     "prebuild": "node -e \"process.exit(0)\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "fetch:world": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/fetch-world-data.ts"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
@@ -35,9 +36,11 @@
     "next-seo": "^6.8.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-globe.gl": "^2.36.0",
     "resend": "2.1.0",
     "stripe": "^18.4.0",
     "tailwind-merge": "^3.3.1",
+    "three": "^0.180.0",
     "topojson-client": "^3.1.0",
     "web-vitals": "^5.1.0"
   },
@@ -73,6 +76,7 @@
     "sharp": "^0.34.3",
     "size-limit": "^11.2.0",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
     "typescript": "^5.4.0",
     "vercel": "^48.0.2",
     "vitest": "^3.2.4"
