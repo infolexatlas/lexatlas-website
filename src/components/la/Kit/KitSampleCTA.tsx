@@ -1,26 +1,11 @@
 'use client'
 
-import { useState, useTransition } from 'react'
-import Image from 'next/image'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
 import { motion, useReducedMotion } from 'framer-motion'
-
-async function requestSample(email: string): Promise<{ ok: boolean }> {
-  try {
-    const res = await fetch('/api/sample', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) })
-    return { ok: res.ok }
-  } catch {
-    return { ok: true } // graceful success
-  }
-}
+import LeadForm from '@/components/LeadForm'
 
 type Props = { compact?: boolean }
 
 export function KitSampleCTA({ compact = false }: Props) {
-  const [email, setEmail] = useState('')
-  const [success, setSuccess] = useState(false)
-  const [isPending, startTransition] = useTransition()
   const prefersReducedMotion = useReducedMotion()
 
   return (
@@ -52,45 +37,16 @@ export function KitSampleCTA({ compact = false }: Props) {
             initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
             animate={prefersReducedMotion ? false : { opacity: 1, y: 0, transition: { delay: 0.12, duration: 0.3 } }}
           >
-            We’ll send you a free sample and occasional updates. Unsubscribe anytime.
+            We'll send you a free sample and occasional updates. Unsubscribe anytime.
           </motion.p>
 
-          {success ? (
-            <motion.p
-              className="mt-6 text-emerald-700 font-medium"
-              initial={prefersReducedMotion ? false : { opacity: 0, y: 6 }}
-              animate={prefersReducedMotion ? false : { opacity: 1, y: 0, transition: { duration: 0.25 } }}
-            >
-              Check your inbox for the sample.
-            </motion.p>
-          ) : (
-            <motion.form
-              className="mt-6 flex flex-col sm:flex-row gap-3"
-              initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
-              animate={prefersReducedMotion ? false : { opacity: 1, y: 0, transition: { delay: 0.18, duration: 0.35 } }}
-              onSubmit={(e) => {
-                e.preventDefault()
-                startTransition(async () => {
-                  const { ok } = await requestSample(email)
-                  if (ok) setSuccess(true)
-                })
-              }}
-            >
-              <label htmlFor="sample-email" className="sr-only">Email address</label>
-              <Input
-                id="sample-email"
-                type="email"
-                required
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="h-12 rounded-xl2"
-                aria-describedby="sample-help"
-              />
-              <input type="text" name="company" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
-              <Button type="submit" size="xl" disabled={isPending} className="sm:ml-2 text-brand-gold">Send me the sample</Button>
-            </motion.form>
-          )}
+          <motion.div
+            className="mt-6"
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+            animate={prefersReducedMotion ? false : { opacity: 1, y: 0, transition: { delay: 0.18, duration: 0.35 } }}
+          >
+            <LeadForm />
+          </motion.div>
 
           <p id="sample-help" className="sr-only">We respect your privacy.</p>
         </motion.div>

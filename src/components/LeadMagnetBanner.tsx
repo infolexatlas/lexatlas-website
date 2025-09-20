@@ -33,26 +33,16 @@ export function LeadMagnetBanner({ className = '', source = 'lead_magnet_banner'
     if (!valid) { setStatus({ kind:'error', msg:'Please enter a valid email.' }); return; }
     setLoading(true);
     try {
-      const res = await fetch('/api/leads', {
+      const res = await fetch('/api/subscribe', {
         method:'POST',
         headers:{ 'Content-Type':'application/json' },
-        body: JSON.stringify({ email: value, source:'lead_magnet' }),
+        body: JSON.stringify({ email: value, website: '' }),
       });
       const data = await res.json().catch(() => ({}));
       console.log('[LeadMagnet] response', { ok: res.ok, data });
 
-      if (res.ok && data?.ok) {
-        if (data.sent === true) {
-          setStatus({ kind:'success', msg:'📬 Email sent! Check your inbox.' });
-        } else if (data.reason === 'sandbox_sender') {
-          setStatus({ kind:'success', msg:'✅ Saved. (Dev mode: sent from sandbox)' });
-        } else if (data.reason === 'provider_error') {
-          setStatus({ kind:'success', msg:'✅ Email saved! We\'ll send you the sample soon. (Email service temporarily unavailable)' });
-        } else if (data.saved === true) {
-          setStatus({ kind:'success', msg:'✅ Email saved! We\'ll send you the sample soon.' });
-        } else {
-          setStatus({ kind:'success', msg:'✅ Saved.' });
-        }
+      if (res.ok && data?.success) {
+        setStatus({ kind:'success', msg:'📬 Email sent! Check your inbox.' });
         setEmail('');
       } else {
         setStatus({ kind:'error', msg: `❌ Error: ${data?.error || 'server_error'}` });
