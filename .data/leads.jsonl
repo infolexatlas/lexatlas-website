@@ -62,3 +62,8 @@
 {"email":"test@example.com","source":"test","timestamp":"2025-09-17T10:19:24.935Z","ip":"captured-if-available"}
 {"email":"test@example.com","source":"test","timestamp":"2025-09-17T10:19:58.840Z","ip":"captured-if-available"}
 {"email":"test@example.com","source":"test","timestamp":"2025-09-17T10:20:42.106Z","ip":"captured-if-available"}
+{"email":"test@example.com","source":"test","timestamp":"2025-09-19T16:14:50.598Z","ip":"captured-if-available"}
+{"email":"contact.lexatlas@gmail.com","source":"test_sandbox","timestamp":"2025-09-19T16:16:20.062Z","ip":"captured-if-available"}
+{"email":"test@example.com","source":"test_sandbox","timestamp":"2025-09-19T16:17:01.032Z","ip":"captured-if-available"}
+{"email":"contact.lexatlas@gmail.com","source":"test_sandbox","timestamp":"2025-09-19T16:17:04.971Z","ip":"captured-if-available"}
+{"email":"contact.lexatlas@gmail.com","source":"newsletter","createdAt":"2025-09-19T16:17:09.906Z","userAgent":"curl/8.7.1","ipHash":"c71876d6a9ee4993","success":true,"error":null}
