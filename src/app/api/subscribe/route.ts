@@ -2,31 +2,69 @@ import { NextResponse } from "next/server";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-// naive in-memory rate limit (per lambda instance)
+// basic in-memory rate limit per lambda instance
 const lastHits = new Map<string, number>();
 const RATE_LIMIT_MS = 15_000;
 
+function getGuideUrl() {
+  return process.env.LEADMAGNET_URL?.trim() || "https://lex-atlas.com/files/lexatlas-starter-guide.pdf";
+}
+
 function htmlTemplate() {
-  const guideUrl = "https://lex-atlas.com/files/guide.pdf";
+  const guideUrl = getGuideUrl();
+  const brand = "#0b5cff";
+  const preheader = "Your free LexAtlas guide is inside.";
+
   return `
-  <table width="100%" cellpadding="0" cellspacing="0" style="font-family:Arial,Helvetica,sans-serif;background:#f7f7f8;padding:24px">
-    <tr><td align="center">
-      <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden">
-        <tr><td style="background:#0b5cff;color:#fff;padding:18px 24px;font-size:18px;font-weight:600">LexAtlas — Votre guide gratuit</td></tr>
-        <tr><td style="padding:24px;color:#111;font-size:16px;line-height:1.55">
-          <p>Merci pour votre inscription 🙌</p>
-          <p>Voici votre guide gratuit pour comprendre les démarches d'un mariage international :</p>
-          <p style="margin:20px 0">
-            <a href="${guideUrl}" target="_blank" style="background:#0b5cff;color:#fff;text-decoration:none;padding:12px 16px;border-radius:8px;display:inline-block;font-weight:600">📥 Télécharger le guide</a>
-          </p>
-          <p>Si le bouton ne fonctionne pas, copiez ce lien : <a href="${guideUrl}" target="_blank" style="color:#0b5cff">${guideUrl}</a></p>
-          <hr style="border:none;border-top:1px solid #eee;margin:24px 0" />
-          <p style="font-size:13px;color:#555">Expéditeur : info@lex-atlas.com</p>
-        </td></tr>
-      </table>
-      <p style="color:#777;font-size:12px;margin-top:12px">© ${new Date().getFullYear()} LexAtlas</p>
-    </td></tr>
-  </table>`;
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charSet="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="x-preheader" content="${preheader}" />
+    <title>Your LexAtlas Guide</title>
+  </head>
+  <body style="margin:0;padding:0;background:#f7f7f8;font-family:Arial,Helvetica,sans-serif;">
+    <span style="display:none !important;visibility:hidden;opacity:0;height:0;width:0;overflow:hidden;">
+      ${preheader}
+    </span>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f7f7f8;padding:24px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,0.06);">
+            <tr>
+              <td style="background:${brand};color:#fff;padding:20px 24px;font-size:18px;font-weight:700;letter-spacing:0.2px;">
+                LexAtlas — Your free guide
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:28px 24px;color:#111;font-size:16px;line-height:1.6;">
+                <p style="margin:0 0 12px 0;">Hi there,</p>
+                <p style="margin:0 0 16px 0;">Thanks for subscribing to LexAtlas 🙌</p>
+                <p style="margin:0 0 18px 0;">Your free guide to cross-border marriage requirements is ready:</p>
+                <p style="margin:22px 0;">
+                  <a href="${guideUrl}" target="_blank" rel="noopener noreferrer"
+                     style="background:${brand};color:#fff;text-decoration:none;padding:12px 18px;border-radius:10px;display:inline-block;font-weight:700;">
+                    📥 Download the guide
+                  </a>
+                </p>
+                <p style="margin:0 0 8px 0;">If the button doesn't work, copy and paste this link in your browser:</p>
+                <p style="margin:0 0 20px 0;word-break:break-all;">
+                  <a href="${guideUrl}" target="_blank" rel="noopener noreferrer" style="color:${brand};text-decoration:underline;">
+                    ${guideUrl}
+                  </a>
+                </p>
+                <hr style="border:none;border-top:1px solid #ececec;margin:24px 0;" />
+                <p style="font-size:13px;color:#555;margin:0;">From: info@lex-atlas.com</p>
+              </td>
+            </tr>
+          </table>
+          <p style="color:#777;font-size:12px;margin-top:12px;">© ${new Date().getFullYear()} LexAtlas</p>
+        </td>
+      </tr>
+    </table>
+  </body>
+  </html>`;
 }
 
 export const runtime = "nodejs";
@@ -76,7 +114,7 @@ export async function POST(req: Request) {
       body: JSON.stringify({
         from: "LexAtlas <info@lex-atlas.com>",
         to: email,
-        subject: "Votre guide LexAtlas 📘",
+        subject: "Your LexAtlas Guide is Ready 📘",
         html: htmlTemplate(),
         reply_to: "info@lex-atlas.com"
       }),

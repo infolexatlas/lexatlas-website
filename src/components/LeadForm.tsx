@@ -20,13 +20,13 @@ export default function LeadForm() {
 
     if (!email) {
       setStatus('error')
-      setMessage('Veuillez saisir un email.')
+      setMessage('Please enter a valid email address.')
       return
     }
 
     try {
       setStatus('loading')
-      setMessage('Envoi en cours…')
+      setMessage('Sending…')
 
       const res = await fetch('/api/subscribe', {
         method: 'POST',
@@ -36,20 +36,20 @@ export default function LeadForm() {
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({} as any))
-        const msg = typeof data?.error === 'string' ? data.error : `Erreur ${res.status}.`
+        const msg = typeof data?.error === 'string' ? data.error : `Error ${res.status}.`
         setStatus('error')
         setMessage(msg)
         return
       }
 
       setStatus('success')
-      setMessage('✅ Merci ! Vérifiez votre boîte mail.')
+      setMessage('✅ Success! Please check your inbox.')
       form.reset()
       // Optional analytics:
       // if ((window as any).plausible) (window as any).plausible('lead_submitted')
     } catch (err) {
       setStatus('error')
-      setMessage('Erreur réseau. Réessayez.')
+      setMessage('Network error. Please try again.')
       console.error('Lead submit failed', err)
     }
   }
@@ -57,20 +57,32 @@ export default function LeadForm() {
   const isLoading = status === 'loading'
 
   return (
-    <form onSubmit={onSubmit} className="flex max-w-md flex-col gap-3">
-      <label htmlFor={`${id}-email`} className="text-sm font-medium">
-        Recevoir le guide gratuit
+    <form onSubmit={onSubmit} className="w-full max-w-md rounded-2xl border border-black/10 bg-white/70 p-4 shadow-sm backdrop-blur">
+      <label htmlFor={`${id}-email`} className="mb-2 block text-sm font-semibold tracking-wide text-gray-900">
+        Get your free guide
       </label>
-      <input
-        id={`${id}-email`}
-        type="email"
-        name="email"
-        required
-        placeholder="Votre email"
-        className="rounded border px-3 py-2"
-        autoComplete="email"
-        inputMode="email"
-      />
+      <div className="flex gap-2">
+        <input
+          id={`${id}-email`}
+          type="email"
+          name="email"
+          required
+          placeholder="you@example.com"
+          className="flex-1 rounded-xl border border-black/10 bg-white px-3 py-2 text-[15px] outline-none ring-0 focus:border-[#0b5cff] focus:ring-2 focus:ring-[#0b5cff]/20"
+          autoComplete="email"
+          inputMode="email"
+        />
+        <button
+          type="submit"
+          disabled={isLoading}
+          className={`rounded-xl px-4 py-2 text-sm font-semibold text-white shadow-sm transition ${
+            isLoading ? 'bg-[#5a8aff] cursor-not-allowed' : 'bg-[#0b5cff] hover:bg-[#0a4ed8]'
+          }`}
+        >
+          {isLoading ? 'Sending…' : 'Send the sample'}
+        </button>
+      </div>
+
       {/* Honeypot (hidden) */}
       <input
         type="text"
@@ -80,21 +92,12 @@ export default function LeadForm() {
         className="hidden"
         aria-hidden="true"
       />
-      <button
-        type="submit"
-        disabled={isLoading}
-        className={`rounded px-4 py-2 font-semibold text-white ${
-          isLoading ? 'bg-blue-400' : 'bg-blue-600 hover:bg-blue-700'
-        }`}
-      >
-        {isLoading ? 'Envoi…' : 'Send the sample'}
-      </button>
 
       {status !== 'idle' && (
         <p
           role="status"
           aria-live="polite"
-          className={`text-sm ${
+          className={`mt-3 text-sm ${
             status === 'success'
               ? 'text-green-600'
               : status === 'error'
