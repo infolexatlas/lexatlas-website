@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
 
     // Send newsletter email
     try {
-      const result = await sendNewsletterEmail(email, { source: source || 'footer' })
+      const result = await sendNewsletterEmail(email)
       console.log('[API/newsletter] result', { 
         sent: result.sent, 
         reason: result.reason, 

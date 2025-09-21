@@ -70,7 +70,7 @@ export async function GET(request: NextRequest) {
 
     // Send lead magnet email
     try {
-      const emailResult = await sendLeadMagnetEmail(testEmail, { source })
+      const emailResult = await sendLeadMagnetEmail(testEmail)
 
       if (emailResult.sent) {
         console.log('[Test Lead] Email sent successfully to:', testEmail)

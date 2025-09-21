@@ -28,7 +28,7 @@ describe('Email Functions', () => {
     })
 
     it('should return a promise', () => {
-      const result = sendLeadMagnetEmail('test@example.com', { source: 'test' })
+      const result = sendLeadMagnetEmail('test@example.com')
       expect(result).toBeInstanceOf(Promise)
     })
   })
@@ -40,7 +40,7 @@ describe('Email Functions', () => {
     })
 
     it('should return a promise', () => {
-      const result = sendNewsletterEmail('test@example.com', { source: 'test' })
+      const result = sendNewsletterEmail('test@example.com')
       expect(result).toBeInstanceOf(Promise)
     })
   })

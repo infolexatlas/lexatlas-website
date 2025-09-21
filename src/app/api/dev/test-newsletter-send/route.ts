@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
   const to = searchParams.get('to') || 'contact.lexatlas@gmail.com'
 
   try {
-    const result = await sendNewsletterEmail(to, { source: 'dev_test' })
+    const result = await sendNewsletterEmail(to)
     
     return NextResponse.json({
       ok: true,

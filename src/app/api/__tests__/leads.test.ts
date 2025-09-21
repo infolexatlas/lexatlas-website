@@ -77,7 +77,7 @@ describe('Leads API Route', () => {
         mode: 'prod',
         message: 'Thank you! Check your email for the free sample.'
       })
-      expect(sendLeadMagnetEmail).toHaveBeenCalledWith('test@example.com', { source: 'lead_magnet_banner' })
+      expect(sendLeadMagnetEmail).toHaveBeenCalledWith('test@example.com')
     })
 
     it('should handle successful newsletter email in production', async () => {
@@ -99,7 +99,7 @@ describe('Leads API Route', () => {
         mode: 'prod',
         message: 'Thank you! Check your email for the free sample.'
       })
-      expect(sendNewsletterEmail).toHaveBeenCalledWith('test@example.com', { source: 'newsletter' })
+      expect(sendNewsletterEmail).toHaveBeenCalledWith('test@example.com')
     })
 
     it('should return 500 in production when email fails', async () => {
