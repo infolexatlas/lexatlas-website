@@ -29,9 +29,10 @@ export function getResolvedFromStrict() {
     return { from: sandbox, reason: 'sandbox_sender' as const };
   }
 
-  // Production mode - require RESEND_FROM
+  // Production mode - require RESEND_FROM, but fallback to sandbox for now
   if (!from) {
-    throw new Error('RESEND_FROM must be set to a verified domain sender (e.g. Lex Atlas <hello@lexatlas.com>)');
+    console.warn('RESEND_FROM not configured in production, using sandbox sender');
+    return { from: sandbox, reason: 'sandbox_fallback' as const };
   }
   if (/@(gmail|yahoo|outlook|hotmail)\./i.test(from)) {
     throw new Error('RESEND_FROM cannot be a free mailbox. Use a verified domain sender (e.g. hello@lexatlas.com).');
