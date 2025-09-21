@@ -3,7 +3,7 @@ import { getEmailEnv } from "./emailEnv";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export async function sendPremiumLeadSampleEmail(to: string, sampleUrl: string) {
+export async function sendPremiumLeadSampleEmail(to: string, sampleUrl?: string) {
   const env = getEmailEnv();
   
   if (!env.hasKey) {
@@ -405,7 +405,7 @@ export async function sendPremiumLeadSampleEmail(to: string, sampleUrl: string) 
                 </p>
                 
                 <div class="cta-container">
-                  <a href="${sampleUrl}" class="cta-button">
+                  <a href="${sampleUrl || `${env.baseUrl}/downloads/samples/LEXATLAS-global-sample.pdf`}" class="cta-button">
                     📥 Download Your Premium Sample Kit
                   </a>
                 </div>
@@ -464,7 +464,7 @@ export async function sendPremiumLeadSampleEmail(to: string, sampleUrl: string) 
 Thank you for choosing LexAtlas!
 
 Your premium sample kit is ready:
-${sampleUrl}
+${sampleUrl || `${env.baseUrl}/downloads/samples/LEXATLAS-global-sample.pdf`}
 
 What's included:
 • Essential document checklist with legal requirements
