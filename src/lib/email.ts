@@ -942,3 +942,4 @@ export async function sendNewsletterEmail(
     }
   }
 }
+// Force redeploy Sun Sep 21 14:43:47 CEST 2025
