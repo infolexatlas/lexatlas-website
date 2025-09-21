@@ -22,7 +22,7 @@ async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
     throw new Error("RESEND_API_KEY missing");
   }
 
-  const subject = "🚀 ULTRA PREMIUM EMAIL 2025 - Logo Bleu + CTA Gold - LexAtlas Sample";
+  const subject = "🎯 NOUVEAU TEMPLATE 2025 - Test Final - LexAtlas Premium Sample";
   const fromAddress = env.resolvedFrom;
   
   console.log('[ULTRA PREMIUM EMAIL] Sending ultra premium email', {
@@ -46,7 +46,7 @@ async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>🚀 ULTRA PREMIUM EMAIL 2025 - LexAtlas Sample</title>
+          <title>🎯 NOUVEAU TEMPLATE 2025 - LexAtlas Premium Sample</title>
           <style>
             body { 
               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Georgia', serif; 
@@ -419,11 +419,14 @@ async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
               <div class="content">
                 <div style="text-align: center;">
                   <div class="premium-badge">
-                    🚀 ULTRA PREMIUM EMAIL 2025 ⭐ BYPASS CACHE ⭐
+                    🎯 NOUVEAU TEMPLATE 2025 ⭐ TEST FINAL ⭐
                   </div>
                 </div>
                 
                 <div class="hero-text">Your Premium Sample Kit is Ready</div>
+                
+                <!-- UNIQUE IDENTIFIER FOR RESEND CACHE BYPASS: ${Date.now()} -->
+                <div style="display: none; color: transparent; font-size: 0;">CACHE_BYPASS_${Date.now()}_${Math.random().toString(36).substr(2, 9)}</div>
                 
                 <p class="description">
                   Thank you for choosing LexAtlas! We're excited to share our comprehensive 
@@ -486,7 +489,7 @@ async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
         </body>
         </html>
       `,
-      text: `🚀 ULTRA PREMIUM EMAIL 2025 - LexAtlas Sample
+      text: `🎯 NOUVEAU TEMPLATE 2025 - LexAtlas Premium Sample
 
 Thank you for choosing LexAtlas!
 
