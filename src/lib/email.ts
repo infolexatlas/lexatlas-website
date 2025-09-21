@@ -416,7 +416,7 @@ export async function sendLeadSampleEmail(to: string): Promise<LeadSampleEmailRe
             .cta-button { 
               display: inline-block; 
               background: linear-gradient(135deg, #1A2E4F 0%, #2D4A6B 100%); 
-              color: #FFFFFF; 
+              color: #D4AF37; 
               padding: 22px 45px; 
               text-decoration: none; 
               border-radius: 16px; 
@@ -449,6 +449,7 @@ export async function sendLeadSampleEmail(to: string): Promise<LeadSampleEmailRe
               transform: translateY(-2px);
               box-shadow: 0 12px 40px -4px rgba(26, 46, 79, 0.35);
               border-color: #D4AF37;
+              color: #FFD700;
             }
             
             .premium-card { 
