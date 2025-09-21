@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
         saved: true,
         sent: result.sent === true,
         reason: result.reason ?? null,
-        message: result.message ?? null,
+        message: result.reason ?? null,
         email,
         env: {
           hasKey: env.hasKey,
