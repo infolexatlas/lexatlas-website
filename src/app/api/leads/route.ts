@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
 import { sendLeadMagnetEmail, sendNewsletterEmail, sendLeadSampleEmail } from '@/lib/email'
+import { sendPremiumLeadSampleEmail } from '@/lib/emailPremium'
 import { IS_DEV, RESEND_API_KEY } from '@/lib/env'
 import { getEmailEnv } from '@/lib/emailEnv'
 
@@ -71,7 +72,7 @@ export async function POST(request: NextRequest) {
 
     // Send lead sample email
     try {
-      const result = await sendLeadSampleEmail(email)
+      const result = await sendPremiumLeadSampleEmail(email, `${env.baseUrl}/downloads/samples/LEXATLAS-global-sample.pdf`)
       console.log('[API/leads] result', { 
         sent: result.sent, 
         reason: result.reason, 
