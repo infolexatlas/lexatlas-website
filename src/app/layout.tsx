@@ -141,15 +141,13 @@ export default function RootLayout({
         )}
       </head>
       <body className={`${inter.className} min-h-screen bg-white text-slate-900 antialiased overflow-x-hidden`}>
-        <div className="min-h-screen flex flex-col w-full overflow-x-hidden">
-          <Header />
-          <main className="flex-1 w-full overflow-x-hidden pt-0">
-            <PageTransition>
-              {children}
-            </PageTransition>
-          </main>
-          <Footer />
-        </div>
+        <Header />
+        <main className="min-h-screen w-full overflow-x-hidden pt-20">
+          <PageTransition>
+            {children}
+          </PageTransition>
+        </main>
+        <Footer />
         <CookieBanner />
         <Analytics />
         <VitalsReporter />
