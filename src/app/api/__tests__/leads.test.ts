@@ -22,7 +22,7 @@ vi.mock('fs', () => ({
 
 // Import after mocking
 import { POST } from '../leads/route'
-import { sendLeadMagnetEmail, sendNewsletterEmail } from '@/lib/sendEmail'
+import { sendLeadMagnetEmail, sendNewsletterEmail } from '@/lib/email'
 
 describe('Leads API Route', () => {
   beforeEach(() => {

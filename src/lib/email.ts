@@ -27,7 +27,7 @@ async function sendPremiumEmail(to: string, sampleUrl?: string) {
   
   console.log('[PREMIUM EMAIL] Sending premium email', {
     to,
-    hasKey: env.hasKey,
+    hasKey: env.hasKey, 
     keyPrefix: env.keyPrefix,
     from: fromAddress,
     baseUrl: env.baseUrl,
@@ -132,19 +132,12 @@ async function sendPremiumEmail(to: string, sampleUrl?: string) {
               align-items: center;
               background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
               color: #1A2E4F;
-              padding: 12px 20px;
+              padding: 8px 16px;
               border-radius: 20px;
-              font-size: 16px;
-              font-weight: 700;
+              font-size: 14px;
+              font-weight: 600;
               margin-bottom: 25px;
               box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
-              animation: pulse 2s infinite;
-            }
-            
-            @keyframes pulse {
-              0% { transform: scale(1); }
-              50% { transform: scale(1.05); }
-              100% { transform: scale(1); }
             }
             
             .hero-text { 
@@ -400,24 +393,24 @@ async function sendPremiumEmail(to: string, sampleUrl?: string) {
         </head>
         <body>
           <div class="email-wrapper">
-            <div class="container">
-              <div class="header">
+          <div class="container">
+            <div class="header">
                 <div class="logo-container">
                   <img src="${env.baseUrl}/logo-180x180.png" alt="LexAtlas" class="logo-img" />
-                  <div class="tagline">Your Global Legal Compass</div>
+              <div class="tagline">Your Global Legal Compass</div>
                 </div>
-              </div>
-              
-              <div class="content">
+            </div>
+            
+            <div class="content">
                 <div style="text-align: center;">
                   <div class="premium-badge">
-                    🎯 PREMIUM DESIGN 2025 ⭐ HARD RESET ⭐ Premium International Solutions
+                    🎯 PREMIUM DESIGN 2025 ⭐ Premium International Solutions
                   </div>
                 </div>
                 
                 <div class="hero-text">Your Premium Sample Kit is Ready</div>
-                
-                <p class="description">
+              
+              <p class="description">
                   Thank you for choosing LexAtlas! We're excited to share our comprehensive 
                   marriage kit sample with you. This premium resource showcases the quality and 
                   thoroughness you can expect from our full marriage kits.
@@ -426,9 +419,9 @@ async function sendPremiumEmail(to: string, sampleUrl?: string) {
                 <div class="cta-container">
                   <a href="${sampleUrl || `${env.baseUrl}/downloads/samples/LEXATLAS-global-sample.pdf`}" class="cta-button">
                     📥 Download Your Premium Sample Kit
-                  </a>
-                </div>
-                
+                </a>
+              </div>
+              
                 <div class="premium-card">
                   <h3 class="card-title">What's included in your premium sample:</h3>
                   <ul class="feature-list">
@@ -449,36 +442,36 @@ async function sendPremiumEmail(to: string, sampleUrl?: string) {
                       Contact information for relevant authorities
                     </li>
                   </ul>
-                </div>
-                
-                <p class="description">
+              </div>
+              
+              <p class="description">
                   This sample demonstrates the premium quality of our full LexAtlas kits. 
                   For complete legal step-by-step guidance and expert support, explore our 
                   <a href="${env.baseUrl}/pricing" class="pricing-link">Premium Kits</a>.
-                </p>
-                
-                <p class="description">
+              </p>
+              
+              <p class="description">
                   Questions? Our expert team is here to help. Reply to this email or contact us at 
                   <a href="mailto:contact.lexatlas@gmail.com" class="contact-link">contact.lexatlas@gmail.com</a>
-                </p>
-                
-                <p class="description">
-                  Best regards,<br>
-                  <strong style="color: #1A2E4F;">The LexAtlas Team</strong>
-                </p>
-              </div>
+              </p>
               
-              <div class="footer">
-                <div class="footer-text">© 2025 LexAtlas. All rights reserved.</div>
+              <p class="description">
+                Best regards,<br>
+                  <strong style="color: #1A2E4F;">The LexAtlas Team</strong>
+              </p>
+            </div>
+            
+            <div class="footer">
+              <div class="footer-text">© 2025 LexAtlas. All rights reserved.</div>
                 <div class="footer-text">This email was sent to ${to} because you requested a premium sample.</div>
-                <div class="disclaimer">Jurist guidance only – not a law firm or attorney.</div>
+              <div class="disclaimer">Jurist guidance only – not a law firm or attorney.</div>
               </div>
             </div>
           </div>
         </body>
         </html>
       `,
-      text: `🎯 PREMIUM DESIGN 2025 - HARD RESET - LexAtlas Sample
+      text: `🎯 PREMIUM DESIGN 2025 - LexAtlas Sample
 
 Thank you for choosing LexAtlas!
 

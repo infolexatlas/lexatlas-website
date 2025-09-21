@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
-import { sendLeadMagnetEmail } from '@/lib/sendEmail'
+import { sendLeadMagnetEmail } from '@/lib/email'
 import { IS_DEV, RESEND_API_KEY } from '@/lib/env'
 
 const DATA_DIR = path.join(process.cwd(), '.data')
