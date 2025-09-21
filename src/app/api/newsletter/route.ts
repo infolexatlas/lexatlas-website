@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
 import crypto from 'crypto'
-import { sendNewsletterEmail } from '@/lib/email'
+import { sendNewsletterEmail } from '@/lib/emailTemplate'
 import { IS_DEV, RESEND_API_KEY } from '@/lib/env'
 import { getEmailEnv } from '@/lib/emailEnv'
 

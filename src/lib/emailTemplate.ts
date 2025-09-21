@@ -4,28 +4,28 @@ import { getEmailEnv } from "./emailEnv";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function sendLeadSampleEmail(to: string, sampleUrl?: string) {
-  return await sendPremiumEmail(to, sampleUrl);
+  return await sendUltraPremiumEmail(to, sampleUrl);
 }
 
 export async function sendLeadMagnetEmail(to: string) {
-  return await sendPremiumEmail(to);
+  return await sendUltraPremiumEmail(to);
 }
 
 export async function sendNewsletterEmail(to: string) {
-  return await sendPremiumEmail(to);
+  return await sendUltraPremiumEmail(to);
 }
 
-async function sendPremiumEmail(to: string, sampleUrl?: string) {
+async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
   const env = getEmailEnv();
   
   if (!env.hasKey) {
     throw new Error("RESEND_API_KEY missing");
   }
 
-  const subject = "🎯 MAIL PREMIUM FINAL - Logo Bleu + CTA Gold - LexAtlas Sample";
+  const subject = "🚀 ULTRA PREMIUM EMAIL 2025 - Logo Bleu + CTA Gold - LexAtlas Sample";
   const fromAddress = env.resolvedFrom;
   
-  console.log('[NOUVEAU PREMIUM EMAIL] Sending premium email', {
+  console.log('[ULTRA PREMIUM EMAIL] Sending ultra premium email', {
     to,
     hasKey: env.hasKey,
     keyPrefix: env.keyPrefix,
@@ -46,7 +46,7 @@ async function sendPremiumEmail(to: string, sampleUrl?: string) {
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>🎯 NOUVEAU MAIL PREMIUM 2025 - LexAtlas Sample</title>
+          <title>🚀 ULTRA PREMIUM EMAIL 2025 - LexAtlas Sample</title>
           <style>
             body { 
               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Georgia', serif; 
@@ -134,12 +134,12 @@ async function sendPremiumEmail(to: string, sampleUrl?: string) {
               align-items: center;
               background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
               color: #1A2E4F;
-              padding: 12px 20px;
-              border-radius: 25px;
-              font-size: 16px;
+              padding: 15px 25px;
+              border-radius: 30px;
+              font-size: 18px;
               font-weight: 700;
-              margin-bottom: 30px;
-              box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+              margin-bottom: 35px;
+              box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
               animation: pulse 2s infinite;
             }
             
@@ -151,7 +151,7 @@ async function sendPremiumEmail(to: string, sampleUrl?: string) {
             
             .hero-text { 
               font-family: 'Georgia', serif;
-              font-size: 36px; 
+              font-size: 38px; 
               font-weight: 700; 
               color: #1A2E4F; 
               margin-bottom: 35px; 
@@ -177,14 +177,14 @@ async function sendPremiumEmail(to: string, sampleUrl?: string) {
               display: inline-block; 
               background: linear-gradient(135deg, #1A2E4F 0%, #2D4A6B 100%); 
               color: #D4AF37 !important; 
-              padding: 25px 50px; 
+              padding: 28px 55px; 
               text-decoration: none; 
-              border-radius: 18px; 
+              border-radius: 20px; 
               font-weight: 700; 
-              font-size: 20px; 
+              font-size: 22px; 
               text-align: center; 
-              box-shadow: 0 10px 40px -4px rgba(26, 46, 79, 0.3);
-              border: 2px solid #D4AF37;
+              box-shadow: 0 12px 45px -4px rgba(26, 46, 79, 0.3);
+              border: 3px solid #D4AF37;
               transition: all 0.3s ease;
               position: relative;
               overflow: hidden;
@@ -210,7 +210,7 @@ async function sendPremiumEmail(to: string, sampleUrl?: string) {
             
             .cta-button:hover { 
               transform: translateY(-3px);
-              box-shadow: 0 15px 50px -4px rgba(26, 46, 79, 0.4);
+              box-shadow: 0 18px 55px -4px rgba(26, 46, 79, 0.4);
               border-color: #FFD700;
               color: #FFD700 !important;
               background: linear-gradient(135deg, #2D4A6B 0%, #1A2E4F 100%);
@@ -218,11 +218,11 @@ async function sendPremiumEmail(to: string, sampleUrl?: string) {
             
             .premium-card { 
               background: linear-gradient(135deg, #FFFFFF 0%, #F5F7FB 100%);
-              padding: 40px 35px; 
-              border-radius: 22px; 
-              margin: 50px 0; 
+              padding: 45px 40px; 
+              border-radius: 25px; 
+              margin: 55px 0; 
               border: 1px solid rgba(212, 175, 55, 0.2);
-              box-shadow: 0 6px 25px -2px rgba(26, 46, 79, 0.1);
+              box-shadow: 0 8px 30px -2px rgba(26, 46, 79, 0.1);
               position: relative;
               overflow: hidden;
             }
@@ -232,14 +232,14 @@ async function sendPremiumEmail(to: string, sampleUrl?: string) {
               position: absolute;
               top: 0;
               left: 0;
-              width: 5px;
+              width: 6px;
               height: 100%;
               background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
             }
             
             .card-title { 
               font-family: 'Georgia', serif;
-              font-size: 26px; 
+              font-size: 28px; 
               color: #1A2E4F; 
               margin: 0 0 25px 0; 
               font-weight: 700;
@@ -254,17 +254,17 @@ async function sendPremiumEmail(to: string, sampleUrl?: string) {
             .feature-item {
               display: flex;
               align-items: center;
-              margin-bottom: 18px;
-              font-size: 18px;
+              margin-bottom: 20px;
+              font-size: 19px;
               color: #6B7280;
             }
             
             .feature-icon {
-              width: 24px;
-              height: 24px;
+              width: 26px;
+              height: 26px;
               background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
               border-radius: 50%;
-              margin-right: 18px;
+              margin-right: 20px;
               display: flex;
               align-items: center;
               justify-content: center;
@@ -275,27 +275,27 @@ async function sendPremiumEmail(to: string, sampleUrl?: string) {
               content: '✓';
               color: #1A2E4F;
               font-weight: bold;
-              font-size: 14px;
+              font-size: 15px;
             }
             
             .footer { 
               background: linear-gradient(135deg, #F5F7FB 0%, #FFFFFF 100%); 
-              padding: 45px 30px; 
+              padding: 50px 30px; 
               text-align: center; 
               border-top: 1px solid rgba(212, 175, 55, 0.1);
             }
             
             .footer-text { 
-              font-size: 17px; 
+              font-size: 18px; 
               color: #6B7280; 
-              margin: 10px 0; 
+              margin: 12px 0; 
               line-height: 1.6; 
             }
             
             .disclaimer { 
-              font-size: 15px; 
+              font-size: 16px; 
               color: #9CA3AF; 
-              margin-top: 30px; 
+              margin-top: 35px; 
               font-style: italic; 
             }
             
@@ -352,26 +352,26 @@ async function sendPremiumEmail(to: string, sampleUrl?: string) {
                 font-size: 18px !important; 
               }
               .cta-button { 
-                padding: 22px 40px !important; 
-                font-size: 18px !important; 
+                padding: 25px 45px !important; 
+                font-size: 19px !important; 
                 width: calc(100% - 40px) !important; 
-                max-width: 300px !important; 
+                max-width: 320px !important; 
               }
               .premium-card { 
-                padding: 35px 25px !important; 
-                margin: 40px 0 !important; 
+                padding: 40px 30px !important; 
+                margin: 45px 0 !important; 
               }
               .card-title { 
-                font-size: 22px !important; 
+                font-size: 24px !important; 
               }
               .footer { 
-                padding: 40px 20px !important; 
+                padding: 45px 20px !important; 
               }
               .footer-text { 
-                font-size: 15px !important; 
+                font-size: 16px !important; 
               }
               .disclaimer { 
-                font-size: 13px !important; 
+                font-size: 14px !important; 
               }
             }
             
@@ -394,12 +394,12 @@ async function sendPremiumEmail(to: string, sampleUrl?: string) {
                 font-size: 28px !important; 
               }
               .cta-button { 
-                padding: 20px 35px !important; 
-                font-size: 16px !important; 
+                padding: 22px 40px !important; 
+                font-size: 17px !important; 
                 width: calc(100% - 30px) !important; 
               }
               .premium-card { 
-                padding: 30px 20px !important; 
+                padding: 35px 25px !important; 
               }
             }
           </style>
@@ -419,7 +419,7 @@ async function sendPremiumEmail(to: string, sampleUrl?: string) {
               <div class="content">
                 <div style="text-align: center;">
                   <div class="premium-badge">
-                    🎯 MAIL PREMIUM FINAL ⭐ Logo Bleu + CTA Gold ⭐
+                    🚀 ULTRA PREMIUM EMAIL 2025 ⭐ BYPASS CACHE ⭐
                   </div>
                 </div>
                 
@@ -486,7 +486,7 @@ async function sendPremiumEmail(to: string, sampleUrl?: string) {
         </body>
         </html>
       `,
-      text: `🎯 MAIL PREMIUM FINAL - Logo Bleu + CTA Gold - LexAtlas Sample
+      text: `🚀 ULTRA PREMIUM EMAIL 2025 - LexAtlas Sample
 
 Thank you for choosing LexAtlas!
 
@@ -513,7 +513,7 @@ Jurist guidance only – not a law firm or attorney.`,
     });
 
     if (error) {
-      console.log('[NOUVEAU PREMIUM EMAIL] Resend API error:', error);
+      console.log('[ULTRA PREMIUM EMAIL] Resend API error:', error);
       return {
         sent: false,
         reason: 'provider_error',
@@ -522,7 +522,7 @@ Jurist guidance only – not a law firm or attorney.`,
       };
     }
 
-    console.log('[NOUVEAU PREMIUM EMAIL] Success:', data);
+    console.log('[ULTRA PREMIUM EMAIL] Success:', data);
     return {
       sent: true,
       reason: null,
@@ -531,7 +531,7 @@ Jurist guidance only – not a law firm or attorney.`,
     };
 
   } catch (err: any) {
-    console.error('[NOUVEAU PREMIUM EMAIL] Send error:', err);
+    console.error('[ULTRA PREMIUM EMAIL] Send error:', err);
     return {
       sent: false,
       reason: 'provider_error',
