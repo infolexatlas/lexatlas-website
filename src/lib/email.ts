@@ -641,35 +641,35 @@ export async function sendLeadSampleEmail(to: string): Promise<LeadSampleEmailRe
         </head>
         <body>
           <div class="email-wrapper">
-            <div class="container">
-              <div class="header">
+          <div class="container">
+            <div class="header">
                 <div class="logo-container">
                   <img src="${env.baseUrl}/logo-180x180.png" alt="LexAtlas" class="logo-img" />
-                  <div class="tagline">Your Global Legal Compass</div>
+              <div class="tagline">Your Global Legal Compass</div>
                 </div>
-              </div>
-              
-              <div class="content">
+            </div>
+            
+            <div class="content">
                 <div style="text-align: center;">
                   <div class="premium-badge">
                     ⭐ Premium International Solutions
                   </div>
                 </div>
                 
-                <div class="hero-text">Your Free Sample Kit is Ready</div>
-                
-                <p class="description">
+                <div class="hero-text">Your Premium Sample Kit is Ready</div>
+              
+              <p class="description">
                   Thank you for choosing LexAtlas! We're excited to share our comprehensive 
                   marriage kit sample with you. This premium resource showcases the quality and 
                   thoroughness you can expect from our full marriage kits.
                 </p>
                 
                 <div class="cta-container">
-                  <a href="${sampleUrl}" class="cta-button">
+                <a href="${sampleUrl}" class="cta-button">
                     📥 Download Your Sample Kit
-                  </a>
-                </div>
-                
+                </a>
+              </div>
+              
                 <div class="premium-card">
                   <h3 class="card-title">What's included in your sample:</h3>
                   <ul class="feature-list">
@@ -690,29 +690,29 @@ export async function sendLeadSampleEmail(to: string): Promise<LeadSampleEmailRe
                       Contact information for relevant authorities
                     </li>
                   </ul>
-                </div>
-                
-                <p class="description">
+              </div>
+              
+              <p class="description">
                   This sample demonstrates the premium quality of our full LexAtlas kits. 
                   For complete legal step-by-step guidance and expert support, explore our 
                   <a href="${env.baseUrl}/pricing" class="pricing-link">Premium Kits</a>.
-                </p>
-                
-                <p class="description">
+              </p>
+              
+              <p class="description">
                   Questions? Our expert team is here to help. Reply to this email or contact us at 
                   <a href="mailto:contact.lexatlas@gmail.com" class="contact-link">contact.lexatlas@gmail.com</a>
-                </p>
-                
-                <p class="description">
-                  Best regards,<br>
-                  <strong style="color: #1A2E4F;">The LexAtlas Team</strong>
-                </p>
-              </div>
+              </p>
               
-              <div class="footer">
-                <div class="footer-text">© 2025 LexAtlas. All rights reserved.</div>
-                <div class="footer-text">This email was sent to ${to} because you requested a free sample.</div>
-                <div class="disclaimer">Jurist guidance only – not a law firm or attorney.</div>
+              <p class="description">
+                Best regards,<br>
+                  <strong style="color: #1A2E4F;">The LexAtlas Team</strong>
+              </p>
+            </div>
+            
+            <div class="footer">
+              <div class="footer-text">© 2025 LexAtlas. All rights reserved.</div>
+              <div class="footer-text">This email was sent to ${to} because you requested a free sample.</div>
+              <div class="disclaimer">Jurist guidance only – not a law firm or attorney.</div>
               </div>
             </div>
           </div>
