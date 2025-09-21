@@ -3,17 +3,29 @@ import { getEmailEnv } from "./emailEnv";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export async function sendPremiumLeadSampleEmail(to: string, sampleUrl?: string) {
+export async function sendLeadSampleEmail(to: string, sampleUrl?: string) {
+  return await sendPremiumEmail(to, sampleUrl);
+}
+
+export async function sendLeadMagnetEmail(to: string) {
+  return await sendPremiumEmail(to);
+}
+
+export async function sendNewsletterEmail(to: string) {
+  return await sendPremiumEmail(to);
+}
+
+async function sendPremiumEmail(to: string, sampleUrl?: string) {
   const env = getEmailEnv();
   
   if (!env.hasKey) {
     throw new Error("RESEND_API_KEY missing");
   }
 
-  const subject = "Your Premium LexAtlas Sample Kit";
+  const subject = "🎯 PREMIUM DESIGN 2025 - Your LexAtlas Sample Kit";
   const fromAddress = env.resolvedFrom;
   
-  console.log('[email] sendPremiumLeadSampleEmail called', {
+  console.log('[PREMIUM EMAIL] Sending premium email', {
     to,
     hasKey: env.hasKey,
     keyPrefix: env.keyPrefix,
@@ -34,7 +46,7 @@ export async function sendPremiumLeadSampleEmail(to: string, sampleUrl?: string)
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Your Premium LexAtlas Sample</title>
+          <title>🎯 PREMIUM DESIGN 2025 - LexAtlas Sample</title>
           <style>
             body { 
               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Georgia', serif; 
@@ -120,12 +132,19 @@ export async function sendPremiumLeadSampleEmail(to: string, sampleUrl?: string)
               align-items: center;
               background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
               color: #1A2E4F;
-              padding: 8px 16px;
+              padding: 12px 20px;
               border-radius: 20px;
-              font-size: 14px;
-              font-weight: 600;
+              font-size: 16px;
+              font-weight: 700;
               margin-bottom: 25px;
               box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+              animation: pulse 2s infinite;
+            }
+            
+            @keyframes pulse {
+              0% { transform: scale(1); }
+              50% { transform: scale(1.05); }
+              100% { transform: scale(1); }
             }
             
             .hero-text { 
@@ -392,7 +411,7 @@ export async function sendPremiumLeadSampleEmail(to: string, sampleUrl?: string)
               <div class="content">
                 <div style="text-align: center;">
                   <div class="premium-badge">
-                    🎯 PREMIUM DESIGN 2025 ⭐ Premium International Solutions
+                    🎯 PREMIUM DESIGN 2025 ⭐ HARD RESET ⭐ Premium International Solutions
                   </div>
                 </div>
                 
@@ -459,7 +478,7 @@ export async function sendPremiumLeadSampleEmail(to: string, sampleUrl?: string)
         </body>
         </html>
       `,
-      text: `Your Premium LexAtlas Sample
+      text: `🎯 PREMIUM DESIGN 2025 - HARD RESET - LexAtlas Sample
 
 Thank you for choosing LexAtlas!
 
@@ -486,7 +505,7 @@ Jurist guidance only – not a law firm or attorney.`,
     });
 
     if (error) {
-      console.log('[Email] Resend API error:', error);
+      console.log('[PREMIUM EMAIL] Resend API error:', error);
       return {
         sent: false,
         reason: 'provider_error',
@@ -495,7 +514,7 @@ Jurist guidance only – not a law firm or attorney.`,
       };
     }
 
-    console.log('[Email] Success:', data);
+    console.log('[PREMIUM EMAIL] Success:', data);
     return {
       sent: true,
       reason: null,
@@ -504,7 +523,7 @@ Jurist guidance only – not a law firm or attorney.`,
     };
 
   } catch (err: any) {
-    console.error('[Email] Send error:', err);
+    console.error('[PREMIUM EMAIL] Send error:', err);
     return {
       sent: false,
       reason: 'provider_error',

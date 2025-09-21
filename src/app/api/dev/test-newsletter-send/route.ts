@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { sendNewsletterEmail } from '@/lib/email'
+import { sendNewsletterEmail } from '@/lib/sendEmail'
 import { getEmailEnv } from '@/lib/emailEnv'
 import { IS_DEV } from '@/lib/env'
 
