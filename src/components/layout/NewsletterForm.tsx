@@ -42,13 +42,10 @@ export function NewsletterForm() {
       console.log('[Newsletter] response', { ok: res.ok, data });
 
       if (res.ok && data?.ok) {
-        const msg = data.sent === true
+        // Use the user-friendly message from the API
+        const msg = data.message || (data.sent === true
           ? '📬 Email sent! Check your inbox.'
-          : data.reason === 'sandbox_sender'
-            ? '✅ Saved. (Dev mode: sandbox sender)'
-            : data.reason === 'provider_error'
-              ? '✅ Saved. (Email provider rejected sending.)'
-              : '✅ Saved.'
+          : '✅ Thank you for subscribing!')
         setStatus({ kind:'success', msg })
         setEmail('');
         // Plausible tracking if available
