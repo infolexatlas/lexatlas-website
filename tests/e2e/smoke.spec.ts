@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test'
 test.describe('@smoke Smoke checks', () => {
   test('@smoke home renders and has title', async ({ page }) => {
     await page.goto('/')
-    await expect(page).toHaveTitle(/LexAtlas/i)
+    await expect(page).toHaveTitle(/Lex Atlas/i)
   })
 
   test('@smoke kits renders and has at least one card', async ({ page }) => {

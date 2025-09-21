@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { BRAND_HEX, LOGO_SRC } from "@/lib/brand";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -12,8 +13,9 @@ function getGuideUrl() {
 
 function htmlTemplate() {
   const guideUrl = getGuideUrl();
-  const brand = "#0b5cff";
-  const preheader = "Your free LexAtlas guide is inside.";
+  const brand = BRAND_HEX;
+  const logo = LOGO_SRC;
+  const preheader = "Your free Lex Atlas guide is inside.";
 
   return `
   <!DOCTYPE html>
@@ -22,7 +24,7 @@ function htmlTemplate() {
     <meta charSet="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="x-preheader" content="${preheader}" />
-    <title>Your LexAtlas Guide</title>
+    <title>Your Lex Atlas Guide</title>
   </head>
   <body style="margin:0;padding:0;background:#f7f7f8;font-family:Arial,Helvetica,sans-serif;">
     <span style="display:none !important;visibility:hidden;opacity:0;height:0;width:0;overflow:hidden;">
@@ -33,14 +35,23 @@ function htmlTemplate() {
         <td align="center">
           <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,0.06);">
             <tr>
-              <td style="background:${brand};color:#fff;padding:20px 24px;font-size:18px;font-weight:700;letter-spacing:0.2px;">
-                LexAtlas — Your free guide
+              <td style="background:${brand};color:#fff;padding:16px 20px;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td align="left" style="vertical-align:middle;">
+                      <img src="${logo}" alt="Lex Atlas" height="24" style="display:inline-block;vertical-align:middle;border:0;outline:none;" />
+                      <span style="display:inline-block;vertical-align:middle;margin-left:10px;font-size:18px;font-weight:700;letter-spacing:0.2px;">
+                        Lex Atlas — Your free guide
+                      </span>
+                    </td>
+                  </tr>
+                </table>
               </td>
             </tr>
             <tr>
               <td style="padding:28px 24px;color:#111;font-size:16px;line-height:1.6;">
                 <p style="margin:0 0 12px 0;">Hi there,</p>
-                <p style="margin:0 0 16px 0;">Thanks for subscribing to LexAtlas 🙌</p>
+                <p style="margin:0 0 16px 0;">Thanks for subscribing to Lex Atlas 🙌</p>
                 <p style="margin:0 0 18px 0;">Your free guide to cross-border marriage requirements is ready:</p>
                 <p style="margin:22px 0;">
                   <a href="${guideUrl}" target="_blank" rel="noopener noreferrer"
@@ -48,18 +59,13 @@ function htmlTemplate() {
                     📥 Download the guide
                   </a>
                 </p>
-                <p style="margin:0 0 8px 0;">If the button doesn't work, copy and paste this link in your browser:</p>
-                <p style="margin:0 0 20px 0;word-break:break-all;">
-                  <a href="${guideUrl}" target="_blank" rel="noopener noreferrer" style="color:${brand};text-decoration:underline;">
-                    ${guideUrl}
-                  </a>
-                </p>
+                <!-- Removed the fallback raw link paragraph to match requirements -->
                 <hr style="border:none;border-top:1px solid #ececec;margin:24px 0;" />
                 <p style="font-size:13px;color:#555;margin:0;">From: info@lex-atlas.com</p>
               </td>
             </tr>
           </table>
-          <p style="color:#777;font-size:12px;margin-top:12px;">© ${new Date().getFullYear()} LexAtlas</p>
+          <p style="color:#777;font-size:12px;margin-top:12px;">© ${new Date().getFullYear()} Lex Atlas</p>
         </td>
       </tr>
     </table>
@@ -112,9 +118,9 @@ export async function POST(req: Request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "LexAtlas <info@lex-atlas.com>",
+        from: "Lex Atlas <info@lex-atlas.com>",
         to: email,
-        subject: "Your LexAtlas Guide is Ready 📘",
+        subject: "Your Lex Atlas Guide is Ready 📘",
         html: htmlTemplate(),
         reply_to: "info@lex-atlas.com"
       }),

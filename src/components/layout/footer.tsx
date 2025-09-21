@@ -4,7 +4,7 @@ import Image from 'next/image'
  
 import { NewsletterForm } from './NewsletterForm'
 import { SocialLinks } from './SocialLinks'
-import { BRAND } from '@/lib/brand'
+import { LOGO_SRC } from '@/lib/brand'
 import { motion } from 'framer-motion'
 import { fadeInUp, stagger } from '@/components/la/Motion'
 
@@ -43,7 +43,7 @@ export function Footer() {
             <div className="flex items-center">
               <Image
                 src="/logo/lexatlas-transparent.svg"
-                alt="LexAtlas logo"
+                alt="Lex Atlas logo"
                 width={56}
                 height={56}
                 loading="lazy"
@@ -104,7 +104,7 @@ export function Footer() {
       <div className="bg-brand-deep/95">
         <div className="container py-6">
           <div className="flex items-center justify-center">
-            <p className="text-xs text-white/70">© 2025 LexAtlas. All rights reserved.</p>
+            <p className="text-xs text-white/70">© 2025 Lex Atlas. All rights reserved.</p>
           </div>
         </div>
       </div>

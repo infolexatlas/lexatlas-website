@@ -23,7 +23,7 @@ export function getOrganizationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "LexAtlas",
+    "name": "Lex Atlas",
     "url": getBaseUrl(),
     "logo": [
       {
@@ -58,7 +58,7 @@ export function getWebsiteSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "LexAtlas",
+    "name": "Lex Atlas",
     "url": getBaseUrl(),
     "potentialAction": {
       "@type": "SearchAction",
@@ -82,7 +82,7 @@ export function getProductSchema(params: {
     "@type": "Product",
     "name": params.pairNameFull,
     "description": `Step-by-step cross-border marriage kit for ${params.pairNameFull}. Official sources, checklists, and templates.`,
-    "brand": { "@type": "Brand", "name": "LexAtlas" },
+    "brand": { "@type": "Brand", "name": "Lex Atlas" },
     "sku": `kit-${params.slug}`,
     "image": [params.imageUrl],
     "url": params.productUrl,

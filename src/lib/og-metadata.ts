@@ -20,7 +20,7 @@ export function generateOGMetadata({
       title,
       description,
       url: `${baseUrl}${url}`,
-      siteName: 'LexAtlas',
+      siteName: 'Lex Atlas',
       images: [
         {
           url: `${baseUrl}${image}`,

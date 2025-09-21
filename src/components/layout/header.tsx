@@ -11,7 +11,7 @@ import { CTA } from '@/lib/site-nav'
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12)
+    const onScroll = () => setScrolled(window.scrollY > 4)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -19,11 +19,12 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b transition-[background,backdrop-filter,box-shadow] ${
+      className={`sticky top-0 z-50 min-h-[80px] border-b border-black/10 transition-[background,backdrop-filter,box-shadow] ${
         scrolled
-          ? 'bg-[--la-surface]/70 backdrop-blur supports-[backdrop-filter]:bg-[--la-surface]/60 shadow-sm'
-          : 'bg-transparent'
+          ? 'bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/60 shadow-[0_6px_20px_rgba(0,0,0,0.08)]'
+          : 'bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/60 shadow-none'
       }`}
+      role="banner"
     >
       <div className="container flex h-16 items-center justify-between md:h-20">
         <div className="shrink-0">

@@ -8,7 +8,7 @@ export type FAQ = {
 export const faqs: FAQ[] = [
   {
     id: 'what-is-lexatlas-kit',
-    question: 'What is a LexAtlas Marriage Kit?',
+    question: 'What is a Lex Atlas Marriage Kit?',
     answer: 'A complete legal guide that explains step by step how to celebrate and legally recognize your marriage between two countries. It covers required documents, fees, timelines, translations, and recognition in both countries. Each kit is based on current national laws and international regulations.',
     tags: ['basics', 'legal-guide']
   },
@@ -74,7 +74,7 @@ export const faqs: FAQ[] = [
   },
   {
     id: 'who-is-behind',
-    question: 'Who is behind LexAtlas?',
+    question: 'Who is behind Lex Atlas?',
     answer: 'International jurists specialized in cross-border marriages and private international law. Our mission is to make legal access simple, clear, and affordable for international couples. We combine legal expertise with user experience design to create accessible, reliable legal resources.',
     tags: ['team', 'expertise', 'mission']
   }

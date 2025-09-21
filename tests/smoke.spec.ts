@@ -7,7 +7,7 @@ const url = (p = '') => new URL(p, base).toString()
 test.describe('@smoke basic', () => {
   test('home renders', async ({ page }) => {
     await page.goto('/')
-    await expect(page).toHaveTitle(/LexAtlas|Kits|Marriage/i)
+    await expect(page).toHaveTitle(/Lex Atlas|Kits|Marriage/i)
   })
 
   test('robots and sitemap', async ({ request }) => {

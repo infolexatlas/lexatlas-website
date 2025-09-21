@@ -59,7 +59,7 @@ function getConfirmationHtmlTemplate(data: FulfillmentData): string {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Purchase Confirmation - LexAtlas</title>
+    <title>Purchase Confirmation - Lex Atlas</title>
     <style>
         body { margin: 0; padding: 0; font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
         .email-container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
@@ -97,7 +97,7 @@ function getConfirmationHtmlTemplate(data: FulfillmentData): string {
                     <!-- Header -->
                     <tr>
                         <td class="header">
-                            <div class="logo">LexAtlas</div>
+                            <div class="logo">Lex Atlas</div>
                             <div class="tagline">Your Global Legal Compass</div>
                         </td>
                     </tr>
@@ -153,7 +153,7 @@ function getConfirmationHtmlTemplate(data: FulfillmentData): string {
                             
                             <p class="description">
                                 Best regards,<br>
-                                <strong>The LexAtlas Team</strong>
+                                <strong>The Lex Atlas Team</strong>
                             </p>
                         </td>
                     </tr>
@@ -161,7 +161,7 @@ function getConfirmationHtmlTemplate(data: FulfillmentData): string {
                     <!-- Footer -->
                     <tr>
                         <td class="footer">
-                            <div class="footer-text">© 2025 LexAtlas. All rights reserved.</div>
+                            <div class="footer-text">© 2025 Lex Atlas. All rights reserved.</div>
                             <div class="footer-text">This email was sent to ${data.customerEmail}</div>
                             <div class="disclaimer">Jurist guidance only – not a law firm or attorney.</div>
                         </td>
@@ -209,10 +209,10 @@ If you have any questions or need assistance, please reply to this email
 or contact us at contact.lexatlas@gmail.com
 
 Best regards,
-The LexAtlas Team
+The Lex Atlas Team
 
 ---
-© 2025 LexAtlas. All rights reserved.
+© 2025 Lex Atlas. All rights reserved.
 This email was sent to ${data.customerEmail}
 Jurist guidance only – not a law firm or attorney.`
 }
@@ -248,7 +248,7 @@ export async function fulfillOrder(data: FulfillmentData): Promise<{sent: boolea
   
   try {
     const { data: emailData, error } = await resend.emails.send({
-      from: 'LexAtlas <contact.lexatlas@gmail.com>',
+      from: 'Lex Atlas <contact.lexatlas@gmail.com>',
       to: [customerEmail],
       subject: 'Purchase Confirmation - Your Marriage Kit is Ready!',
       html: getConfirmationHtmlTemplate(data),

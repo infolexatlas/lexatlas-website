@@ -13,9 +13,9 @@ export async function GET() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "LexAtlas <info@lex-atlas.com>",
+      from: "Lex Atlas <info@lex-atlas.com>",
       to: "youremail+test@gmail.com",
-      subject: "Test LexAtlas ✅",
+      subject: "Test Lex Atlas ✅",
       html: "<p>Si vous recevez ceci, l'envoi fonctionne 🎉</p>",
     }),
   });

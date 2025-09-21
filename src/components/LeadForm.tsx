@@ -1,5 +1,6 @@
 'use client'
 import { useId, useState } from 'react'
+import { BRAND_HEX } from '@/lib/brand'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
@@ -68,16 +69,22 @@ export default function LeadForm() {
           name="email"
           required
           placeholder="you@example.com"
-          className="flex-1 rounded-xl border border-black/10 bg-white px-3 py-2 text-[15px] outline-none ring-0 focus:border-[#0b5cff] focus:ring-2 focus:ring-[#0b5cff]/20"
+          className="flex-1 rounded-xl border border-black/10 bg-white px-3 py-2 text-[15px] outline-none ring-0"
+          style={{ 
+            boxShadow: status === 'loading' ? undefined : `0 0 0 2px ${BRAND_HEX}33`,
+            borderColor: status === 'loading' ? undefined : BRAND_HEX
+          }}
           autoComplete="email"
           inputMode="email"
         />
         <button
           type="submit"
           disabled={isLoading}
-          className={`rounded-xl px-4 py-2 text-sm font-semibold text-white shadow-sm transition ${
-            isLoading ? 'bg-[#5a8aff] cursor-not-allowed' : 'bg-[#0b5cff] hover:bg-[#0a4ed8]'
-          }`}
+          style={{
+            background: isLoading ? `${BRAND_HEX}80` : BRAND_HEX,
+            cursor: isLoading ? 'not-allowed' : 'pointer'
+          }}
+          className="rounded-xl px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:opacity-90"
         >
           {isLoading ? 'Sending…' : 'Send the sample'}
         </button>

@@ -31,7 +31,7 @@ describe('Kits Configuration', () => {
       expect(kit.currency).toBe('EUR')
       expect(kit.url).toBeTruthy()
       expect(kit.validFrom).toBeTruthy()
-      expect(kit.brand).toBe('LexAtlas')
+      expect(kit.brand).toBe('Lex Atlas')
       
       // Validation rules
       expect(kit.title.length).toBeLessThanOrEqual(60)

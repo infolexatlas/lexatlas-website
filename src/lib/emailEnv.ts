@@ -11,7 +11,7 @@ export interface EmailEnv {
 export function getResolvedFromStrict() {
   const forceSandbox = process.env.EMAIL_FORCE_SANDBOX === '1';
   const isDev = process.env.NODE_ENV !== 'production';
-  const sandbox = 'LexAtlas <onboarding@resend.dev>';
+  const sandbox = 'Lex Atlas <onboarding@resend.dev>';
 
   // If forced: always sandbox sender
   if (forceSandbox) {
@@ -31,7 +31,7 @@ export function getResolvedFromStrict() {
 
   // Production mode - require RESEND_FROM
   if (!from) {
-    throw new Error('RESEND_FROM must be set to a verified domain sender (e.g. LexAtlas <hello@lexatlas.com>)');
+    throw new Error('RESEND_FROM must be set to a verified domain sender (e.g. Lex Atlas <hello@lexatlas.com>)');
   }
   if (/@(gmail|yahoo|outlook|hotmail)\./i.test(from)) {
     throw new Error('RESEND_FROM cannot be a free mailbox. Use a verified domain sender (e.g. hello@lexatlas.com).');

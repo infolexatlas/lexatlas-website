@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import AnimatedLogo from '@/components/brand/AnimatedLogo'
-import { BRAND } from '@/lib/brand'
+import { LOGO_SRC } from '@/lib/brand'
 import clsx from 'clsx'
 import { usePathname } from 'next/navigation'
 import { useEffect } from 'react'
@@ -21,7 +21,7 @@ export default function HeaderBrand() {
   return (
     <Link
       href="/"
-      aria-label="LexAtlas home"
+      aria-label="Lex Atlas home"
       data-testid="header-brand"
       className={clsx(
         'group flex items-center gap-2 font-semibold tracking-tight shrink-0 relative'
@@ -44,8 +44,8 @@ export default function HeaderBrand() {
         aria-hidden="true"
       >
         <AnimatedLogo
-          src={BRAND.logo.src}
-          alt="LexAtlas"
+          src={LOGO_SRC}
+          alt="Lex Atlas"
           width={22}
           height={22}
           priority
@@ -59,7 +59,7 @@ export default function HeaderBrand() {
       </span>
 
       {/* brand label */}
-      <span className="sr-only md:not-sr-only md:inline">LexAtlas</span>
+      <span className="sr-only md:not-sr-only md:inline">Lex Atlas</span>
     </Link>
   )
 }

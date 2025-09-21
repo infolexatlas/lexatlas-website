@@ -28,7 +28,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL('https://lex-atlas.com'),
   title: { 
-    default: 'LexAtlas — Cross-Border Marriage Kits', 
+    default: 'Lex Atlas — Cross-Border Marriage Kits', 
     template: '%s' 
   },
   icons: {
@@ -126,7 +126,7 @@ export default function RootLayout({
         {/* Apple specific meta tags */}
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="LexAtlas" />
+        <meta name="apple-mobile-web-app-title" content="Lex Atlas" />
         
         {/* Windows/IE browser config */}
         <meta name="msapplication-config" content="/browserconfig.xml" />
@@ -143,7 +143,7 @@ export default function RootLayout({
       <body className={`${inter.className} min-h-screen bg-white text-slate-900 antialiased overflow-x-hidden`}>
         <div className="min-h-screen flex flex-col w-full overflow-x-hidden">
           <Header />
-          <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-hidden">
+          <main className="flex-1 w-full overflow-x-hidden pt-0">
             <PageTransition>
               {children}
             </PageTransition>

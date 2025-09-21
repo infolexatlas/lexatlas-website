@@ -1,16 +1,22 @@
-export const BRAND = {
-  name: 'LexAtlas',
-  logo: { src: '/logo/lexatlas.svg', alt: 'LexAtlas' },
-  colors: {
-    navy: '#1A2E4F',  // dominant brand color
-    gold: '#D4AF37',  // secondary brand gold
-    goldMuted: '#C9A24E',  // fallback variant
-    ivory: '#FAFAF7',  // off-white background
-    gray: '#F2F2F2',  // light gray
-    text: '#222222',  // dark text
-    textMuted: '#444444',  // gray text
-    accent: '#3BA3A3',  // optional teal accent
-    // Backward compatibility
-    deep: '#1A2E4F',  // maps to navy
-  },
-} as const
+// Centralized brand constants (avoid color drift across UI and emails)
+import fs from 'node:fs'
+import path from 'node:path'
+
+function fileExists(p: string) {
+  try {
+    return fs.existsSync(path.join(process.cwd(), 'public', p.replace(/^\//, '')))
+  } catch {
+    return false
+  }
+}
+
+export const BRAND_HEX =
+  process.env.NEXT_PUBLIC_BRAND_BLUE?.trim() ||
+  // Using the brand-navy color from the theme system
+  '#1A2E4F' // brand-navy from globals.css
+
+export const LOGO_SRC = fileExists('/logo.svg')
+  ? '/logo.svg'
+  : fileExists('/logo/lexatlas.svg')
+    ? '/logo/lexatlas.svg'
+    : 'https://lex-atlas.com/logo.svg'
