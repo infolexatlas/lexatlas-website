@@ -14,7 +14,7 @@ function getGuideUrl() {
 function htmlTemplate() {
   const guideUrl = getGuideUrl();
   const brand = BRAND_HEX;
-  const logo = LOGO_SRC;
+  const logo = 'https://lex-atlas.com/logo.svg'; // URL complète pour les emails
   const preheader = "Your free Lex Atlas guide is inside.";
 
   return `
