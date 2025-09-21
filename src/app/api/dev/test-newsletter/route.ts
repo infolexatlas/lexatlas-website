@@ -88,7 +88,7 @@ export async function GET(request: NextRequest) {
     try {
       const emailResult = await sendNewsletterEmail(testEmail)
       emailSent = emailResult.sent
-      emailError = emailResult.message || undefined
+      emailError = emailResult.reason || undefined
     } catch (error) {
       console.error('[Test Newsletter] Email send failed:', error)
       emailError = error instanceof Error ? error.message : 'Unknown error'
