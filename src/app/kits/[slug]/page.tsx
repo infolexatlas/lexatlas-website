@@ -59,11 +59,10 @@ export default async function KitPage({ params }: Props) {
   const countryCode = slug.split('-')[1] as any
 
   const styledTitle = (
-    <>
-      {kit.title.replace(' Marriage Guide (2025) | LexAtlas', '')}
-      {' '}
-      <span className="text-brand-gold">Marriage Guide</span>
-    </>
+    <div>
+      <div>{kit.title.replace(/\nMarriage Guide$/, '')}</div>
+      <div className="text-brand-gold mt-1">Marriage Guide</div>
+    </div>
   )
 
   // Product JSON-LD with all required fields

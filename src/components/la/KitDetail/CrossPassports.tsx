@@ -187,15 +187,11 @@ export function CrossPassports({ partner }: { partner: Iso3 }) {
                 </g>
               ) : partner === 'can' ? (
                 <g>
-                  {renderCANFlag()}
+                  <image href="/flags/ca.svg" x="0" y="0" width="16" height="10" />
                 </g>
               ) : partner === 'mar' ? (
                 <g>
-                  <rect x="0" y="0" width="16" height="10" rx="1" fill="#C1272D" />
-                  <g transform="translate(8,5)">
-                    <path d="M 0 -3.5 L 0.5 -2.5 L 1.2 -3.0 L 0.8 -1.5 L 1.8 -1.8 L 1.0 -0.8 L 2.0 -0.5 L 0.8 0 L 1.2 1.2 L 0.6 0.8 L 0.3 2.0 L 0 1.2 L -0.3 2.0 L -0.6 0.8 L -1.2 1.2 L -0.8 0 L -2.0 -0.5 L -1.0 -0.8 L -1.8 -1.8 L -0.8 -1.5 L -1.2 -3.0 L -0.5 -2.5 Z" fill="#006233" />
-                    <rect x="-0.2" y="1.2" width="0.4" height="1.5" fill="#006233" />
-                  </g>
+                  <image href="/flags/ma.svg" x="1" y="1" width="16" height="10" />
                 </g>
               ) : partner === 'fra' ? (
                 <g>
@@ -211,9 +207,7 @@ export function CrossPassports({ partner }: { partner: Iso3 }) {
                 </g>
               ) : partner === 'che' ? (
                 <g>
-                  <rect x="0" y="0" width="16" height="10" rx="1" fill="#FF0000" />
-                  <rect x="0" y="4" width="16" height="2" fill="#FFFFFF" />
-                  <rect x="7" y="0" width="2" height="10" fill="#FFFFFF" />
+                  <image href="/flags/ch.svg" x="1" y="1" width="16" height="10" />
                 </g>
               ) : partner === 'bel' ? (
                 <g>
@@ -223,9 +217,7 @@ export function CrossPassports({ partner }: { partner: Iso3 }) {
                 </g>
               ) : partner === 'esp' ? (
                 <g>
-                  <rect x="0" y="0" width="16" height="2.5" rx="1" fill="#AA151B" />
-                  <rect x="0" y="2.5" width="16" height="5" rx="1" fill="#F1BF00" />
-                  <rect x="0" y="7.5" width="16" height="2.5" rx="1" fill="#AA151B" />
+                  <image href="/flags/es.svg" x="0" y="0" width="19" height="13" />
                 </g>
               ) : partner === 'ita' ? (
                 <g>
@@ -233,16 +225,10 @@ export function CrossPassports({ partner }: { partner: Iso3 }) {
                   <rect x="5.33" y="0" width="5.33" height="10" rx="1" fill="#FFFFFF" />
                   <rect x="10.66" y="0" width="5.34" height="10" rx="1" fill="#CE2B37" />
                 </g>
-              ) : partner === 'prt' ? (
-                <g>
-                  <rect x="0" y="0" width="8" height="10" rx="1" fill="#006600" />
-                  <rect x="8" y="0" width="8" height="10" rx="1" fill="#FF0000" />
-                  <g transform="translate(4,5)">
-                    <circle cx="0" cy="0" r="2" fill="#FFCC00" />
-                    <circle cx="0" cy="0" r="1.2" fill="#006600" />
-                    <circle cx="0" cy="0" r="0.6" fill="#FFCC00" />
+                ) : partner === 'prt' ? (
+                  <g>
+                    <image href="/flags/pt.svg" x="-1" y="-1" width="20" height="14" />
                   </g>
-                </g>
               ) : (
                 <>
                   <rect x="0" y="0" width="5.33" height="10" rx="1" fill={oth[0]} />

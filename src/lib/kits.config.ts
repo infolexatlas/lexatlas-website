@@ -26,7 +26,7 @@ export type Kit = {
 
 export const KITS: Record<string, Kit> = {
   'fra-usa': {
-    title: 'France ⇄ United States Marriage Guide (2025) | Lex Atlas',
+    title: 'France ⇄ United States (2025)',
     description: "Documents, CCAM/recognition, étapes légales pour un mariage France–USA. Kit PDF prêt à l'emploi, téléchargement instantané.",
     ogImage: '/images/kits/fra-usa-cover.jpg',
     sku: 'KIT-FRA-USA-2025',
@@ -37,7 +37,7 @@ export const KITS: Record<string, Kit> = {
     brand: 'Lex Atlas'
   },
   'fra-gbr': {
-    title: 'France ⇄ United Kingdom Marriage Guide (2025) | Lex Atlas',
+    title: 'France ⇄ United Kingdom (2025)',
     description: "Documents, CNI/recognition, étapes légales pour un mariage France–UK. Kit PDF prêt à l'emploi, téléchargement instantané.",
     ogImage: '/images/kits/fra-gbr-cover.jpg',
     sku: 'KIT-FRA-GBR-2025',
@@ -48,7 +48,7 @@ export const KITS: Record<string, Kit> = {
     brand: 'Lex Atlas'
   },
   'fra-can': {
-    title: 'France ⇄ Canada Marriage Guide (2025) | Lex Atlas',
+    title: 'France ⇄ Canada (2025)',
     description: "Étapes officielles, traductions et reconnaissance d'un mariage France–Canada. Kit PDF complet + mises à jour incluses.",
     ogImage: '/images/kits/fra-can-cover.jpg',
     sku: 'KIT-FRA-CAN-2025',
@@ -59,7 +59,7 @@ export const KITS: Record<string, Kit> = {
     brand: 'Lex Atlas'
   },
   'fra-mar': {
-    title: 'France ⇄ Morocco Marriage Guide (2025) | Lex Atlas',
+    title: 'France ⇄ Morocco (2025)',
     description: "Publication des bans, CCAM, transcription Maroc → France. Guide PDF étape par étape, téléchargement instantané.",
     ogImage: '/images/kits/fra-mar-cover.jpg',
     sku: 'KIT-FRA-MAR-2025',
@@ -70,7 +70,7 @@ export const KITS: Record<string, Kit> = {
     brand: 'Lex Atlas'
   },
   'fra-deu': {
-    title: 'France ⇄ Germany Marriage Guide (2025) | Lex Atlas',
+    title: 'France ⇄ Germany (2025)',
     description: "Documents requis, délais, reconnaissance France–Allemagne. Kit PDF prêt à l'emploi.",
     ogImage: '/images/kits/fra-deu-cover.jpg',
     sku: 'KIT-FRA-DEU-2025',
@@ -81,7 +81,7 @@ export const KITS: Record<string, Kit> = {
     brand: 'Lex Atlas'
   },
   'fra-che': {
-    title: 'France ⇄ Switzerland Marriage Guide (2025) | Lex Atlas',
+    title: 'France ⇄ Switzerland (2025)',
     description: "Processus de mariage France–Suisse: démarches, documents, reconnaissance. PDF clair et prêt à utiliser.",
     ogImage: '/images/kits/fra-che-cover.jpg',
     sku: 'KIT-FRA-CHE-2025',
@@ -92,7 +92,7 @@ export const KITS: Record<string, Kit> = {
     brand: 'Lex Atlas'
   },
   'fra-bel': {
-    title: 'France ⇄ Belgium Marriage Guide (2025) | Lex Atlas',
+    title: 'France ⇄ Belgium (2025)',
     description: "CCAM, publication des bans, reconnaissance France–Belgique. Téléchargement instantané.",
     ogImage: '/images/kits/fra-bel-cover.jpg',
     sku: 'KIT-FRA-BEL-2025',
@@ -103,7 +103,7 @@ export const KITS: Record<string, Kit> = {
     brand: 'Lex Atlas'
   },
   'fra-esp': {
-    title: 'France ⇄ Spain Marriage Guide (2025) | Lex Atlas',
+    title: 'France ⇄ Spain (2025)',
     description: "Mariage France–Espagne : actes, traductions, transcription. Kit expert + accès immédiat.",
     ogImage: '/images/kits/fra-esp-cover.jpg',
     sku: 'KIT-FRA-ESP-2025',
@@ -114,7 +114,7 @@ export const KITS: Record<string, Kit> = {
     brand: 'Lex Atlas'
   },
   'fra-ita': {
-    title: 'France ⇄ Italy Marriage Guide (2025) | Lex Atlas',
+    title: 'France ⇄ Italy (2025)',
     description: "Se marier en Italie (Comune), traductions, reconnaissance en France. Kit complet PDF.",
     ogImage: '/images/kits/fra-ita-cover.jpg',
     sku: 'KIT-FRA-ITA-2025',
@@ -125,7 +125,7 @@ export const KITS: Record<string, Kit> = {
     brand: 'Lex Atlas'
   },
   'fra-prt': {
-    title: 'France ⇄ Portugal Marriage Guide (2025) | Lex Atlas',
+    title: 'France ⇄ Portugal (2025)',
     description: "Mariage transfrontalier France–Portugal : démarches, documents, reconnaissance. PDF facile & sécurisé.",
     ogImage: '/images/kits/fra-prt-cover.jpg',
     sku: 'KIT-FRA-PRT-2025',

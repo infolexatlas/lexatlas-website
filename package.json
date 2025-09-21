@@ -15,7 +15,8 @@
     "analyze": "ANALYZE=true next build",
     "size": "size-limit",
     "prebuild": "node -e \"process.exit(0)\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "check:stripe-live": "tsx scripts/check-stripe.ts"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",

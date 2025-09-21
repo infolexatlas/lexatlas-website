@@ -67,3 +67,9 @@
 {"email":"test@example.com","source":"test_sandbox","timestamp":"2025-09-19T16:17:01.032Z","ip":"captured-if-available"}
 {"email":"contact.lexatlas@gmail.com","source":"test_sandbox","timestamp":"2025-09-19T16:17:04.971Z","ip":"captured-if-available"}
 {"email":"contact.lexatlas@gmail.com","source":"newsletter","createdAt":"2025-09-19T16:17:09.906Z","userAgent":"curl/8.7.1","ipHash":"c71876d6a9ee4993","success":true,"error":null}
+{"email":"test@example.com","source":"footer","timestamp":"2025-09-21T11:30:57.589Z","ip":"captured-if-available"}
+{"email":"test2@example.com","source":"kits-page","timestamp":"2025-09-21T11:32:42.053Z","ip":"captured-if-available"}
+{"email":"test3@example.com","source":"pricing-page","timestamp":"2025-09-21T11:33:27.970Z","ip":"captured-if-available"}
+{"email":"test4@example.com","source":"contact-page","timestamp":"2025-09-21T11:34:22.904Z","ip":"captured-if-available"}
+{"email":"test5@example.com","source":"kit-page","timestamp":"2025-09-21T11:34:46.391Z","ip":"captured-if-available"}
+{"email":"alexandreott@yahoo.com","source":"footer","timestamp":"2025-09-21T11:39:53.756Z","ip":"captured-if-available"}
