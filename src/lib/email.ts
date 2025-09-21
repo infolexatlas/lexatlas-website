@@ -652,7 +652,7 @@ export async function sendLeadSampleEmail(to: string): Promise<LeadSampleEmailRe
             <div class="content">
                 <div style="text-align: center;">
                   <div class="premium-badge">
-                    ⭐ Premium International Solutions
+                    🎯 NEW PREMIUM DESIGN 2025 ⭐ Premium International Solutions
                   </div>
                 </div>
                 
