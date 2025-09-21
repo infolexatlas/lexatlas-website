@@ -297,85 +297,110 @@ export async function sendLeadSampleEmail(to: string): Promise<LeadSampleEmailRe
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <title>Your Free LexAtlas Sample</title>
           <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
-            .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
-            .header { background: linear-gradient(135deg, #0A2342 0%, #1a365d 100%); padding: 40px 30px; text-align: center; }
-            .logo { color: #ffffff; font-size: 28px; font-weight: bold; margin-bottom: 8px; }
-            .tagline { color: #D4AF37; font-size: 16px; margin: 0; }
-            .content { padding: 40px 30px; background-color: #ffffff; }
-            .hero-text { font-size: 24px; font-weight: bold; color: #0A2342; margin-bottom: 20px; text-align: center; }
-            .description { font-size: 16px; color: #666; margin-bottom: 30px; line-height: 1.6; }
-            .cta-button { display: inline-block; background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%); color: #0A2342; padding: 16px 32px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 18px; text-align: center; margin: 20px 0; box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3); }
+            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f5f5f5; }
+            .email-wrapper { width: 100%; max-width: 100%; margin: 0; padding: 0; background-color: #f5f5f5; }
+            .container { width: 100%; max-width: 100%; margin: 0 auto; background-color: #ffffff; }
+            .header { background: linear-gradient(135deg, #0A2342 0%, #1a365d 100%); padding: 40px 20px; text-align: center; width: 100%; }
+            .logo-img { width: 120px; height: 120px; margin: 0 auto 20px; display: block; }
+            .tagline { color: #D4AF37; font-size: 18px; margin: 0; font-weight: 500; }
+            .content { padding: 40px 20px; background-color: #ffffff; width: 100%; }
+            .hero-text { font-size: 28px; font-weight: bold; color: #0A2342; margin-bottom: 25px; text-align: center; line-height: 1.3; }
+            .description { font-size: 18px; color: #555; margin-bottom: 35px; line-height: 1.7; }
+            .cta-button { display: inline-block; background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%); color: #0A2342; padding: 20px 40px; text-decoration: none; border-radius: 12px; font-weight: bold; font-size: 20px; text-align: center; margin: 30px 0; box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4); width: calc(100% - 40px); max-width: 300px; }
             .cta-button:hover { background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); }
-            .reminder { background-color: #f8f9fa; padding: 25px; border-radius: 8px; margin: 30px 0; border-left: 4px solid #D4AF37; }
-            .reminder-text { font-size: 16px; color: #555; margin: 0; line-height: 1.6; }
-            .footer { background-color: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e9ecef; }
-            .footer-text { font-size: 14px; color: #666; margin: 5px 0; }
-            .disclaimer { font-size: 12px; color: #999; margin-top: 15px; font-style: italic; }
+            .reminder { background-color: #f8f9fa; padding: 30px 20px; border-radius: 12px; margin: 40px 0; border-left: 6px solid #D4AF37; }
+            .reminder-text { font-size: 18px; color: #555; margin: 0; line-height: 1.7; }
+            .reminder-text strong { color: #0A2342; font-size: 20px; }
+            .footer { background-color: #f8f9fa; padding: 40px 20px; text-align: center; border-top: 1px solid #e9ecef; }
+            .footer-text { font-size: 16px; color: #666; margin: 8px 0; line-height: 1.5; }
+            .disclaimer { font-size: 14px; color: #999; margin-top: 20px; font-style: italic; }
             .pricing-link { color: #D4AF37; text-decoration: none; font-weight: bold; }
             .pricing-link:hover { text-decoration: underline; }
+            
+            /* Mobile-first responsive design */
             @media only screen and (max-width: 600px) {
-              .container { width: 100% !important; }
-              .header { padding: 30px 20px !important; }
-              .content { padding: 30px 20px !important; }
-              .hero-text { font-size: 20px !important; }
-              .cta-button { padding: 14px 24px !important; font-size: 16px !important; }
+              .email-wrapper { width: 100% !important; max-width: 100% !important; }
+              .container { width: 100% !important; max-width: 100% !important; }
+              .header { padding: 30px 15px !important; width: 100% !important; }
+              .logo-img { width: 100px !important; height: 100px !important; }
+              .tagline { font-size: 16px !important; }
+              .content { padding: 30px 15px !important; width: 100% !important; }
+              .hero-text { font-size: 24px !important; }
+              .description { font-size: 16px !important; }
+              .cta-button { padding: 18px 30px !important; font-size: 18px !important; width: calc(100% - 30px) !important; max-width: 280px !important; }
+              .reminder { padding: 25px 15px !important; margin: 30px 0 !important; }
+              .reminder-text { font-size: 16px !important; }
+              .reminder-text strong { font-size: 18px !important; }
+              .footer { padding: 30px 15px !important; }
+              .footer-text { font-size: 14px !important; }
+              .disclaimer { font-size: 12px !important; }
+            }
+            
+            @media only screen and (max-width: 480px) {
+              .header { padding: 25px 10px !important; }
+              .logo-img { width: 80px !important; height: 80px !important; }
+              .content { padding: 25px 10px !important; }
+              .hero-text { font-size: 22px !important; }
+              .cta-button { padding: 16px 25px !important; font-size: 16px !important; width: calc(100% - 20px) !important; }
+              .reminder { padding: 20px 10px !important; }
             }
           </style>
         </head>
         <body>
-          <div class="container">
-            <div class="header">
-              <div class="logo">LexAtlas</div>
-              <div class="tagline">Your Global Legal Compass</div>
-            </div>
-            
-            <div class="content">
-              <div class="hero-text">Here's your free sample kit</div>
-              
-              <p class="description">
-                Thank you for your interest in LexAtlas! We're excited to share our comprehensive 
-                marriage kit sample with you. This free resource will give you a preview of 
-                what's included in our full marriage kits.
-              </p>
-              
-              <div style="text-align: center;">
-                <a href="${sampleUrl}" class="cta-button">
-                  📥 Download Sample Kit
-                </a>
+          <div class="email-wrapper">
+            <div class="container">
+              <div class="header">
+                <img src="${env.baseUrl}/logo-180x180.png" alt="LexAtlas" class="logo-img" />
+                <div class="tagline">Your Global Legal Compass</div>
               </div>
               
-              <div class="reminder">
-                <p class="reminder-text">
-                  <strong>What's included in this sample:</strong><br>
-                  • Essential document checklist<br>
-                  • Step-by-step procedure overview<br>
-                  • Important deadlines and timelines<br>
-                  • Contact information for authorities
+              <div class="content">
+                <div class="hero-text">Here's your free sample kit</div>
+                
+                <p class="description">
+                  Thank you for your interest in LexAtlas! We're excited to share our comprehensive 
+                  marriage kit sample with you. This free resource will give you a preview of 
+                  what's included in our full marriage kits.
+                </p>
+                
+                <div style="text-align: center;">
+                  <a href="${sampleUrl}" class="cta-button">
+                    📥 Download Sample Kit
+                  </a>
+                </div>
+                
+                <div class="reminder">
+                  <p class="reminder-text">
+                    <strong>What's included in this sample:</strong><br><br>
+                    • Essential document checklist<br>
+                    • Step-by-step procedure overview<br>
+                    • Important deadlines and timelines<br>
+                    • Contact information for authorities
+                  </p>
+                </div>
+                
+                <p class="description">
+                  This sample gives you a taste of the full LexAtlas kits. For complete legal 
+                  step-by-step guidance, visit our 
+                  <a href="${env.baseUrl}/pricing" class="pricing-link">Pricing Page</a>.
+                </p>
+                
+                <p class="description">
+                  If you have any questions, feel free to reply to this email or contact us at 
+                  <a href="mailto:contact.lexatlas@gmail.com" style="color: #D4AF37; font-weight: bold;">contact.lexatlas@gmail.com</a>
+                </p>
+                
+                <p class="description">
+                  Best regards,<br>
+                  <strong>The LexAtlas Team</strong>
                 </p>
               </div>
               
-              <p class="description">
-                This sample gives you a taste of the full LexAtlas kits. For complete legal 
-                step-by-step guidance, visit our 
-                <a href="${env.baseUrl}/pricing" class="pricing-link">Pricing Page</a>.
-              </p>
-              
-              <p class="description">
-                If you have any questions, feel free to reply to this email or contact us at 
-                <a href="mailto:contact.lexatlas@gmail.com" style="color: #D4AF37;">contact.lexatlas@gmail.com</a>
-              </p>
-              
-              <p class="description">
-                Best regards,<br>
-                <strong>The LexAtlas Team</strong>
-              </p>
-            </div>
-            
-            <div class="footer">
-              <div class="footer-text">© 2025 LexAtlas. All rights reserved.</div>
-              <div class="footer-text">This email was sent to ${to} because you requested a free sample.</div>
-              <div class="disclaimer">Jurist guidance only – not a law firm or attorney.</div>
+              <div class="footer">
+                <div class="footer-text">© 2025 LexAtlas. All rights reserved.</div>
+                <div class="footer-text">This email was sent to ${to} because you requested a free sample.</div>
+                <div class="disclaimer">Jurist guidance only – not a law firm or attorney.</div>
+              </div>
             </div>
           </div>
         </body>
