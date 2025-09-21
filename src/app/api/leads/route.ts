@@ -79,12 +79,24 @@ export async function POST(request: NextRequest) {
         echoTo: process.env.EMAIL_ECHO_TO || null 
       })
 
+      // Determine user-friendly message
+      let userMessage = 'Thank you for subscribing!'
+      if (result.sent === false) {
+        if (result.reason === 'provider_error') {
+          userMessage = 'Thank you for subscribing! Your email has been saved and we\'ll contact you soon.'
+        } else if (result.reason === 'missing_key_dev') {
+          userMessage = 'Thank you for subscribing!'
+        } else {
+          userMessage = 'Thank you for subscribing!'
+        }
+      }
+
       return NextResponse.json({
         ok: true,
         saved: true,
         sent: result.sent === true,
         reason: result.reason ?? null,
-        message: result.message ?? null,
+        message: userMessage,
         email,
         env: {
           hasKey: env.hasKey,
@@ -105,8 +117,8 @@ export async function POST(request: NextRequest) {
           email,
           sent: false, 
           error: 'email_failed',
-          message: 'Thank you! Your lead is saved.',
-          warning: 'Email delivery failed.'
+          message: 'Thank you for subscribing! Your email has been saved.',
+          warning: null
         },
         { status: 200 }
       )
