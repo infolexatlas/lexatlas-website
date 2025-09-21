@@ -19,10 +19,10 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 min-h-[80px] border-b border-black/10 transition-[background,backdrop-filter,box-shadow] ${
+      className={`sticky top-0 z-50 min-h-[80px] border-b border-black/10 transition-all duration-300 ease-out ${
         scrolled
-          ? 'bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/60 shadow-[0_6px_20px_rgba(0,0,0,0.08)]'
-          : 'bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/60 shadow-none'
+          ? 'bg-white/80 backdrop-blur-md shadow-[0_6px_20px_rgba(0,0,0,0.08)] border-black/20'
+          : 'bg-transparent backdrop-blur-none shadow-none border-transparent'
       }`}
       role="banner"
     >
