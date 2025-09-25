@@ -22,7 +22,7 @@ async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
     throw new Error("RESEND_API_KEY missing");
   }
 
-  const subject = "🎯 NOUVEAU TEMPLATE 2025 - Test Final - LexAtlas Premium Sample";
+  const subject = "🎉 Your free Lex Atlas resource is here";
   const fromAddress = env.resolvedFrom;
   
   console.log('[ULTRA PREMIUM EMAIL] Sending ultra premium email', {
@@ -46,10 +46,13 @@ async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>🎯 NOUVEAU TEMPLATE 2025 - LexAtlas Premium Sample</title>
+          <title>🎉 Your free Lex Atlas resource is here</title>
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
           <style>
             body { 
-              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Georgia', serif; 
+              font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
               line-height: 1.6; 
               color: #374151; 
               margin: 0; 
@@ -57,33 +60,39 @@ async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
               background: linear-gradient(135deg, #F5F7FB 0%, #FFFFFF 100%);
               -webkit-font-smoothing: antialiased;
               -moz-osx-font-smoothing: grayscale;
+              width: 100% !important;
+              min-width: 320px;
+              overflow-x: hidden;
             }
             
             .email-wrapper { 
               width: 100%; 
               max-width: 100%; 
               margin: 0; 
-              padding: 20px 0; 
+              padding: 10px; 
               background: linear-gradient(135deg, #F5F7FB 0%, #FFFFFF 100%);
+              box-sizing: border-box;
             }
             
             .container { 
               width: 100%; 
-              max-width: 100%; 
+              max-width: 600px; 
               margin: 0 auto; 
               background-color: #FFFFFF; 
               border-radius: 24px;
               box-shadow: 0 8px 32px -4px rgba(26, 46, 79, 0.12);
               overflow: hidden;
               border: 1px solid rgba(212, 175, 55, 0.1);
+              box-sizing: border-box;
             }
             
             .header { 
               background: linear-gradient(135deg, #1A2E4F 0%, #2D4A6B 50%, #1A2E4F 100%); 
-              padding: 50px 30px; 
+              padding: 50px 20px; 
               text-align: center; 
               width: 100%; 
               position: relative;
+              box-sizing: border-box;
             }
             
             .header::before {
@@ -124,9 +133,10 @@ async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
             }
             
             .content { 
-              padding: 50px 30px; 
+              padding: 50px 20px; 
               background-color: #FFFFFF; 
               width: 100%; 
+              box-sizing: border-box;
             }
             
             .premium-badge {
@@ -150,14 +160,18 @@ async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
             }
             
             .hero-text { 
-              font-family: 'Georgia', serif;
+              font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
               font-size: 38px; 
               font-weight: 700; 
               color: #1A2E4F; 
               margin-bottom: 35px; 
               text-align: center; 
-              line-height: 1.2;
+              line-height: 1.3;
               letter-spacing: -0.5px;
+              word-wrap: break-word;
+              hyphens: auto;
+              -webkit-hyphens: auto;
+              -ms-hyphens: auto;
             }
             
             .description { 
@@ -166,6 +180,10 @@ async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
               margin-bottom: 45px; 
               line-height: 1.7; 
               text-align: center;
+              word-wrap: break-word;
+              hyphens: auto;
+              -webkit-hyphens: auto;
+              -ms-hyphens: auto;
             }
             
             .cta-container {
@@ -188,7 +206,7 @@ async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
               transition: all 0.3s ease;
               position: relative;
               overflow: hidden;
-              font-family: 'Georgia', serif;
+              font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
               letter-spacing: 0.5px;
               text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             }
@@ -218,13 +236,14 @@ async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
             
             .premium-card { 
               background: linear-gradient(135deg, #FFFFFF 0%, #F5F7FB 100%);
-              padding: 45px 40px; 
+              padding: 45px 25px; 
               border-radius: 25px; 
               margin: 55px 0; 
               border: 1px solid rgba(212, 175, 55, 0.2);
               box-shadow: 0 8px 30px -2px rgba(26, 46, 79, 0.1);
               position: relative;
               overflow: hidden;
+              box-sizing: border-box;
             }
             
             .premium-card::before {
@@ -238,7 +257,7 @@ async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
             }
             
             .card-title { 
-              font-family: 'Georgia', serif;
+              font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
               font-size: 28px; 
               color: #1A2E4F; 
               margin: 0 0 25px 0; 
@@ -280,9 +299,10 @@ async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
             
             .footer { 
               background: linear-gradient(135deg, #F5F7FB 0%, #FFFFFF 100%); 
-              padding: 50px 30px; 
+              padding: 50px 20px; 
               text-align: center; 
               border-top: 1px solid rgba(212, 175, 55, 0.1);
+              box-sizing: border-box;
             }
             
             .footer-text { 
@@ -336,8 +356,8 @@ async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
                 padding: 40px 20px !important; 
               }
               .logo-img { 
-                width: 120px !important; 
-                height: 120px !important; 
+                width: 100px !important; 
+                height: 100px !important; 
               }
               .tagline { 
                 font-size: 18px !important; 
@@ -346,29 +366,40 @@ async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
                 padding: 40px 20px !important; 
               }
               .hero-text { 
-                font-size: 32px !important; 
+                font-size: 28px !important; 
+                line-height: 1.4 !important;
+                margin-bottom: 30px !important;
               }
               .description { 
                 font-size: 18px !important; 
+                line-height: 1.6 !important;
+                margin-bottom: 35px !important;
               }
               .cta-button { 
                 padding: 25px 45px !important; 
                 font-size: 19px !important; 
                 width: calc(100% - 40px) !important; 
                 max-width: 320px !important; 
+                margin: 0 auto !important;
               }
               .premium-card { 
-                padding: 40px 30px !important; 
-                margin: 45px 0 !important; 
+                padding: 35px 25px !important; 
+                margin: 40px 0 !important; 
               }
               .card-title { 
-                font-size: 24px !important; 
+                font-size: 22px !important; 
+                line-height: 1.3 !important;
+              }
+              .feature-item {
+                font-size: 17px !important;
+                margin-bottom: 18px !important;
               }
               .footer { 
-                padding: 45px 20px !important; 
+                padding: 40px 20px !important; 
               }
               .footer-text { 
                 font-size: 16px !important; 
+                line-height: 1.5 !important;
               }
               .disclaimer { 
                 font-size: 14px !important; 
@@ -384,59 +415,75 @@ async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
                 padding: 30px 15px !important; 
               }
               .logo-img { 
-                width: 100px !important; 
-                height: 100px !important; 
+                width: 90px !important; 
+                height: 90px !important; 
               }
               .content { 
                 padding: 30px 15px !important; 
               }
               .hero-text { 
-                font-size: 28px !important; 
+                font-size: 24px !important; 
+                line-height: 1.4 !important;
+                margin-bottom: 25px !important;
+              }
+              .description {
+                font-size: 16px !important;
+                line-height: 1.5 !important;
+                margin-bottom: 30px !important;
               }
               .cta-button { 
-                padding: 22px 40px !important; 
-                font-size: 17px !important; 
+                padding: 20px 35px !important; 
+                font-size: 16px !important; 
                 width: calc(100% - 30px) !important; 
+                max-width: 280px !important;
               }
               .premium-card { 
-                padding: 35px 25px !important; 
+                padding: 30px 20px !important; 
+                margin: 35px 0 !important;
+              }
+              .card-title {
+                font-size: 20px !important;
+                line-height: 1.3 !important;
+              }
+              .feature-item {
+                font-size: 15px !important;
+                margin-bottom: 15px !important;
+              }
+              .footer {
+                padding: 35px 15px !important;
               }
             }
           </style>
         </head>
         <body>
-          <div class="email-wrapper">
-            <div class="container">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0; padding: 0; background: linear-gradient(135deg, #F5F7FB 0%, #FFFFFF 100%);">
+            <tr>
+              <td align="center" style="padding: 10px;">
+                <div class="email-wrapper">
+                  <div class="container">
               <div class="header">
                 <div class="logo-container">
-                  <div style="background: linear-gradient(135deg, #1A2E4F 0%, #2D4A6B 100%); border-radius: 50%; padding: 15px; display: inline-block; box-shadow: 0 8px 32px -4px rgba(26, 46, 79, 0.3);">
-                    <img src="${env.baseUrl}/logo-180x180.png" alt="LexAtlas" class="logo-img" style="background: transparent; border: none; padding: 0;" />
+                  <div style="background: transparent; border-radius: 50%; padding: 15px; display: inline-block;">
+                    <img src="https://lex-atlas.com/logo-180x180.png" alt="Lex Atlas" class="logo-img" style="background: transparent; border: none; padding: 0; width: 110px; height: 110px; object-fit: contain; filter: brightness(0) invert(1);" />
                   </div>
                   <div class="tagline">Your Global Legal Compass</div>
                 </div>
               </div>
               
               <div class="content">
-                <div style="text-align: center;">
-                  <div class="premium-badge">
-                    🎯 NOUVEAU TEMPLATE 2025 ⭐ TEST FINAL ⭐
-                  </div>
-                </div>
-                
-                <div class="hero-text">Your Premium Sample Kit is Ready</div>
+                <div class="hero-text">Welcome to Lex Atlas</div>
                 
                 <!-- UNIQUE IDENTIFIER FOR RESEND CACHE BYPASS: ${Date.now()} -->
                 <div style="display: none; color: transparent; font-size: 0;">CACHE_BYPASS_${Date.now()}_${Math.random().toString(36).substr(2, 9)}</div>
                 
                 <p class="description">
-                  Thank you for choosing LexAtlas! We're excited to share our comprehensive 
-                  marriage kit sample with you. This premium resource showcases the quality and 
-                  thoroughness you can expect from our full marriage kits.
+                  You've just unlocked your first step towards mastering <strong>international legal procedures</strong>.
+                  As promised, here is your exclusive resource:
                 </p>
                 
                 <div class="cta-container">
                   <a href="${sampleUrl || `${env.baseUrl}/downloads/samples/LEXATLAS-global-sample.pdf`}" class="cta-button">
-                    📥 Download Your Premium Sample Kit
+                    📥 Download your free guide
                   </a>
                 </div>
                 
@@ -463,38 +510,41 @@ async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
                 </div>
                 
                 <p class="description">
-                  This sample demonstrates the premium quality of our full LexAtlas kits. 
-                  For complete legal step-by-step guidance and expert support, explore our 
-                  <a href="${env.baseUrl}/pricing" class="pricing-link">Premium Kits</a>.
+                  With Lex Atlas, you get <em>expert-built, country-specific PDF kits</em> that make complex international procedures clear and affordable.
                 </p>
                 
                 <p class="description">
-                  Questions? Our expert team is here to help. Reply to this email or contact us at 
-                  <a href="mailto:contact.lexatlas@gmail.com" class="contact-link">contact.lexatlas@gmail.com</a>
+                  Stay tuned — we'll keep sending you premium insights and updates to help you navigate cross-border challenges with confidence.
                 </p>
                 
                 <p class="description">
                   Best regards,<br>
-                  <strong style="color: #1A2E4F;">The LexAtlas Team</strong>
+                  <strong style="color: #1A2E4F;">The Lex Atlas Team</strong>
                 </p>
               </div>
               
               <div class="footer">
-                <div class="footer-text">© 2025 LexAtlas. All rights reserved.</div>
-                <div class="footer-text">This email was sent to ${to} because you requested a premium sample.</div>
-                <div class="disclaimer">Jurist guidance only – not a law firm or attorney.</div>
+                <div class="footer-text">© ${new Date().getFullYear()} Lex Atlas · All rights reserved</div>
+                <div class="footer-text">
+                  <a href="${env.baseUrl}/unsubscribe" style="color: #D4AF37; text-decoration: underline;">Unsubscribe</a>
+                </div>
               </div>
-            </div>
-          </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
         </body>
         </html>
       `,
-      text: `🎯 NOUVEAU TEMPLATE 2025 - LexAtlas Premium Sample
+      text: `🎉 Your free Lex Atlas resource is here
 
-Thank you for choosing LexAtlas!
+Welcome to Lex Atlas!
 
-Your premium sample kit is ready:
-${sampleUrl || `${env.baseUrl}/downloads/samples/LEXATLAS-global-sample.pdf`}
+You've just unlocked your first step towards mastering international legal procedures.
+As promised, here is your exclusive resource:
+
+Download your free guide: ${sampleUrl || `${env.baseUrl}/downloads/samples/LEXATLAS-global-sample.pdf`}
 
 What's included:
 • Essential document checklist with legal requirements
@@ -502,16 +552,15 @@ What's included:
 • Important deadlines and critical dates
 • Contact information for relevant authorities
 
-This sample demonstrates the premium quality of our full LexAtlas kits.
+With Lex Atlas, you get expert-built, country-specific PDF kits that make complex international procedures clear and affordable.
 
-For complete legal guidance, visit: ${env.baseUrl}/pricing
-
-Questions? Contact us at: contact.lexatlas@gmail.com
+Stay tuned — we'll keep sending you premium insights and updates to help you navigate cross-border challenges with confidence.
 
 Best regards,
-The LexAtlas Team
+The Lex Atlas Team
 
-© 2025 LexAtlas. All rights reserved.
+© ${new Date().getFullYear()} Lex Atlas · All rights reserved
+Unsubscribe: ${env.baseUrl}/unsubscribe
 Jurist guidance only – not a law firm or attorney.`,
     });
 
