@@ -87,7 +87,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ 
         error: "Email send failed", 
         details: txt?.slice(0, 200),
-        status: res.status 
+        status: res.status,
+        debug: {
+          hasApiKey: !!process.env.RESEND_API_KEY,
+          apiKeyPrefix: process.env.RESEND_API_KEY?.slice(0, 4),
+          htmlLength: html.length,
+          subject: subject,
+          from: "Lex Atlas <onboarding@resend.dev>"
+        }
       }, { status: 502 });
     }
 
