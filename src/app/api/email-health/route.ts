@@ -13,7 +13,7 @@ export async function GET() {
     guideUrl: getGuideUrl(),
     brandBlue: blue,
     logo,
-    subject: `Your Lex Atlas Guide is Ready 📘 [${LEADMAGNET_TEMPLATE_VERSION}]`,
+    subject: `🎉 Your free Lex Atlas resource is here [${LEADMAGNET_TEMPLATE_VERSION}]`,
     htmlSnippet: snippet,
   });
 }

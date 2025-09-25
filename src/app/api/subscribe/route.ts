@@ -47,7 +47,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Server config error" }, { status: 500 });
     }
 
-    const subject = `Your Lex Atlas Guide is Ready 📘 [${LEADMAGNET_TEMPLATE_VERSION}]`;
+    const subject = `🎉 Your free Lex Atlas resource is here [${LEADMAGNET_TEMPLATE_VERSION}]`;
     const html = renderLeadMagnetEmailHTML();
 
     console.log("resend_payload_preview", { to: email, subject, version: LEADMAGNET_TEMPLATE_VERSION });
@@ -59,7 +59,7 @@ export async function POST(req: Request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "LexAtlas <info@lex-atlas.com>",
+        from: "Lex Atlas <onboarding@resend.dev>",
         to: email,
         subject,
         html,
