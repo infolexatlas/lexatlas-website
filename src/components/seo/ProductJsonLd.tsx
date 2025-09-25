@@ -1,6 +1,6 @@
 // Server component to inject Product JSON-LD (SSR)
 import React from 'react'
-import { toJsonLd } from '@/lib/jsonld'
+import { toJsonLd } from '@/lib/jsonLd'
 
 type ProductJsonLdProps = {
   name: string
