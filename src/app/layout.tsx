@@ -106,6 +106,7 @@ export default function RootLayout({
         />
         
         {/* Additional Open Graph meta tags */}
+        <meta property="og:image" content="https://lex-atlas.com/og/home.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:type" content="image/png" />
