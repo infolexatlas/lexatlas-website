@@ -4,7 +4,7 @@ import path from "node:path";
 
 export const LEADMAGNET_TEMPLATE_VERSION = "v3.0.0";
 
-export const FREE_GUIDE_SUBJECT = "Your Lex Atlas Free Guide is Ready 📘 [v3]"
+export const FREE_GUIDE_SUBJECT = "Your Lex Atlas Free Guide is Ready 🎉"
 
 function publicFileExists(p: string) {
   try {
