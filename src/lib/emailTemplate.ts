@@ -22,7 +22,7 @@ async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
     throw new Error("RESEND_API_KEY missing");
   }
 
-  const subject = "🎉 Your free Lex Atlas resource is here";
+  const subject = "🎉 Your free Lex Atlas resource is here [v2.0]";
   const fromAddress = env.resolvedFrom;
   
   console.log('[ULTRA PREMIUM EMAIL] Sending ultra premium email', {
@@ -46,7 +46,7 @@ async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>🎉 Your free Lex Atlas resource is here</title>
+          <title>🎉 Your free Lex Atlas resource is here [v2.0]</title>
           <link rel="preconnect" href="https://fonts.googleapis.com">
           <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
           <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -473,8 +473,8 @@ async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {
               <div class="content">
                 <div class="hero-text">Welcome to Lex Atlas</div>
                 
-                <!-- UNIQUE IDENTIFIER FOR RESEND CACHE BYPASS: ${Date.now()} -->
-                <div style="display: none; color: transparent; font-size: 0;">CACHE_BYPASS_${Date.now()}_${Math.random().toString(36).substr(2, 9)}</div>
+                <!-- UNIQUE IDENTIFIER FOR RESEND CACHE BYPASS v2.0: ${Date.now()} -->
+                <div style="display: none; color: transparent; font-size: 0;">CACHE_BYPASS_V2_${Date.now()}_${Math.random().toString(36).substr(2, 9)}</div>
                 
                 <p class="description">
                   You've just unlocked your first step towards mastering <strong>international legal procedures</strong>.
