@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import {
   LEADMAGNET_TEMPLATE_VERSION,
+  FREE_GUIDE_SUBJECT,
   renderLeadMagnetEmailHTML,
 } from "@/emails/leadmagnet-simple";
 
@@ -18,7 +19,23 @@ export async function POST(req: Request) {
     "0.0.0.0";
 
   try {
-    // rate limit
+    const body = await req.json().catch(() => ({}));
+    const email = (body?.email || "").toString().trim().toLowerCase();
+    const honeypot = (body?.website || "").toString().trim();
+
+    // 1) Honeypot: accept silently (do not rate-limit bots)
+    if (honeypot) {
+      console.log("lead_honeypot_triggered", { ip });
+      return NextResponse.json({ success: true });
+    }
+
+    // 2) Validate before rate-limit
+    if (!EMAIL_RE.test(email)) {
+      console.warn("lead_invalid_email", { ip, email });
+      return NextResponse.json({ error: "Invalid email" }, { status: 400 });
+    }
+
+    // 3) Only now apply rate-limit for valid emails
     const now = Date.now();
     const last = lastHits.get(ip) ?? 0;
     if (now - last < RATE_LIMIT_MS) {
@@ -27,27 +44,12 @@ export async function POST(req: Request) {
     }
     lastHits.set(ip, now);
 
-    const body = await req.json().catch(() => ({}));
-    const email = (body?.email || "").toString().trim().toLowerCase();
-    const honeypot = (body?.website || "").toString().trim();
-
-    // honeypot -> accept silently
-    if (honeypot) {
-      console.log("lead_honeypot_triggered", { ip });
-      return NextResponse.json({ success: true });
-    }
-
-    if (!EMAIL_RE.test(email)) {
-      console.warn("lead_invalid_email", { ip, email });
-      return NextResponse.json({ error: "Invalid email" }, { status: 400 });
-    }
-
     if (!process.env.RESEND_API_KEY) {
       console.error("lead_missing_resend_key");
       return NextResponse.json({ error: "Server config error" }, { status: 500 });
     }
 
-    const subject = `🎉 Your free Lex Atlas resource is here`;
+    const subject = FREE_GUIDE_SUBJECT;
     const html = renderLeadMagnetEmailHTML();
 
     console.log("resend_payload_preview", { 

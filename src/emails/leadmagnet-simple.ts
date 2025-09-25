@@ -2,7 +2,9 @@
 import fs from "node:fs";
 import path from "node:path";
 
-export const LEADMAGNET_TEMPLATE_VERSION = "v1.0.0";
+export const LEADMAGNET_TEMPLATE_VERSION = "v3.0.0";
+
+export const FREE_GUIDE_SUBJECT = "Your Lex Atlas Free Guide is Ready 📘 [v3]"
 
 function publicFileExists(p: string) {
   try {
@@ -37,8 +39,10 @@ export function renderLeadMagnetEmailHTML() {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🎉 Your free Lex Atlas resource is here</title>
+  <!-- LEXATLAS:FREEGUIDE:v3 -->
 </head>
 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 20px; background: #f5f5f5;">
+  <!-- LEXATLAS:FREEGUIDE:v3 -->
   <div style="max-width: 600px; margin: 0 auto; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
     
     <!-- Header -->

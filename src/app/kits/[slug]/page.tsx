@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import Script from 'next/script'
 import { KITS, KIT_SLUGS } from '@/lib/kits.config'
 import { kitsDetail } from '@/lib/kits-detail-data'
 import { HeaderBlock } from '@/components/la/KitDetail/HeaderBlock'
@@ -11,6 +10,7 @@ import { TrustStrip } from '@/components/la/KitDetail/TrustStrip'
 import { RelatedKits } from '@/components/la/KitDetail/RelatedKits'
 import { BreadcrumbsJsonLd } from '@/components/la/KitDetail/JsonLd'
 import { CrossPassports } from '@/components/la/KitDetail/CrossPassports'
+import ProductJsonLd from '@/components/seo/ProductJsonLd'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -65,33 +65,19 @@ export default async function KitPage({ params }: Props) {
     </div>
   )
 
-  // Product JSON-LD with all required fields
-  const productJsonLd = {
-    '@context': 'https://schema.org/',
-    '@type': 'Product',
-    name: kit.title,
-    description: kit.description,
-    sku: kit.sku,
-    brand: { '@type': 'Brand', name: kit.brand },
-    image: `https://lex-atlas.com${kit.ogImage}`,
-    url: kit.url,
-    offers: {
-      '@type': 'Offer',
-      price: kit.price,
-      priceCurrency: kit.currency,
-      availability: 'https://schema.org/InStock',
-      url: kit.url,
-      validFrom: kit.validFrom
-    }
-  }
-
   return (
     <main data-testid="kit-detail-app-router">
       {/* Product JSON-LD */}
-      <Script 
-        id="jsonld-product" 
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} 
+      <ProductJsonLd
+        name={kit.title}
+        description={kit.description}
+        sku={kit.sku}
+        image={`https://lex-atlas.com${kit.ogImage}`}
+        url={kit.url}
+        price={kit.price}
+        priceCurrency={kit.currency}
+        brandName={kit.brand}
+        validFrom={kit.validFrom}
       />
 
       <HeaderBlock 
