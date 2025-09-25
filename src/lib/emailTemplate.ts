@@ -4,15 +4,15 @@ import { getEmailEnv } from "./emailEnv";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function sendLeadSampleEmail(to: string, sampleUrl?: string) {
-  return await sendUltraPremiumEmail(to, sampleUrl);
+  throw new Error("Legacy email template removed. Use renderLeadMagnetEmailHTML() from @/emails/leadmagnet");
 }
 
 export async function sendLeadMagnetEmail(to: string) {
-  return await sendUltraPremiumEmail(to);
+  throw new Error("Legacy email template removed. Use renderLeadMagnetEmailHTML() from @/emails/leadmagnet");
 }
 
 export async function sendNewsletterEmail(to: string) {
-  return await sendUltraPremiumEmail(to);
+  throw new Error("Legacy email template removed. Use renderLeadMagnetEmailHTML() from @/emails/leadmagnet");
 }
 
 async function sendUltraPremiumEmail(to: string, sampleUrl?: string) {

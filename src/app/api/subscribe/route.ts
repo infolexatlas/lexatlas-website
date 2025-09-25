@@ -1,77 +1,13 @@
+// DISCOVERY NOTE: This route is the ONLY place that sends the lead magnet email.
 import { NextResponse } from "next/server";
-import { BRAND_HEX, LOGO_SRC } from "@/lib/brand";
+import {
+  LEADMAGNET_TEMPLATE_VERSION,
+  renderLeadMagnetEmailHTML,
+} from "@/emails/leadmagnet";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-// basic in-memory rate limit per lambda instance
 const lastHits = new Map<string, number>();
 const RATE_LIMIT_MS = 15_000;
-
-function getGuideUrl() {
-  return process.env.LEADMAGNET_URL?.trim() || "https://lex-atlas.com/files/lexatlas-starter-guide.pdf";
-}
-
-function htmlTemplate() {
-  const guideUrl = getGuideUrl();
-  const brand = BRAND_HEX;
-  const logo = 'https://lex-atlas.com/logo.svg'; // URL complète pour les emails
-  const preheader = "Your free Lex Atlas guide is inside.";
-
-  return `
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charSet="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="x-preheader" content="${preheader}" />
-    <title>Your Lex Atlas Guide</title>
-  </head>
-  <body style="margin:0;padding:0;background:#f7f7f8;font-family:Arial,Helvetica,sans-serif;">
-    <span style="display:none !important;visibility:hidden;opacity:0;height:0;width:0;overflow:hidden;">
-      ${preheader}
-    </span>
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f7f7f8;padding:24px;">
-      <tr>
-        <td align="center">
-          <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,0.06);">
-            <tr>
-              <td style="background:${brand};color:#fff;padding:16px 20px;">
-                <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td align="left" style="vertical-align:middle;">
-                      <img src="${logo}" alt="Lex Atlas" height="24" style="display:inline-block;vertical-align:middle;border:0;outline:none;" />
-                      <span style="display:inline-block;vertical-align:middle;margin-left:10px;font-size:18px;font-weight:700;letter-spacing:0.2px;">
-                        Lex Atlas — Your free guide
-                      </span>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding:28px 24px;color:#111;font-size:16px;line-height:1.6;">
-                <p style="margin:0 0 12px 0;">Hi there,</p>
-                <p style="margin:0 0 16px 0;">Thanks for subscribing to Lex Atlas 🙌</p>
-                <p style="margin:0 0 18px 0;">Your free guide to cross-border marriage requirements is ready:</p>
-                <p style="margin:22px 0;">
-                  <a href="${guideUrl}" target="_blank" rel="noopener noreferrer"
-                     style="background:${brand};color:#fff;text-decoration:none;padding:12px 18px;border-radius:10px;display:inline-block;font-weight:700;">
-                    📥 Download the guide
-                  </a>
-                </p>
-                <!-- Removed the fallback raw link paragraph to match requirements -->
-                <hr style="border:none;border-top:1px solid #ececec;margin:24px 0;" />
-                <p style="font-size:13px;color:#555;margin:0;">From: info@lex-atlas.com</p>
-              </td>
-            </tr>
-          </table>
-          <p style="color:#777;font-size:12px;margin-top:12px;">© ${new Date().getFullYear()} Lex Atlas</p>
-        </td>
-      </tr>
-    </table>
-  </body>
-  </html>`;
-}
 
 export const runtime = "nodejs";
 
@@ -111,6 +47,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Server config error" }, { status: 500 });
     }
 
+    const subject = `Your Lex Atlas Guide is Ready 📘 [${LEADMAGNET_TEMPLATE_VERSION}]`;
+    const html = renderLeadMagnetEmailHTML();
+
+    console.log("resend_payload_preview", { to: email, subject, version: LEADMAGNET_TEMPLATE_VERSION });
+
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -118,11 +59,11 @@ export async function POST(req: Request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Lex Atlas <info@lex-atlas.com>",
+        from: "LexAtlas <info@lex-atlas.com>",
         to: email,
-        subject: "Your Lex Atlas Guide is Ready 📘",
-        html: htmlTemplate(),
-        reply_to: "info@lex-atlas.com"
+        subject,
+        html,
+        reply_to: "info@lex-atlas.com",
       }),
     });
 
@@ -132,7 +73,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Email send failed" }, { status: 502 });
     }
 
-    console.log("lead_email_sent", { ip, email });
+    console.log("lead_email_sent", { ip, email, version: LEADMAGNET_TEMPLATE_VERSION });
     return NextResponse.json({ success: true });
   } catch (err: any) {
     console.error("lead_server_error", { ip, message: err?.message });
