@@ -43,7 +43,7 @@ export function renderLeadMagnetEmailHTML() {
     
     <!-- Header -->
     <div style="background: linear-gradient(135deg, #1A2E4F 0%, #2D4A6B 100%); padding: 40px 20px; text-align: center; color: white;">
-      <img src="https://lex-atlas.com/logo-180x180.png" alt="Lex Atlas" style="width: 80px; height: 80px; border-radius: 50%; margin-bottom: 20px; filter: brightness(0) invert(1);" />
+      <img src="https://lex-atlas.com/logo-180x180.png" alt="Lex Atlas" style="width: 80px; height: 80px; border-radius: 50%; margin-bottom: 20px;" />
       <h1 style="margin: 0; font-size: 28px; font-weight: 700;">Welcome to Lex Atlas</h1>
       <p style="margin: 10px 0 0 0; font-size: 18px; color: #D4AF37;">Your Global Legal Compass</p>
     </div>
