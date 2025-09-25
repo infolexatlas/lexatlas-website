@@ -57,7 +57,7 @@ export function renderLeadMagnetEmailHTML() {
       
       <div style="text-align: center; margin: 30px 0;">
         <a href="${guideUrl}" style="display: inline-block; background: linear-gradient(135deg, #1A2E4F 0%, #2D4A6B 100%); color: #D4AF37; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 18px; border: 2px solid #D4AF37;">
-          📥 Download your free guide
+          Download your free guide
         </a>
       </div>
       
