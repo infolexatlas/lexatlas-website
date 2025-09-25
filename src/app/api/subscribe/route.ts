@@ -50,7 +50,14 @@ export async function POST(req: Request) {
     const subject = `🎉 Your free Lex Atlas resource is here [${LEADMAGNET_TEMPLATE_VERSION}]`;
     const html = renderLeadMagnetEmailHTML();
 
-    console.log("resend_payload_preview", { to: email, subject, version: LEADMAGNET_TEMPLATE_VERSION });
+    console.log("resend_payload_preview", { 
+      to: email, 
+      subject, 
+      version: LEADMAGNET_TEMPLATE_VERSION,
+      htmlLength: html.length,
+      hasApiKey: !!process.env.RESEND_API_KEY,
+      apiKeyPrefix: process.env.RESEND_API_KEY?.slice(0, 4)
+    });
 
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -69,8 +76,19 @@ export async function POST(req: Request) {
 
     if (!res.ok) {
       const txt = await res.text();
-      console.error("lead_email_failed", { ip, email, status: res.status, resp: txt?.slice(0, 300) });
-      return NextResponse.json({ error: "Email send failed" }, { status: 502 });
+      console.error("lead_email_failed", { 
+        ip, 
+        email, 
+        status: res.status, 
+        statusText: res.statusText,
+        resp: txt?.slice(0, 500),
+        headers: Object.fromEntries(res.headers.entries())
+      });
+      return NextResponse.json({ 
+        error: "Email send failed", 
+        details: txt?.slice(0, 200),
+        status: res.status 
+      }, { status: 502 });
     }
 
     console.log("lead_email_sent", { ip, email, version: LEADMAGNET_TEMPLATE_VERSION });
