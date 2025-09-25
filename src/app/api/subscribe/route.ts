@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import {
   LEADMAGNET_TEMPLATE_VERSION,
   renderLeadMagnetEmailHTML,
-} from "@/emails/leadmagnet";
+} from "@/emails/leadmagnet-simple";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const lastHits = new Map<string, number>();
