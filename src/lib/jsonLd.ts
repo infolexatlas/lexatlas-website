@@ -17,6 +17,13 @@ export function jsonLd(obj: unknown): string {
 }
 
 /**
+ * Alias for jsonLd for backward compatibility
+ */
+export function toJsonLd(obj: unknown): string {
+  return JSON.stringify(obj)
+}
+
+/**
  * Generate Organization schema
  */
 export function getOrganizationSchema() {
