@@ -14,10 +14,7 @@
       "maxDuration": 30
     }
   },
-  "redirects": [
-    // Redirections supprimées pour éviter les problèmes d'indexation Google
-    // Les anciennes URLs ne sont plus redirigées automatiquement
-  ],
+  "redirects": [],
   "rewrites": [
     {
       "source": "/sitemap.xml",
