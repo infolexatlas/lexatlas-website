@@ -12,8 +12,8 @@ Disallow: /checkout
 Disallow: /kits/*/success
 Disallow: /kits/*/cancel
 
-# Allow marriage kit pages
-Allow: /kits/marriage-kit/
+# Allow all kit pages (including marriage-kit)
+Allow: /kits/
 
 # Crawl delay
 Crawl-delay: 1

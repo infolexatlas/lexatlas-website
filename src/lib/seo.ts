@@ -4,7 +4,7 @@ export const defaultSEO: DefaultSeoProps = {
   titleTemplate: '%s | Lex Atlas',
   defaultTitle: 'Lex Atlas - Your Global Legal Compass',
   description: 'Expert-built, country-specific PDF guides to handle international legal procedures with clarity and confidence.',
-  canonical: process.env.NEXT_PUBLIC_BASE_URL || 'https://lex-atlas.com',
+  // canonical supprimé pour éviter les conflits avec les pages individuelles
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -13,6 +13,13 @@ export const defaultSEO: DefaultSeoProps = {
     title: 'Lex Atlas - Your Global Legal Compass',
     description: 'Expert-built, country-specific PDF guides to handle international legal procedures with clarity and confidence.',
     images: [
+      {
+        url: '/logo/lexatlas.svg',
+        width: 200,
+        height: 200,
+        alt: 'Lex Atlas Logo',
+        type: 'image/svg+xml',
+      },
       {
         url: '/og/home.png',
         width: 1200,
