@@ -25,5 +25,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }))
 
-  return [...staticRoutes, ...kitRoutes]
+  const previewRoutes: MetadataRoute.Sitemap = KIT_SLUGS.map(slug => ({
+    url: `${base}/preview/${slug}`,
+    lastModified: now,
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }))
+
+  return [...staticRoutes, ...kitRoutes, ...previewRoutes]
 }

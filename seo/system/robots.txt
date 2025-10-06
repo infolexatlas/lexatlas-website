@@ -1,9 +1,8 @@
 User-agent: *
 Allow: /
 
-# Disallow internal API and preview routes
+# Disallow internal API routes
 Disallow: /api/
-Disallow: /preview/
 
 # Disallow admin and API routes
 Disallow: /admin/

@@ -36,6 +36,8 @@ export const metadata: Metadata = {
       { url: "/favicon.ico", sizes: "any" },
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/logo-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/logo-512x512.png", sizes: "512x512", type: "image/png" },
     ],
     shortcut: ["/favicon.ico"],
     apple: [
@@ -114,14 +116,18 @@ export default function RootLayout({
         <meta name="twitter:creator" content="@lexatlas" />
         
         {/* Logo meta tags for better Google visibility */}
-        <meta property="og:logo" content="https://lex-atlas.com/logo-180x180.png" />
-        <meta name="logo" content="https://lex-atlas.com/logo-180x180.png" />
-        <link rel="logo" href="https://lex-atlas.com/logo-180x180.png" />
+        <meta property="og:logo" content="https://lex-atlas.com/logo-192x192.png" />
+        <meta name="logo" content="https://lex-atlas.com/logo-192x192.png" />
+        <link rel="logo" href="https://lex-atlas.com/logo-192x192.png" />
+        
+        {/* Google Search Console specific meta tags */}
+        <meta name="google-site-verification" content="" />
+        <meta name="application-name" content="Lex Atlas" />
+        <meta name="msapplication-TileImage" content="/logo-192x192.png" />
         
         {/* Additional favicon and logo meta tags for Google Search */}
-        <link rel="icon" type="image/png" sizes="192x192" href="/logo-180x180.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/logo-192x192.png" />
         <link rel="icon" type="image/png" sizes="512x512" href="/logo-512x512.png" />
-        <meta name="msapplication-TileImage" content="/logo-180x180.png" />
         <meta name="msapplication-TileColor" content="#1A2E4F" />
         
         {/* Apple specific meta tags */}
