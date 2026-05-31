@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
+import { IS_DEV } from "@/lib/env";
 
 export const runtime = "nodejs";
 
 export async function GET() {
+  if (!IS_DEV) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
   if (!process.env.RESEND_API_KEY) {
     return NextResponse.json({ 
       error: "RESEND_API_KEY not configured",

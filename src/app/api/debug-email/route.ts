@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
+import { IS_DEV } from "@/lib/env";
 
 export const runtime = "nodejs";
 
 export async function GET() {
+  if (!IS_DEV) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
   return NextResponse.json({
     hasApiKey: !!process.env.RESEND_API_KEY,
     apiKeyPrefix: process.env.RESEND_API_KEY?.slice(0, 4),
@@ -12,6 +16,9 @@ export async function GET() {
 }
 
 export async function POST() {
+  if (!IS_DEV) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
   if (!process.env.RESEND_API_KEY) {
     return NextResponse.json({ 
       error: "RESEND_API_KEY not configured",

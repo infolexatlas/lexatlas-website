@@ -2,6 +2,8 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
+const isFakeCheckout = process.env.NEXT_PUBLIC_FAKE_CHECKOUT === '1';
+
 export const runtime = 'nodejs'; // important: Stripe SDK needs Node
 
 // Guard: secret must exist
@@ -13,7 +15,7 @@ if (!STRIPE_SECRET_KEY) {
 
 // Single Stripe client (best practice)
 const stripe = STRIPE_SECRET_KEY
-  ? new Stripe(STRIPE_SECRET_KEY, { apiVersion: '2025-08-27.basil' })
+  ? new Stripe(STRIPE_SECRET_KEY, { apiVersion: '2024-11-20.acacia' })
   : null;
 
 // Mapping exact slug → Price ID from environment variables
@@ -45,20 +47,7 @@ type CreateSessionBody = {
 
 export async function POST(req: Request) {
   try {
-    if (!stripe) {
-      return NextResponse.json(
-        { error: 'Stripe not configured. Missing STRIPE_SECRET_KEY.' },
-        { status: 500 }
-      );
-    }
-
     const baseUrl = getBaseUrl();
-    if (!baseUrl) {
-      return NextResponse.json(
-        { error: 'Missing NEXT_PUBLIC_BASE_URL. Set it in Vercel env.' },
-        { status: 500 }
-      );
-    }
 
     // Parse JSON body
     const body = (await req.json().catch(() => ({}))) as CreateSessionBody;
@@ -69,6 +58,30 @@ export async function POST(req: Request) {
       return NextResponse.json(
         { error: 'Missing kitSlug in request body' },
         { status: 400 }
+      );
+    }
+
+    // Fake checkout mode for local dev (no Stripe keys needed)
+    if (isFakeCheckout) {
+      if (!baseUrl) {
+        return NextResponse.json({ error: 'Missing NEXT_PUBLIC_BASE_URL.' }, { status: 500 });
+      }
+      const successPath = body.successPath || `/kits/${slug}?checkout=success`;
+      const fakeUrl = `${baseUrl}${successPath}&session_id=fake_${Date.now()}`;
+      return NextResponse.json({ id: `fake_${Date.now()}`, url: fakeUrl }, { status: 200 });
+    }
+
+    if (!stripe) {
+      return NextResponse.json(
+        { error: 'Stripe not configured. Missing STRIPE_SECRET_KEY.' },
+        { status: 500 }
+      );
+    }
+
+    if (!baseUrl) {
+      return NextResponse.json(
+        { error: 'Missing NEXT_PUBLIC_BASE_URL. Set it in Vercel env.' },
+        { status: 500 }
       );
     }
 

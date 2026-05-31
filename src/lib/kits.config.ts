@@ -28,7 +28,7 @@ export const KITS: Record<string, Kit> = {
   'fra-usa': {
     title: 'France ⇄ United States (2025)',
     description: "Documents, CCAM/recognition, étapes légales pour un mariage France–USA. Kit PDF prêt à l'emploi, téléchargement instantané.",
-    ogImage: '/images/kits/fra-usa-cover.jpg',
+    ogImage: '/og/kits.png',
     sku: 'KIT-FRA-USA-2025',
     price: '29.00',
     currency: 'EUR',
@@ -39,7 +39,7 @@ export const KITS: Record<string, Kit> = {
   'fra-gbr': {
     title: 'France ⇄ United Kingdom (2025)',
     description: "Documents, CNI/recognition, étapes légales pour un mariage France–UK. Kit PDF prêt à l'emploi, téléchargement instantané.",
-    ogImage: '/images/kits/fra-gbr-cover.jpg',
+    ogImage: '/og/kits.png',
     sku: 'KIT-FRA-GBR-2025',
     price: '29.00',
     currency: 'EUR',
@@ -50,7 +50,7 @@ export const KITS: Record<string, Kit> = {
   'fra-can': {
     title: 'France ⇄ Canada (2025)',
     description: "Étapes officielles, traductions et reconnaissance d'un mariage France–Canada. Kit PDF complet + mises à jour incluses.",
-    ogImage: '/images/kits/fra-can-cover.jpg',
+    ogImage: '/og/kits.png',
     sku: 'KIT-FRA-CAN-2025',
     price: '29.00',
     currency: 'EUR',
@@ -61,7 +61,7 @@ export const KITS: Record<string, Kit> = {
   'fra-mar': {
     title: 'France ⇄ Morocco (2025)',
     description: "Publication des bans, CCAM, transcription Maroc → France. Guide PDF étape par étape, téléchargement instantané.",
-    ogImage: '/images/kits/fra-mar-cover.jpg',
+    ogImage: '/og/kits.png',
     sku: 'KIT-FRA-MAR-2025',
     price: '29.00',
     currency: 'EUR',
@@ -72,7 +72,7 @@ export const KITS: Record<string, Kit> = {
   'fra-deu': {
     title: 'France ⇄ Germany (2025)',
     description: "Documents requis, délais, reconnaissance France–Allemagne. Kit PDF prêt à l'emploi.",
-    ogImage: '/images/kits/fra-deu-cover.jpg',
+    ogImage: '/og/kits.png',
     sku: 'KIT-FRA-DEU-2025',
     price: '29.00',
     currency: 'EUR',
@@ -83,7 +83,7 @@ export const KITS: Record<string, Kit> = {
   'fra-che': {
     title: 'France ⇄ Switzerland (2025)',
     description: "Processus de mariage France–Suisse: démarches, documents, reconnaissance. PDF clair et prêt à utiliser.",
-    ogImage: '/images/kits/fra-che-cover.jpg',
+    ogImage: '/og/kits.png',
     sku: 'KIT-FRA-CHE-2025',
     price: '29.00',
     currency: 'EUR',
@@ -94,7 +94,7 @@ export const KITS: Record<string, Kit> = {
   'fra-bel': {
     title: 'France ⇄ Belgium (2025)',
     description: "CCAM, publication des bans, reconnaissance France–Belgique. Téléchargement instantané.",
-    ogImage: '/images/kits/fra-bel-cover.jpg',
+    ogImage: '/og/kits.png',
     sku: 'KIT-FRA-BEL-2025',
     price: '29.00',
     currency: 'EUR',
@@ -105,7 +105,7 @@ export const KITS: Record<string, Kit> = {
   'fra-esp': {
     title: 'France ⇄ Spain (2025)',
     description: "Mariage France–Espagne : actes, traductions, transcription. Kit expert + accès immédiat.",
-    ogImage: '/images/kits/fra-esp-cover.jpg',
+    ogImage: '/og/kits.png',
     sku: 'KIT-FRA-ESP-2025',
     price: '29.00',
     currency: 'EUR',
@@ -116,7 +116,7 @@ export const KITS: Record<string, Kit> = {
   'fra-ita': {
     title: 'France ⇄ Italy (2025)',
     description: "Se marier en Italie (Comune), traductions, reconnaissance en France. Kit complet PDF.",
-    ogImage: '/images/kits/fra-ita-cover.jpg',
+    ogImage: '/og/kits.png',
     sku: 'KIT-FRA-ITA-2025',
     price: '29.00',
     currency: 'EUR',
@@ -127,7 +127,7 @@ export const KITS: Record<string, Kit> = {
   'fra-prt': {
     title: 'France ⇄ Portugal (2025)',
     description: "Mariage transfrontalier France–Portugal : démarches, documents, reconnaissance. PDF facile & sécurisé.",
-    ogImage: '/images/kits/fra-prt-cover.jpg',
+    ogImage: '/og/kits.png',
     sku: 'KIT-FRA-PRT-2025',
     price: '29.00',
     currency: 'EUR',

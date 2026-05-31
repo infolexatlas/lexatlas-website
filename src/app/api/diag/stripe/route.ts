@@ -9,7 +9,7 @@ export const runtime = 'nodejs';
 // Guard: secret must exist
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 const stripe = STRIPE_SECRET_KEY
-  ? new Stripe(STRIPE_SECRET_KEY, { apiVersion: '2025-08-27.basil' })
+  ? new Stripe(STRIPE_SECRET_KEY, { apiVersion: '2024-11-20.acacia' })
   : null;
 
 type DiagnosticBody = {
