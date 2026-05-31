@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import Stripe from 'stripe'
 import { kitsDetail } from '@/lib/kits-detail-data'
 
 export async function POST(req: NextRequest) {
@@ -23,33 +22,41 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true, url }, { status: 200 })
     }
 
-    const stripe = new Stripe(stripeKey)
+    // Use Stripe REST API directly via fetch instead of SDK
+    const sessionData = new URLSearchParams()
+    sessionData.append('mode', 'payment')
+    sessionData.append('line_items[0][price_data][currency]', 'eur')
+    sessionData.append('line_items[0][price_data][unit_amount]', String(Math.round((item.priceEUR || 29) * 100)))
+    sessionData.append('line_items[0][price_data][product_data][name]', `${String(item.slug || kit).toUpperCase().replace('-', ' – ')} Marriage Kit`)
+    sessionData.append('line_items[0][quantity]', '1')
+    sessionData.append('success_url', `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}&kit=${encodeURIComponent(kit)}`)
+    sessionData.append('cancel_url', `${baseUrl}/checkout?kit=${encodeURIComponent(kit)}&canceled=1`)
 
-    const session = await stripe.checkout.sessions.create({
-      mode: 'payment',
-      line_items: [
-        {
-          price_data: {
-            currency: 'eur',
-            unit_amount: Math.round((item.priceEUR || 29) * 100),
-            product_data: {
-              name: `${String(item.slug || kit).toUpperCase().replace('-', ' – ')} Marriage Kit`,
-            },
-          },
-          quantity: 1,
-        },
-      ],
-      success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}&kit=${encodeURIComponent(kit)}`,
-      cancel_url: `${baseUrl}/checkout?kit=${encodeURIComponent(kit)}&canceled=1`,
+    const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${stripeKey}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: sessionData.toString(),
     })
 
-    return NextResponse.json({ ok: true, url: session.url }, { status: 200 })
+    const sessionJson = await response.json() as any
+
+    if (!response.ok) {
+      console.error('[checkout] Stripe error:', sessionJson)
+      return NextResponse.json({
+        ok: false,
+        error: 'server_error',
+        detail: sessionJson.error?.message || 'Stripe error'
+      }, { status: 500 })
+    }
+
+    return NextResponse.json({ ok: true, url: sessionJson.url }, { status: 200 })
   } catch (error: any) {
     const errorMsg = error?.message || String(error)
-    const errorCode = error?.code || 'unknown'
-    const errorType = error?.type || 'unknown'
-    console.error('[api/checkout/create] error', { errorMsg, errorCode, errorType, fullError: error })
-    return NextResponse.json({ ok: false, error: 'server_error', detail: errorMsg, code: errorCode }, { status: 500 })
+    console.error('[checkout] error', errorMsg)
+    return NextResponse.json({ ok: false, error: 'server_error', detail: errorMsg }, { status: 500 })
   }
 }
 
