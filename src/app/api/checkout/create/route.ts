@@ -45,8 +45,11 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ ok: true, url: session.url }, { status: 200 })
   } catch (error: any) {
-    console.error('[api/checkout/create] error', error)
-    return NextResponse.json({ ok: false, error: 'server_error', detail: String(error?.message || error) }, { status: 500 })
+    const errorMsg = error?.message || String(error)
+    const errorCode = error?.code || 'unknown'
+    const errorType = error?.type || 'unknown'
+    console.error('[api/checkout/create] error', { errorMsg, errorCode, errorType, fullError: error })
+    return NextResponse.json({ ok: false, error: 'server_error', detail: errorMsg, code: errorCode }, { status: 500 })
   }
 }
 

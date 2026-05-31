@@ -4,9 +4,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({ enabled: process.e
 // Sentry plugin wrapper (disabled for now - causing API errors)
 const maybeWithSentry = (config: NextConfig) => config;
 
-/**
- * Minimal config to debug API errors
- */
 const nextConfig: NextConfig = {
   eslint: { ignoreDuringBuilds: true },
   images: {
@@ -23,6 +20,15 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     optimizePackageImports: ['framer-motion', 'lucide-react'],
+  },
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.watchOptions = {
+        poll: 1000,
+        aggregateTimeout: 300,
+      };
+    }
+    return config;
   },
 };
 
