@@ -4,13 +4,8 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({ enabled: process.e
 // Sentry plugin wrapper (disabled for now - causing API errors)
 const maybeWithSentry = (config: NextConfig) => config;
 
-import { getSecurityHeaders } from './src/lib/securityHeaders';
-
 /**
- * Add modern security headers.
- * Note: CSP is set to Report-Only initially so we can observe violations in production
- * without breaking functionality. Once stable, switch to enforcing by replacing
- * the header key via CONTENT_SECURITY_POLICY_MODE=block.
+ * Minimal config to debug API errors
  */
 const nextConfig: NextConfig = {
   eslint: { ignoreDuringBuilds: true },
@@ -26,31 +21,8 @@ const nextConfig: NextConfig = {
     ],
     formats: ['image/avif', 'image/webp'],
   },
-  // Performance optimizations
   experimental: {
     optimizePackageImports: ['framer-motion', 'lucide-react'],
-  },
-  // Optimize bundle splitting (simplified)
-  webpack: (config, { dev }) => {
-    if (dev) {
-      // Reduce compilation overhead in development
-      config.watchOptions = {
-        poll: 1000,
-        aggregateTimeout: 300,
-      };
-    }
-    
-    return config;
-  },
-  async headers() {
-    const headerTuples = getSecurityHeaders();
-    return [
-      {
-        // Apply to all routes
-        source: "/:path*",
-        headers: headerTuples.map(([key, value]) => ({ key, value })),
-      },
-    ];
   },
 };
 
