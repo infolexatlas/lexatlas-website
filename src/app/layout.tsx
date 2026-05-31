@@ -15,10 +15,6 @@ import './globals.css'
 
 
 
-// One-time check for missing RESEND_API_KEY in development
-if (IS_DEV && !RESEND_API_KEY) {
-  console.warn('[Email] RESEND_API_KEY not set — emails will NOT be sent in development.')
-}
 
 const inter = Inter({ 
   subsets: ['latin'],

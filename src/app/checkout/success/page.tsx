@@ -37,7 +37,6 @@ interface SessionData {
 
 async function fetchSessionData(sessionId: string): Promise<SessionData | null> {
   if (!process.env.STRIPE_SECRET_KEY) {
-    console.warn('STRIPE_SECRET_KEY not configured - cannot fetch session data')
     return null
   }
 

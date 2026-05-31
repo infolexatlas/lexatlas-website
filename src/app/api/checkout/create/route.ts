@@ -19,7 +19,6 @@ export async function POST(req: NextRequest) {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
 
     if (!stripeKey) {
-      console.warn('[Stripe] Missing STRIPE_SECRET_KEY. Returning mock success URL.')
       const url = `${baseUrl}/success?kit=${encodeURIComponent(kit)}&dev=1&session_id=fake_${Date.now()}`
       return NextResponse.json({ ok: true, url }, { status: 200 })
     }

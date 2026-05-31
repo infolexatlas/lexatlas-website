@@ -28,6 +28,12 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: 'https', hostname: 'cdn.jsdelivr.net' },
     ],
+    localPatterns: [
+      {
+        pathname: '/logo/.*',
+        search: '',
+      },
+    ],
     formats: ['image/avif', 'image/webp'],
   },
   // Performance optimizations

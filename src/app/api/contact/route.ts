@@ -21,18 +21,6 @@ export async function POST(request: NextRequest) {
     // 2. Store in database
     // 3. Send notification to your team
     
-    // For now, we'll just log and return success
-    console.log('Contact form submission:', {
-      name: validatedData.name,
-      email: validatedData.email,
-      topic: validatedData.topic,
-      country: validatedData.country,
-      message: validatedData.message,
-      timestamp: new Date().toISOString(),
-      ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown',
-      userAgent: request.headers.get('user-agent'),
-    })
-    
     // TODO: Implement actual email sending
     // Example with a hypothetical email service:
     // await sendEmail({
