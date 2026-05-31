@@ -1,18 +1,8 @@
 import type { NextConfig } from "next";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const withBundleAnalyzer = require('@next/bundle-analyzer')({ enabled: process.env.ANALYZE === 'true' });
-// Sentry plugin wrapper (optional)
-// We use require here to avoid type dependency when the package is not yet installed
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const maybeWithSentry = (() => {
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { withSentryConfig } = require("@sentry/nextjs");
-    return (config: NextConfig) => withSentryConfig(config, { silent: true });
-  } catch {
-    return (config: NextConfig) => config;
-  }
-})();
+// Sentry plugin wrapper (disabled for now - causing API errors)
+const maybeWithSentry = (config: NextConfig) => config;
 
 import { getSecurityHeaders } from './src/lib/securityHeaders';
 
