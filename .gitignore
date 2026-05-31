@@ -47,3 +47,4 @@ next-env.d.ts
 # Track Playwright VR baselines
 !tests/**/*.spec.ts-snapshots/
 !tests/**/*.spec.ts-snapshots/*.png
+.claude/

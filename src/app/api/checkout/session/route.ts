@@ -15,7 +15,7 @@ if (!STRIPE_SECRET_KEY) {
 
 // Single Stripe client (best practice)
 const stripe = STRIPE_SECRET_KEY
-  ? new Stripe(STRIPE_SECRET_KEY, { apiVersion: '2024-11-20.acacia' })
+  ? new Stripe(STRIPE_SECRET_KEY, { apiVersion: '2025-08-27.basil' })
   : null;
 
 // Mapping exact slug → Price ID from environment variables
